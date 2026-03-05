@@ -98,6 +98,13 @@ def build_fcff(df, tax_rate=0.34):
         - df["DELTA_WC"]
     )
 
+    # ✅ MELHORIA: NaN vira 0 somente após log de aviso
+    # Isso evita mascarar silenciosamente anos com dados faltantes
+    n_nan = df["FCFF"].isna().sum()
+    if n_nan > 0:
+        print(f"[WARN] build_fcff: {n_nan} ano(s) com FCFF nulo substituído(s) por 0. "
+              "Verifique os dados de entrada.")
+
     df["FCFF"] = df["FCFF"].replace([np.inf, -np.inf], np.nan).fillna(0)
 
     return df["FCFF"]

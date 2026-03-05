@@ -9,9 +9,9 @@ import yfinance as yf
 # =====================================================
 
 DAMODARAN_BRAZIL_ERP = 0.0747   # Atualizar 1x por ano
-DEFAULT_REAL_RF = 0.074        # Fallback NTNB real (~7.4%)
-DEFAULT_INFLATION = 0.04       # IPCA estrutural
-DEFAULT_FALLBACK_RF = 0.115    # Nominal fallback caso tudo falhe
+DEFAULT_REAL_RF = 0.074         # Fallback NTNB real (~7.4%)
+DEFAULT_INFLATION = 0.04        # IPCA estrutural
+DEFAULT_FALLBACK_RF = 0.115     # Nominal fallback caso tudo falhe
 
 
 # =====================================================
@@ -38,11 +38,10 @@ def fetch_ntnb_real_long(anbima_token: str = None):
         response = requests.get(url, headers=headers, timeout=10)
 
         if response.status_code != 200:
-            raise Exception(f"Erro ANBIMA {response.status_code}")
+            raise ValueError(f"Erro ANBIMA {response.status_code}")
 
         data = response.json()
 
-        # Filtrar NTN-B longas
         ipca_curve = [
             x for x in data.get("data", [])
             if x.get("modalidade") == "NTN-B"
@@ -50,7 +49,7 @@ def fetch_ntnb_real_long(anbima_token: str = None):
         ]
 
         if not ipca_curve:
-            raise Exception("Curva NTN-B longa não encontrada")
+            raise ValueError("Curva NTN-B longa não encontrada")
 
         ipca_curve.sort(key=lambda x: x["vencimento_anos"], reverse=True)
 
@@ -98,7 +97,18 @@ def fetch_beta_regression(
     )
 
     if stock_df.empty or market_df.empty:
-        raise ValueError("Dados insuficientes para cálculo de beta")
+        raise ValueError(
+            f"Dados insuficientes para cálculo de beta do ticker '{ticker_symbol}'. "
+            "Verifique se o ticker está correto (ex: 'WEGE3.SA')."
+        )
+
+    # ✅ CORREÇÃO BUG: yfinance >= 0.2 retorna MultiIndex em colunas
+    # Precisamos achatar para acessar "Close" corretamente
+    if isinstance(stock_df.columns, pd.MultiIndex):
+        stock_df.columns = stock_df.columns.get_level_values(0)
+
+    if isinstance(market_df.columns, pd.MultiIndex):
+        market_df.columns = market_df.columns.get_level_values(0)
 
     stock = stock_df["Close"]
     market = market_df["Close"]
@@ -108,8 +118,16 @@ def fetch_beta_regression(
 
     returns = df.pct_change().dropna()
 
+    if len(returns) < 12:
+        raise ValueError(
+            f"Histórico insuficiente para beta confiável: apenas {len(returns)} meses."
+        )
+
     cov = np.cov(returns["stock"], returns["market"])[0][1]
     var = np.var(returns["market"])
+
+    if var == 0:
+        raise ValueError("Variância do mercado é zero — dados inválidos.")
 
     beta = cov / var
 
@@ -130,9 +148,13 @@ def build_wacc_structural_brazil(
     expected_inflation: float = DEFAULT_INFLATION,
     anbima_token: str = None
 ):
-
-    if round(debt_weight + equity_weight, 5) != 1:
-        raise ValueError("Debt + Equity weights devem somar 1")
+    # ✅ CORREÇÃO BUG: round() com ponto flutuante é frágil
+    # Ex: 0.1 + 0.2 = 0.30000000000000004 → round() pode falhar
+    # np.isclose() é a forma correta de comparar floats
+    if not np.isclose(debt_weight + equity_weight, 1.0, atol=1e-6):
+        raise ValueError(
+            f"Debt ({debt_weight}) + Equity ({equity_weight}) devem somar 1.0"
+        )
 
     # -------------------------
     # Risk Free Estrutural

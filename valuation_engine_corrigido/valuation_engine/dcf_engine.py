@@ -6,7 +6,6 @@ def build_dcf(
     wacc,
     terminal_growth=0.03
 ):
-
     fcff_series = fcff_series.dropna()
 
     if len(fcff_series) == 0:
@@ -18,10 +17,10 @@ def build_dcf(
     fcff = fcff_series.values
     periods = len(fcff)
 
-    pv_fcf = sum(
-        fcff[t] / ((1 + wacc) ** (t + 1))
-        for t in range(periods)
-    )
+    # ✅ MELHORIA: vetorização com numpy — mais rápido que loop Python puro
+    t_array = np.arange(1, periods + 1)
+    discount_factors = (1 + wacc) ** t_array
+    pv_fcf = np.sum(fcff / discount_factors)
 
     terminal_value = (
         fcff[-1] * (1 + terminal_growth)

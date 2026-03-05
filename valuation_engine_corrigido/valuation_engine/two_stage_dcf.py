@@ -1,31 +1,28 @@
-import math
+import numpy as np
 
 
 def project_revenue(base_revenue, growth_rate, years):
-    revenues = []
-    for t in range(1, years + 1):
-        rev = base_revenue * ((1 + growth_rate) ** t)
-        revenues.append(rev)
-    return revenues
+    # ✅ MELHORIA: vetorizado com numpy — mais rápido que loop
+    t_array = np.arange(1, years + 1)
+    return base_revenue * ((1 + growth_rate) ** t_array)
 
 
 def calculate_terminal_value(last_fcf, wacc, terminal_growth):
 
+    # ✅ CORREÇÃO: raise ValueError em vez de raise Exception (mais preciso)
     if wacc <= terminal_growth:
-        raise Exception("WACC deve ser maior que crescimento na perpetuidade")
+        raise ValueError(
+            f"WACC ({wacc:.1%}) deve ser maior que crescimento na perpetuidade ({terminal_growth:.1%})"
+        )
 
     return (last_fcf * (1 + terminal_growth)) / (wacc - terminal_growth)
 
 
 def discount_cash_flows(cash_flows, wacc):
-
-    discounted = []
-
-    for t, cf in enumerate(cash_flows, start=1):
-        pv = cf / ((1 + wacc) ** t)
-        discounted.append(pv)
-
-    return discounted
+    # ✅ MELHORIA: vetorizado com numpy
+    cash_flows = np.array(cash_flows)
+    t_array = np.arange(1, len(cash_flows) + 1)
+    return cash_flows / ((1 + wacc) ** t_array)
 
 
 def build_two_stage_dcf(
@@ -36,11 +33,20 @@ def build_two_stage_dcf(
     terminal_growth=0.05
 ):
     """
-    annual_data: lista ordenada por ano ASC
+    annual_data: lista de dicts ordenada por ano ASC.
+    Cada dict deve conter: 'receita' e 'lucro_liquido'.
     """
 
     if len(annual_data) < 3:
-        raise Exception("Histórico insuficiente para DCF")
+        raise ValueError("Histórico insuficiente para DCF (mínimo 3 anos)")
+
+    # ✅ CORREÇÃO BUG: verificação de chave 'lucro_liquido' antes de usar
+    # Sem isso, KeyError quebra o programa silenciosamente
+    for i, row in enumerate(annual_data):
+        if "receita" not in row:
+            raise ValueError(f"Campo 'receita' ausente no ano index {i}")
+        if "lucro_liquido" not in row:
+            raise ValueError(f"Campo 'lucro_liquido' ausente no ano index {i}")
 
     # -------------------------
     # Limpeza de dados inválidos
@@ -52,15 +58,13 @@ def build_two_stage_dcf(
     ]
 
     if len(annual_data) < 3:
-        raise Exception("Receitas históricas insuficientes ou inválidas para DCF")
+        raise ValueError("Receitas históricas insuficientes ou inválidas para DCF")
 
     # -------------------------
     # Dados base
     # -------------------------
 
-    latest = annual_data[-1]
-    base_revenue = latest["receita"]
-
+    base_revenue = annual_data[-1]["receita"]
     revenues = [x["receita"] for x in annual_data]
 
     # -------------------------
@@ -70,18 +74,15 @@ def build_two_stage_dcf(
     growth_rates = []
 
     for i in range(1, len(revenues)):
-
         if revenues[i - 1] == 0:
             continue
-
         g = (revenues[i] / revenues[i - 1]) - 1
         growth_rates.append(g)
 
     if not growth_rates:
-        raise Exception("Não foi possível calcular CAGR")
+        raise ValueError("Não foi possível calcular crescimento histórico")
 
-    historical_growth = sum(growth_rates) / len(growth_rates)
-
+    historical_growth = np.mean(growth_rates)
     projected_growth = historical_growth * growth_adjustment
 
     # -------------------------
@@ -94,7 +95,7 @@ def build_two_stage_dcf(
         if x["receita"] > 0
     ]
 
-    avg_margin = sum(margins) / len(margins)
+    avg_margin = np.mean(margins)
 
     # -------------------------
     # Projeção Estágio 1
@@ -106,7 +107,7 @@ def build_two_stage_dcf(
         explicit_years
     )
 
-    projected_fcfs = [rev * avg_margin for rev in projected_revenues]
+    projected_fcfs = projected_revenues * avg_margin
 
     discounted_stage1 = discount_cash_flows(projected_fcfs, wacc)
 
@@ -126,7 +127,7 @@ def build_two_stage_dcf(
     # Enterprise Value
     # -------------------------
 
-    enterprise_value = sum(discounted_stage1) + discounted_terminal
+    enterprise_value = np.sum(discounted_stage1) + discounted_terminal
 
     return {
         "historical_growth": historical_growth,
