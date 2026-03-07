@@ -1,6 +1,11 @@
 import pandas as pd
 import re
 
+# ✅ CORREÇÃO BUG CRÍTICO: unit_detector existia mas nunca era chamado
+# Sem isso, empresas que reportam em R$ milhões (padrão B3) geravam
+# valuations 1.000.000x menores que o real
+from normalization.unit_detector import detect_unit_multiplier
+
 
 class UniversalTableExtractor:
 
@@ -13,20 +18,18 @@ class UniversalTableExtractor:
 
     def safe_to_float(self, value):
 
-        # Se vier uma Series (coluna duplicada), pega o primeiro valor válido
         if isinstance(value, pd.Series):
             value = value.dropna()
             if value.empty:
                 return None
             value = value.iloc[0]
 
-        # Agora é escalar
         if pd.isna(value):
             return None
 
         value = str(value).strip()
 
-        if value in ["", "-", "nan", "None"]:
+        if value in ["", "-", "nan", "None", "N/A", "#N/A"]:
             return None
 
         value = value.replace(" ", "")
@@ -38,13 +41,14 @@ class UniversalTableExtractor:
 
         # Notação científica
         if "e" in value.lower():
+            # ✅ CORREÇÃO: except tipado — nunca usar except nu
             try:
                 number = float(value)
                 return -number if negative else number
-            except:
+            except (ValueError, TypeError):
                 return None
 
-        # Padrão brasileiro
+        # Padrão brasileiro: 1.234.567,89
         if "," in value and "." in value:
             value = value.replace(".", "").replace(",", ".")
         elif "," in value:
@@ -55,7 +59,7 @@ class UniversalTableExtractor:
         try:
             number = float(value)
             return -number if negative else number
-        except:
+        except (ValueError, TypeError):
             return None
 
     # =====================================================
@@ -89,6 +93,44 @@ class UniversalTableExtractor:
         return None
 
     # =====================================================
+    # DETECTAR COLUNA DE LABELS
+    # =====================================================
+
+    def detect_label_col(self, df, start_row):
+        """
+        Detecta a coluna de labels como a que tem maior proporção
+        de células com texto (não numérico) após a linha de período.
+
+        ✅ CORREÇÃO: pandas StringArray mantém NaN como objeto nan, não string "nan"
+           → verificação explícita com pd.isna() antes da comparação de string
+        ✅ MELHORIA: ignora col 0 se ela for toda NaN (col de índice vazia)
+        """
+        data_slice = df.iloc[start_row:]
+
+        best_col = 1  # começa em 1 — col 0 costuma ser índice/vazia
+        best_score = -1
+
+        for col_idx in range(len(df.columns)):
+            col = data_slice.iloc[:, col_idx]
+            text_count = 0
+            for v in col:
+                # ✅ CORREÇÃO: pd.isna() captura float NaN e pd.NA
+                if pd.isna(v):
+                    continue
+                v_str = str(v).strip()
+                if v_str in ("nan", "", "None", "NaN", "<NA>"):
+                    continue
+                if self.safe_to_float(v_str) is None:
+                    text_count += 1
+
+            score = text_count / max(len(col), 1)
+            if score > best_score:
+                best_score = score
+                best_col = col_idx
+
+        return best_col
+
+    # =====================================================
     # DETECTAR ORIENTAÇÃO
     # =====================================================
 
@@ -112,106 +154,112 @@ class UniversalTableExtractor:
 
     def extract_long_format(self):
 
-        xls = pd.ExcelFile(self.file_path)
+        # ✅ MELHORIA: ExcelFile usado como context manager — fecha automaticamente
         all_data = []
 
-        for sheet in xls.sheet_names:
+        with pd.ExcelFile(self.file_path) as xls:
 
-            df_raw = pd.read_excel(xls, sheet_name=sheet, header=None)
+            for sheet in xls.sheet_names:
 
-            # 🔥 MULTIPLIER FIXO (DESATIVADO AUTOMÁTICO)
-            multiplier = 1
+                df_raw = pd.read_excel(xls, sheet_name=sheet, header=None)
 
-            orientation, ref = self.detect_orientation(df_raw)
+                multiplier = detect_unit_multiplier(df_raw)
 
-            if orientation is None:
-                continue
+                orientation, ref = self.detect_orientation(df_raw)
 
-            # ==========================
-            # HORIZONTAL
-            # ==========================
-            if orientation == "horizontal":
-
-                period_row = ref
-                periods = df_raw.iloc[period_row]
-                data = df_raw.iloc[period_row + 1:].copy()
-
-                data.columns = periods
-
-                valid_columns = [
-                    col for col in data.columns
-                    if self.is_period(str(col))
-                ]
-
-                if not valid_columns:
+                if orientation is None:
                     continue
 
-                data = data[valid_columns]
+                # ==========================
+                # HORIZONTAL
+                # ==========================
+                if orientation == "horizontal":
 
-                label_col = (
-                    df_raw.iloc[period_row + 1:, :]
-                    .apply(lambda col: col.astype(str).str.len().mean())
-                    .idxmax()
-                )
+                    period_row = ref
+                    periods = df_raw.iloc[period_row]
+                    data = df_raw.iloc[period_row + 1:].copy()
+                    data.columns = periods
 
-                labels = df_raw.iloc[period_row + 1:, label_col]
+                    valid_columns = [
+                        col for col in data.columns
+                        if self.is_period(str(col))
+                    ]
 
-                for idx, label in labels.items():
-
-                    if pd.isna(label):
+                    if not valid_columns:
                         continue
 
-                    for period in valid_columns:
+                    data = data[valid_columns]
 
-                        value = data.loc[idx, period]
-                        value = self.safe_to_float(value)
+                    # ✅ MELHORIA: usa detect_label_col mais robusto
+                    label_col_idx = self.detect_label_col(df_raw, period_row + 1)
+                    labels = df_raw.iloc[period_row + 1:, label_col_idx]
 
-                        if value is None:
+                    for idx, label in labels.items():
+
+                        if pd.isna(label):
                             continue
 
-                        value *= multiplier
+                        for period in valid_columns:
 
-                        all_data.append({
-                            "sheet": sheet,
-                            "label_original": str(label),
-                            "period": str(period),
-                            "value": value
-                        })
+                            value = data.loc[idx, period]
+                            value = self.safe_to_float(value)
 
-            # ==========================
-            # VERTICAL
-            # ==========================
-            elif orientation == "vertical":
+                            if value is None:
+                                continue
 
-                period_col = ref
+                            value *= multiplier
 
-                data = df_raw[
-                    df_raw[period_col].apply(
-                        lambda x: self.is_period(str(x))
-                    )
-                ]
+                            all_data.append({
+                                "sheet": sheet,
+                                "label_original": str(label),
+                                "period": str(period),
+                                "value": value
+                            })
 
-                label_cols = [c for c in df_raw.columns if c != period_col]
+                # ==========================
+                # VERTICAL
+                # ✅ MELHORIA: substituído iterrows() por itertuples() — mais rápido
+                # ==========================
+                elif orientation == "vertical":
 
-                for _, row in data.iterrows():
+                    period_col = ref
 
-                    period = row[period_col]
+                    data = df_raw[
+                        df_raw[period_col].apply(
+                            lambda x: self.is_period(str(x))
+                        )
+                    ]
 
-                    for col in label_cols:
+                    label_cols = [c for c in df_raw.columns if c != period_col]
 
-                        label = df_raw.iloc[0, col]
-                        value = self.safe_to_float(row[col])
+                    # cabeçalhos da primeira linha
+                    header_row = df_raw.iloc[0]
 
-                        if value is None:
-                            continue
+                    for row in data.itertuples(index=False):
 
-                        value *= multiplier
+                        period = getattr(row, str(period_col), None) \
+                                 if hasattr(row, str(period_col)) \
+                                 else row[period_col]
 
-                        all_data.append({
-                            "sheet": sheet,
-                            "label_original": str(label),
-                            "period": str(period),
-                            "value": value
-                        })
+                        for col in label_cols:
+                            label = header_row[col]
+                            value = self.safe_to_float(row[col])
+
+                            if value is None:
+                                continue
+
+                            value *= multiplier
+
+                            all_data.append({
+                                "sheet": sheet,
+                                "label_original": str(label),
+                                "period": str(period),
+                                "value": value
+                            })
+
+        if not all_data:
+            return pd.DataFrame(
+                columns=["sheet", "label_original", "period", "value"]
+            )
 
         return pd.DataFrame(all_data)

@@ -1,0 +1,235 @@
+CNPJ_CIA;DT_REFER;VERSAO;DENOM_CIA;CD_CVM;GRUPO_DFP;MOEDA;ESCALA_MOEDA;ORDEM_EXERC;DT_FIM_EXERC;CD_CONTA;DS_CONTA;VL_CONTA;ST_CONTA_FIXA
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2;Passivo Total;26396751.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2;Passivo Total;25135863.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01;Passivo Circulante;4069278.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01;Passivo Circulante;3669988.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.01;Obrigações Sociais e Trabalhistas;387031.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.01;Obrigações Sociais e Trabalhistas;403220.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.01.01;Obrigações Sociais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.01.01;Obrigações Sociais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.01.02;Obrigações Trabalhistas;387031.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.01.02;Obrigações Trabalhistas;403220.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.02;Fornecedores;977817.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.02;Fornecedores;1268416.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.02.01;Fornecedores Nacionais;977817.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.02.01;Fornecedores Nacionais;1268416.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.02.01.01;Fornecedores;664375.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.02.01.01;Fornecedores;690473.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.02.01.02;Fornecedores risco sacado;313442.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.02.01.02;Fornecedores risco sacado;577943.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.02.02;Fornecedores Estrangeiros;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.02.02;Fornecedores Estrangeiros;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03;Obrigações Fiscais;119050.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03;Obrigações Fiscais;112095.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03.01;Obrigações Fiscais Federais;119050.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03.01;Obrigações Fiscais Federais;112095.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03.01.01;Imposto de Renda e Contribuição Social a Pagar;22536.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03.01.01;Imposto de Renda e Contribuição Social a Pagar;29449.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03.01.02;Tributos a Pagar;96514.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03.01.02;Tributos a Pagar;82646.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03.01.03;Impostos e Contribuições Parcelados;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03.01.03;Impostos e Contribuições Parcelados;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03.02;Obrigações Fiscais Estaduais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03.02;Obrigações Fiscais Estaduais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.03.03;Obrigações Fiscais Municipais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.03.03;Obrigações Fiscais Municipais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.04;Empréstimos e Financiamentos;2184815.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.04;Empréstimos e Financiamentos;1610571.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.04.01;Empréstimos e Financiamentos;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.04.01;Empréstimos e Financiamentos;4619.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.04.01.01;Em Moeda Nacional;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.04.01.01;Em Moeda Nacional;4619.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.04.01.02;Em Moeda Estrangeira;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.04.01.02;Em Moeda Estrangeira;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.04.02;Debêntures;2038312.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.04.02;Debêntures;1450226.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.04.03;Financiamento por Arrendamento;146503.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.04.03;Financiamento por Arrendamento;155726.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05;Outras Obrigações;400565.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05;Outras Obrigações;275686.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.01;Passivos com Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.01;Passivos com Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.01.01;Débitos com Coligadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.01.01;Débitos com Coligadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.01.03;Débitos com Controladores;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.01.03;Débitos com Controladores;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.01.04;Débitos com Outras Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.01.04;Débitos com Outras Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02;Outros;400565.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02;Outros;275686.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.01;Dividendos e JCP a Pagar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.01;Dividendos e JCP a Pagar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.02;Dividendo Mínimo Obrigatório a Pagar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.02;Dividendo Mínimo Obrigatório a Pagar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.03;Obrigações por Pagamentos Baseados em Ações;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.03;Obrigações por Pagamentos Baseados em Ações;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.04;Dividendos a Pagar;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.04;Dividendos a Pagar;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.05;Contas a Pagar - Aquisições;168061.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.05;Contas a Pagar - Aquisições;81588.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.06;Adiantamentos de Clientes;192768.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.06;Adiantamentos de Clientes;161419.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.07;Demais contas a Pagar;39736.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.07;Demais contas a Pagar;32679.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.05.02.08;Fornecedores confirming;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.05.02.08;Fornecedores confirming;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06;Provisões;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06;Provisões;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.01;Provisões Fiscais Previdenciárias Trabalhistas e Cíveis;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.01;Provisões Fiscais Previdenciárias Trabalhistas e Cíveis;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.01.01;Provisões Fiscais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.01.01;Provisões Fiscais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.01.02;Provisões Previdenciárias e Trabalhistas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.01.02;Provisões Previdenciárias e Trabalhistas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.01.03;Provisões para Benefícios a Empregados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.01.03;Provisões para Benefícios a Empregados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.01.04;Provisões Cíveis;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.01.04;Provisões Cíveis;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.02;Outras Provisões;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.02;Outras Provisões;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.02.01;Provisões para Garantias;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.02.01;Provisões para Garantias;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.02.02;Provisões para Reestruturação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.02.02;Provisões para Reestruturação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.06.02.03;Provisões para Passivos Ambientais e de Desativação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.06.02.03;Provisões para Passivos Ambientais e de Desativação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.07;Passivos sobre Ativos Não-Correntes a Venda e Descontinuados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.07;Passivos sobre Ativos Não-Correntes a Venda e Descontinuados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.07.01;Passivos sobre Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.07.01;Passivos sobre Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.01.07.02;Passivos sobre Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.01.07.02;Passivos sobre Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02;Passivo Não Circulante;9086085.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02;Passivo Não Circulante;8759596.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.01;Empréstimos e Financiamentos;6019508.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.01;Empréstimos e Financiamentos;6165025.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.01.01;Empréstimos e Financiamentos;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.01.01;Empréstimos e Financiamentos;56959.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.01.01.01;Em Moeda Nacional;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.01.01.01;Em Moeda Nacional;56959.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.01.01.02;Em Moeda Estrangeira;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.01.01.02;Em Moeda Estrangeira;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.01.02;Debêntures;3152882.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.01.02;Debêntures;3422746.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.01.03;Financiamento por Arrendamento;2866626.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.01.03;Financiamento por Arrendamento;2685320.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02;Outras Obrigações;211477.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02;Outras Obrigações;149165.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.01;Passivos com Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.01;Passivos com Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.01.01;Débitos com Coligadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.01.01;Débitos com Coligadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.01.03;Débitos com Controladores;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.01.03;Débitos com Controladores;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.01.04;Débitos com Outras Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.01.04;Débitos com Outras Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02;Outros;211477.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02;Outros;149165.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.01;Obrigações por Pagamentos Baseados em Ações;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.01;Obrigações por Pagamentos Baseados em Ações;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.02;Adiantamento para Futuro Aumento de Capital;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.02;Adiantamento para Futuro Aumento de Capital;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.03;Impostos e Contribuições Parcelados;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.03;Impostos e Contribuições Parcelados;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.04;Contas a Pagar - Aquisições;84368.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.04;Contas a Pagar - Aquisições;54852.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.05;Demais Contas a Pagar;104077.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.05;Demais Contas a Pagar;80262.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.06;Instrumentos Financeiros Derivativos;23032.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.06;Instrumentos Financeiros Derivativos;2714.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.02.02.07;Fornecedores risco sacado;0.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.02.02.07;Fornecedores risco sacado;11337.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.03;Tributos Diferidos;907160.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.03;Tributos Diferidos;808321.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.03.01;Imposto de Renda e Contribuição Social Diferidos;907160.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.03.01;Imposto de Renda e Contribuição Social Diferidos;808321.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04;Provisões;1947940.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04;Provisões;1634219.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01;Provisões Fiscais Previdenciárias Trabalhistas e Cíveis;1947940.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01;Provisões Fiscais Previdenciárias Trabalhistas e Cíveis;1634219.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01.01;Provisões Fiscais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01.01;Provisões Fiscais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01.02;Provisões Previdenciárias e Trabalhistas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01.02;Provisões Previdenciárias e Trabalhistas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01.03;Provisões para Benefícios a Empregados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01.03;Provisões para Benefícios a Empregados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01.04;Provisões Cíveis;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01.04;Provisões Cíveis;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01.05;Provisão para perdas tributárias, trabalhistas e cíveis;720653.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01.05;Provisão para perdas tributárias, trabalhistas e cíveis;631303.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.01.06;Passivos assumidos na combinação de negócio;1227287.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.01.06;Passivos assumidos na combinação de negócio;1002916.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.02;Outras Provisões;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.02;Outras Provisões;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.02.01;Provisões para Garantias;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.02.01;Provisões para Garantias;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.02.02;Provisões para Reestruturação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.02.02;Provisões para Reestruturação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.04.02.03;Provisões para Passivos Ambientais e de Desativação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.04.02.03;Provisões para Passivos Ambientais e de Desativação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.05;Passivos sobre Ativos Não-Correntes a Venda e Descontinuados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.05;Passivos sobre Ativos Não-Correntes a Venda e Descontinuados;2866.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.05.01;Passivos sobre Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.05.01;Passivos sobre Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.05.02;Passivos sobre Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.05.02;Passivos sobre Ativos de Operações Descontinuadas;2866.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.06;Lucros e Receitas a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.06;Lucros e Receitas a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.06.01;Lucros a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.06.01;Lucros a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.06.02;Receitas a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.06.02;Receitas a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.02.06.03;Subvenções de Investimento a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.02.06.03;Subvenções de Investimento a Apropriar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03;Patrimônio Líquido Consolidado;13241388.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03;Patrimônio Líquido Consolidado;12706279.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.01;Capital Social Realizado;7667615.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.01;Capital Social Realizado;7667615.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02;Reservas de Capital;4508947.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02;Reservas de Capital;3997779.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.01;Ágio na Emissão de Ações;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.01;Ágio na Emissão de Ações;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.02;Reserva Especial de Ágio na Incorporação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.02;Reserva Especial de Ágio na Incorporação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.03;Alienação de Bônus de Subscrição;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.03;Alienação de Bônus de Subscrição;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.04;Opções Outorgadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.04;Opções Outorgadas;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.05;Ações em Tesouraria;-8257.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.05;Ações em Tesouraria;-12154.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.06;Adiantamento para Futuro Aumento de Capital;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.06;Adiantamento para Futuro Aumento de Capital;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.02.07;Reserva de Capital;4517204.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.02.07;Reserva de Capital;4009933.0000000000;N
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.03;Reservas de Reavaliação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.03;Reservas de Reavaliação;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04;Reservas de Lucros;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04;Reservas de Lucros;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.01;Reserva Legal;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.01;Reserva Legal;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.02;Reserva Estatutária;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.02;Reserva Estatutária;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.03;Reserva para Contingências;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.03;Reserva para Contingências;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.04;Reserva de Lucros a Realizar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.04;Reserva de Lucros a Realizar;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.05;Reserva de Retenção de Lucros;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.05;Reserva de Retenção de Lucros;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.06;Reserva Especial para Dividendos Não Distribuídos;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.06;Reserva Especial para Dividendos Não Distribuídos;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.07;Reserva de Incentivos Fiscais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.07;Reserva de Incentivos Fiscais;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.08;Dividendo Adicional Proposto;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.08;Dividendo Adicional Proposto;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.04.09;Ações em Tesouraria;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.04.09;Ações em Tesouraria;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.05;Lucros/Prejuízos Acumulados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.05;Lucros/Prejuízos Acumulados;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.06;Ajustes de Avaliação Patrimonial;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.06;Ajustes de Avaliação Patrimonial;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.07;Ajustes Acumulados de Conversão;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.07;Ajustes Acumulados de Conversão;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.08;Outros Resultados Abrangentes;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.08;Outros Resultados Abrangentes;0.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;PENÚLTIMO;2022-12-31;2.03.09;Participação dos Acionistas Não Controladores;1064826.0000000000;S
+02.800.026/0001-40;2023-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Passivo;REAL;MIL;ÚLTIMO;2023-12-31;2.03.09;Participação dos Acionistas Não Controladores;1040885.0000000000;S

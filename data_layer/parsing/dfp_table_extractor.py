@@ -17,6 +17,9 @@ class DFPTableExtractor:
             for page in pdf.pages:
                 tables = page.extract_tables()
 
+                if not tables:
+                    continue
+
                 for table in tables:
 
                     if not table or len(table) < 2:
@@ -24,20 +27,14 @@ class DFPTableExtractor:
 
                     header = table[0]
 
-                    # tentar identificar colunas que contenham ano
                     years = []
-
                     for col in header:
                         if col:
                             match = re.search(r"(20\d{2})", col)
-                            if match:
-                                years.append(match.group(1))
-                            else:
-                                years.append(None)
+                            years.append(match.group(1) if match else None)
                         else:
                             years.append(None)
 
-                    # agora iterar linhas de contas
                     for row in table[1:]:
 
                         if not row or not row[0]:
@@ -47,30 +44,36 @@ class DFPTableExtractor:
 
                         for i in range(1, len(row)):
 
-                            if i >= len(years):
+                            if i >= len(years) or not years[i]:
                                 continue
 
-                            year = years[i]
-
-                            if not year:
+                            raw = row[i]
+                            if not raw:
                                 continue
 
-                            value = row[i]
+                            # ✅ CORREÇÃO BUG: except nu silenciava todos os erros
+                            # incluindo erros de memória e outros críticos
+                            value_str = str(raw).strip().replace(".", "").replace(",", ".")
 
-                            if not value:
-                                continue
-
-                            value = value.replace(".", "").replace(",", ".")
+                            # Trata parênteses como negativo: (1.234) → -1234
+                            negative = value_str.startswith("(") and value_str.endswith(")")
+                            if negative:
+                                value_str = value_str[1:-1]
 
                             try:
-                                value = float(value)
-                            except:
+                                value = float(value_str)
+                                if negative:
+                                    value = -value
+                            except (ValueError, TypeError):
                                 continue
 
                             structured.append({
-                                "period": year,
+                                "period":   years[i],
                                 "category": label,
-                                "value": value
+                                "value":    value
                             })
+
+        if not structured:
+            return pd.DataFrame(columns=["period", "category", "value"])
 
         return pd.DataFrame(structured)

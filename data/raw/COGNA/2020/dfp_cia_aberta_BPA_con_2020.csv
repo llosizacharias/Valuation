@@ -1,0 +1,133 @@
+CNPJ_CIA;DT_REFER;VERSAO;DENOM_CIA;CD_CVM;GRUPO_DFP;MOEDA;ESCALA_MOEDA;ORDEM_EXERC;DT_FIM_EXERC;CD_CONTA;DS_CONTA;VL_CONTA;ST_CONTA_FIXA
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1;Ativo Total;34118446.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1;Ativo Total;30783788.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01;Ativo Circulante;4478450.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01;Ativo Circulante;9272019.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.01;Caixa e Equivalentes de Caixa;371683.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.01;Caixa e Equivalentes de Caixa;2205346.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.02;Aplicações Financeiras;453952.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.02;Aplicações Financeiras;1976436.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.02.01;Aplicações Financeiras Avaliadas a Valor Justo através do Resultado;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.02.01;Aplicações Financeiras Avaliadas a Valor Justo através do Resultado;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.02.01.01;Títulos para Negociação;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.02.01.01;Títulos para Negociação;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.02.01.02;Títulos Designados a Valor Justo;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.02.01.02;Títulos Designados a Valor Justo;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.02.02;Aplicações Financeiras Avaliadas a Valor Justo através de Outros Resultados Abrangentes;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.02.02;Aplicações Financeiras Avaliadas a Valor Justo através de Outros Resultados Abrangentes;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.02.03;Aplicações Financeiras Avaliadas ao Custo Amortizado;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.02.03;Aplicações Financeiras Avaliadas ao Custo Amortizado;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.03;Contas a Receber;2586529.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.03;Contas a Receber;1876801.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.03.01;Clientes;2586529.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.03.01;Clientes;1876801.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.03.02;Outras Contas a Receber;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.03.02;Outras Contas a Receber;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.04;Estoques;407120.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.04;Estoques;366405.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.05;Ativos Biológicos;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.05;Ativos Biológicos;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.06;Tributos a Recuperar;346162.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.06;Tributos a Recuperar;275445.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.06.01;Tributos Correntes a Recuperar;346162.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.06.01;Tributos Correntes a Recuperar;275445.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.07;Despesas Antecipadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.07;Despesas Antecipadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08;Outros Ativos Circulantes;313004.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08;Outros Ativos Circulantes;2571586.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.01;Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.01;Ativos Não-Correntes a Venda;2402541.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.02;Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.02;Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.03;Outros;313004.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.03;Outros;169045.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.03.01;Adiantamentos;77078.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.03.01;Adiantamentos;63312.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.03.02;Demais Contas a Receber;96764.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.03.02;Demais Contas a Receber;105140.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.03.04;Contas a receber pela venda de controladas;139162.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.03.04;Contas a receber pela venda de controladas;593.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.01.08.03.05;Partes relacionadas;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.01.08.03.05;Partes relacionadas;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02;Ativo Não Circulante;29639996.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02;Ativo Não Circulante;21511769.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01;Ativo Realizável a Longo Prazo;3254294.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01;Ativo Realizável a Longo Prazo;2147841.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.01;Aplicações Financeiras Avaliadas a Valor Justo através do Resultado;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.01;Aplicações Financeiras Avaliadas a Valor Justo através do Resultado;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.01.01;Títulos Designados a Valor Justo;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.01.01;Títulos Designados a Valor Justo;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.02;Aplicações Financeiras Avaliadas a Valor Justo através de Outros Resultados Abrangentes;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.02;Aplicações Financeiras Avaliadas a Valor Justo através de Outros Resultados Abrangentes;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.03;Aplicações Financeiras Avaliadas ao Custo Amortizado;17438.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.03;Aplicações Financeiras Avaliadas ao Custo Amortizado;15026.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.04;Contas a Receber;754687.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.04;Contas a Receber;443286.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.04.01;Clientes;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.04.01;Clientes;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.04.02;Outras Contas a Receber;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.04.02;Outras Contas a Receber;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.05;Estoques;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.05;Estoques;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.06;Ativos Biológicos;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.06;Ativos Biológicos;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.07;Tributos Diferidos;776733.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.07;Tributos Diferidos;838338.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.07.01;Imposto de Renda e Contribuição Social Diferidos;776733.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.07.01;Imposto de Renda e Contribuição Social Diferidos;838338.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.08;Despesas Antecipadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.08;Despesas Antecipadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.09;Créditos com Partes Relacionadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.09;Créditos com Partes Relacionadas;309767.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.09.01;Créditos com Coligadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.09.01;Créditos com Coligadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.09.03;Créditos com Controladores;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.09.03;Créditos com Controladores;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.09.04;Créditos com Outras Partes Relacionadas;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.09.04;Créditos com Outras Partes Relacionadas;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10;Outros Ativos Não Circulantes;1705436.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10;Outros Ativos Não Circulantes;541424.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.01;Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.01;Ativos Não-Correntes a Venda;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.02;Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.02;Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.03;Adiantamentos;1680.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.03;Adiantamentos;0.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.04;Tributos a Recuperar;130428.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.04;Tributos a Recuperar;137126.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.05;Depositos Judiciais;95671.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.05;Depositos Judiciais;74055.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.06;Garantia para Provisões Previdenciárias, Trabalhistas e Cíveis;1130019.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.06;Garantia para Provisões Previdenciárias, Trabalhistas e Cíveis;166872.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.07;Demais Contas a Receber;97107.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.07;Demais Contas a Receber;92042.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.01.10.08;Contas a receber pela venda de controladas;250531.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.01.10.08;Contas a receber pela venda de controladas;71329.0000000000;N
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.02;Investimentos;8213.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.02;Investimentos;1453.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.02.01;Participações Societárias;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.02.01;Participações Societárias;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.02.01.01;Participações em Coligadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.02.01.01;Participações em Coligadas;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.02.01.04;Participações em Controladas em Conjunto;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.02.01.04;Participações em Controladas em Conjunto;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.02.01.05;Outros Investimentos;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.02.01.05;Outros Investimentos;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.02.02;Propriedades para Investimento;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.02.02;Propriedades para Investimento;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.03;Imobilizado;5855264.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.03;Imobilizado;4344174.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.03.01;Imobilizado em Operação;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.03.01;Imobilizado em Operação;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.03.02;Direito de Uso em Arrendamento;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.03.02;Direito de Uso em Arrendamento;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.03.03;Imobilizado em Andamento;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.03.03;Imobilizado em Andamento;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.04;Intangível;20522225.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.04;Intangível;15018301.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.04.01;Intangíveis;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.04.01;Intangíveis;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.04.01.01;Contrato de Concessão;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.04.01.01;Contrato de Concessão;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;PENÚLTIMO;2019-12-31;1.02.04.02;Goodwill;0.0000000000;S
+02.800.026/0001-40;2020-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Balanço Patrimonial Ativo;REAL;MIL;ÚLTIMO;2020-12-31;1.02.04.02;Goodwill;0.0000000000;S

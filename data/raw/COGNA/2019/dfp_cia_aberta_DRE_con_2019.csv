@@ -1,0 +1,65 @@
+CNPJ_CIA;DT_REFER;VERSAO;DENOM_CIA;CD_CVM;GRUPO_DFP;MOEDA;ESCALA_MOEDA;ORDEM_EXERC;DT_INI_EXERC;DT_FIM_EXERC;CD_CONTA;DS_CONTA;VL_CONTA;ST_CONTA_FIXA
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.01;Receita de Venda de Bens e/ou Serviços;6060708.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.01;Receita de Venda de Bens e/ou Serviços;7027194.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.02;Custo dos Bens e/ou Serviços Vendidos;-2268804.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.02;Custo dos Bens e/ou Serviços Vendidos;-2809622.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.03;Resultado Bruto;3791904.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.03;Resultado Bruto;4217572.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04;Despesas/Receitas Operacionais;-2547006.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04;Despesas/Receitas Operacionais;-3200633.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.01;Despesas com Vendas;-1502580.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.01;Despesas com Vendas;-1536991.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.02;Despesas Gerais e Administrativas;-1051990.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.02;Despesas Gerais e Administrativas;-1702760.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.03;Perdas pela Não Recuperabilidade de Ativos;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.03;Perdas pela Não Recuperabilidade de Ativos;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.04;Outras Receitas Operacionais;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.04;Outras Receitas Operacionais;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.05;Outras Despesas Operacionais;9591.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.05;Outras Despesas Operacionais;39275.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.05.01;Outras receitas (despesas) operacionais;9591.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.05.01;Outras receitas (despesas) operacionais;39275.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.05.02;Resultado na venda de controladas;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.05.02;Resultado na venda de controladas;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.04.06;Resultado de Equivalência Patrimonial;-2027.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.04.06;Resultado de Equivalência Patrimonial;-157.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.05;Resultado Antes do Resultado Financeiro e dos Tributos;1244898.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.05;Resultado Antes do Resultado Financeiro e dos Tributos;1016939.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.06;Resultado Financeiro;134491.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.06;Resultado Financeiro;-833153.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.06.01;Receitas Financeiras;430924.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.06.01;Receitas Financeiras;346517.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.06.02;Despesas Financeiras;-296433.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.06.02;Despesas Financeiras;-1179670.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.07;Resultado Antes dos Tributos sobre o Lucro;1379389.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.07;Resultado Antes dos Tributos sobre o Lucro;183786.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.08;Imposto de Renda e Contribuição Social sobre o Lucro;13467.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.08;Imposto de Renda e Contribuição Social sobre o Lucro;58802.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.08.01;Corrente;-122422.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.08.01;Corrente;-90504.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.08.02;Diferido;135889.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.08.02;Diferido;149306.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.09;Resultado Líquido das Operações Continuadas;1392856.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.09;Resultado Líquido das Operações Continuadas;242588.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.10;Resultado Líquido de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.10;Resultado Líquido de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.10.01;Lucro/Prejuízo Líquido das Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.10.01;Lucro/Prejuízo Líquido das Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.10.02;Ganhos/Perdas Líquidas sobre Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.10.02;Ganhos/Perdas Líquidas sobre Ativos de Operações Descontinuadas;0.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.11;Lucro/Prejuízo Consolidado do Período;1392856.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.11;Lucro/Prejuízo Consolidado do Período;242588.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.11.01;Atribuído a Sócios da Empresa Controladora;1403747.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.11.01;Atribuído a Sócios da Empresa Controladora;235244.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.11.02;Atribuído a Sócios Não Controladores;-10891.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.11.02;Atribuído a Sócios Não Controladores;7344.0000000000;S
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.99;Lucro por Ação - (Reais / Ação);0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.99;Lucro por Ação - (Reais / Ação);0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.99.01;Lucro Básico por Ação;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.99.01;Lucro Básico por Ação;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.99.01.01;ON;1.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.99.01.01;ON;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.99.02;Lucro Diluído por Ação;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.99.02;Lucro Diluído por Ação;0.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;PENÚLTIMO;2018-01-01;2018-12-31;3.99.02.01;ON;1.0000000000;N
+02.800.026/0001-40;2019-12-31;1;COGNA EDUCAÇÃO S.A.;017973;DF Consolidado - Demonstração do Resultado;REAL;MIL;ÚLTIMO;2019-01-01;2019-12-31;3.99.02.01;ON;0.0000000000;N

@@ -3,51 +3,81 @@ import re
 
 
 def consolidate_to_annual(df_long):
+    """
+    Consolida df no formato long (period, category, value) em DataFrame anual.
+
+    Regras:
+    - Se existirem dados anuais (ex: "2022"), usa eles diretamente
+    - Se só existirem trimestrais (ex: "1T22"), soma os 4 trimestres
+    - Nunca mistura os dois — evita dupla contagem
+    """
+
+    if df_long.empty:
+        return pd.DataFrame()
+
+    # ✅ CORREÇÃO BUG: sem verificação de colunas → KeyError se viesse df sem "category"
+    required_cols = {"period", "category", "value"}
+    missing = required_cols - set(df_long.columns)
+    if missing:
+        raise ValueError(f"Colunas obrigatórias ausentes em df_long: {missing}")
 
     df = df_long.copy()
-
-    # ---------------------------------------------------------
-    # 1) REMOVER NÃO CLASSIFICADOS
-    # ---------------------------------------------------------
-
     df = df[df["category"].notna()]
 
-    # ---------------------------------------------------------
-    # 2) EXTRAIR ANO
-    # ---------------------------------------------------------
+    if df.empty:
+        return pd.DataFrame()
 
-    def extract_year(period):
+    df["period"] = df["period"].astype(str).str.strip()
 
-        period = str(period)
+    # Separar anuais vs trimestrais
+    mask_annual    = df["period"].str.match(r"^20\d{2}$", na=False)
+    mask_quarterly = df["period"].str.match(r"^[1-4][QT]\d{2}$", na=False)
 
-        match_year = re.search(r"(20\d{2})", period)
+    has_annual    = mask_annual.any()
+    has_quarterly = mask_quarterly.any()
 
-        if match_year:
-            return int(match_year.group(1))
+    if has_annual:
+        # ✅ CORREÇÃO BUG CRÍTICO: se existem dados anuais E trimestrais,
+        # o código original somava AMBOS → dupla contagem de todos os valores
+        # Ex: receita 2022 aparecia duplicada (dado anual + soma dos 4 trimestres)
+        if has_quarterly:
+            print("[WARN] Dados anuais e trimestrais encontrados — usando apenas anuais.")
+        df_use = df[mask_annual].copy()
+        df_use["year"] = df_use["period"].astype(int)
 
-        return None
+    elif has_quarterly:
+        df_use = df[mask_quarterly].copy()
 
-    df["year"] = df["period"].apply(extract_year)
+        def quarter_to_year(period):
+            match = re.search(r"(\d{2})$", period)
+            return 2000 + int(match.group(1)) if match else None
 
-    df = df[df["year"].notna()]
-    df["year"] = df["year"].astype(int)
+        df_use["year"] = df_use["period"].apply(quarter_to_year)
+        df_use = df_use[df_use["year"].notna()]
+        df_use["year"] = df_use["year"].astype(int)
 
-    # ---------------------------------------------------------
-    # 3) CONSOLIDAR
-    # ---------------------------------------------------------
+    else:
+        # Fallback: qualquer formato com 4 dígitos de ano
+        def extract_year(period):
+            match = re.search(r"(20\d{2})", str(period))
+            return int(match.group(1)) if match else None
+
+        df_use = df.copy()
+        df_use["year"] = df_use["period"].apply(extract_year)
+        df_use = df_use[df_use["year"].notna()]
+        df_use["year"] = df_use["year"].astype(int)
+
+    if df_use.empty:
+        return pd.DataFrame()
 
     annual = (
-        df.groupby(["year", "category"])["value"]
+        df_use.groupby(["year", "category"])["value"]
         .sum()
         .unstack()
+        .sort_index()
     )
 
-    annual = annual.sort_index()
-
-    # ---------------------------------------------------------
-    # 4) REMOVER ANOS COMPLETAMENTE ZERADOS
-    # ---------------------------------------------------------
-
+    # Remove anos completamente zerados
     annual = annual.loc[(annual != 0).any(axis=1)]
 
     return annual
