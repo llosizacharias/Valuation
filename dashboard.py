@@ -96,14 +96,25 @@ def load_auth_config():
 
 config = load_auth_config()
 
-authenticator = stauth.Authenticate(
-    config["credentials"],
-    config["cookie"]["name"],
-    config["cookie"]["key"],
-    config["cookie"]["expiry_days"],
-)
-
-name, auth_status, username = authenticator.login(location="main")
+# Compatível com streamlit-authenticator 0.2.x e 0.3.x
+try:
+    authenticator = stauth.Authenticate(
+        config["credentials"],
+        config["cookie"]["name"],
+        config["cookie"]["key"],
+        config["cookie"]["expiry_days"],
+    )
+    login_result = authenticator.login(location="main")
+    if isinstance(login_result, tuple):
+        name, auth_status, username = login_result
+    else:
+        name         = st.session_state.get("name")
+        auth_status  = st.session_state.get("authentication_status")
+        username     = st.session_state.get("username")
+except Exception as e:
+    st.error(f"Erro de autenticação: {e}")
+    st.info("Tente: pip install streamlit-authenticator==0.2.3")
+    st.stop()
 
 if auth_status is False:
     st.error("❌ Usuário ou senha incorretos.")

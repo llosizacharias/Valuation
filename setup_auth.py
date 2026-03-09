@@ -24,8 +24,15 @@ USUARIOS = [
 # ─────────────────────────────────────────────────────────────
 # Gera hashes bcrypt
 # ─────────────────────────────────────────────────────────────
-senhas_plain  = [u["password"] for u in USUARIOS]
-senhas_hashed = stauth.Hasher(senhas_plain).generate()
+# Compatível com streamlit-authenticator 0.2.x e 0.3.x
+try:
+    # 0.3.x+: Hasher não recebe lista no __init__
+    from streamlit_authenticator.utilities.hasher import Hasher
+    senhas_hashed = [Hasher.hash(u["password"]) for u in USUARIOS]
+except Exception:
+    # 0.2.x fallback
+    senhas_plain  = [u["password"] for u in USUARIOS]
+    senhas_hashed = stauth.Hasher(senhas_plain).generate()
 
 credentials = {
     "usernames": {
