@@ -334,11 +334,57 @@ if __name__ == "__main__":
             print(f"❌ Erro fatal em {nome}: {e}")
             import traceback; traceback.print_exc()
 
-    # ── Salva JSON consolidado ────────────────────────────
+    # ── Salva JSON consolidado (com dados extras para dashboard) ──
     out = {}
     for nome, r in results.items():
-        out[nome] = {k: (float(v) if hasattr(v, "__float__") else v)
-                     for k, v in r.items() if not callable(v)}
+        entry = {k: (float(v) if hasattr(v, "__float__") else v)
+                 for k, v in r.items() if not callable(v)}
+
+        # Adiciona série FCFF e dados DCF para o dashboard
+        cfg = get_company(nome)
+        entry["terminal_growth"]       = cfg.get("terminal_growth", 0.035)
+        entry["cost_of_debt"]          = cfg.get("cost_of_debt", 0.12)
+        entry["shares_out"]            = cfg["shares_out"]
+        entry["last_historical_year"]  = 2024
+
+        # FCFF série completa (histórico + projeção)
+        try:
+            combined = r.get("combined_df") if hasattr(r.get("combined_df"), "to_dict") else None
+            if combined is not None and "FCFF" in combined.columns:
+                entry["fcff_series"] = {
+                    str(int(yr)): float(val)
+                    for yr, val in combined["FCFF"].dropna().items()
+                }
+                # Último FCFF projetado (para sensibilidade)
+                proj_fcff = {yr: v for yr, v in entry["fcff_series"].items()
+                             if int(yr) > 2024}
+                if proj_fcff:
+                    entry["fcff_last_proj"] = list(proj_fcff.values())[-1]
+        except Exception:
+            pass
+
+        # DCF detalhado
+        try:
+            dcf = r.get("dcf_results", {})
+            entry["dcf_pv_fcf"]     = float(dcf.get("pv_fcf", 0))
+            entry["dcf_pv_terminal"] = float(dcf.get("pv_terminal", 0))
+        except Exception:
+            pass
+
+        out[nome] = entry
+
+    # Remove objetos não serializáveis (DataFrames etc.)
+    def _clean(obj):
+        if isinstance(obj, dict):
+            return {k: _clean(v) for k, v in obj.items()
+                    if not hasattr(v, "to_dict") and not hasattr(v, "iloc")}
+        if hasattr(obj, "__float__"):
+            return float(obj)
+        if hasattr(obj, "__int__"):
+            return int(obj)
+        return obj
+
+    out = _clean(out)
 
     with open("valuation_results.json", "w") as f:
         json.dump(out, f, indent=2, default=str)
