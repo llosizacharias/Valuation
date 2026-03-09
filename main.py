@@ -7,7 +7,7 @@ Uso:
   python main.py WEG COGNA          # roda lista específica
 """
 
-import sys
+import sys`nimport pandas as pd
 import json
 from pathlib import Path
 
@@ -139,7 +139,7 @@ def run_company(nome: str) -> dict | None:
         last = hist.iloc[-1]
         ebit_last = float(last.get("EBIT", 0))
         equity    = float(last.get("EQUITY", 1)) or 1
-        inv_cap   = float(last.get("TOTAL_ASSETS", 1)) - float(last.get("TOTAL_LIABILITIES", 0))
+        inv_cap   = (float(last.get("DEBT_SHORT", 0)) + float(last.get("DEBT_LONG", 0)) + float(last.get("EQUITY", 1))) or 1
         roic      = ebit_last * (1 - 0.34) / (inv_cap or 1)
         roe       = (float(hist["NET_INCOME"].iloc[-1]) / equity) if "NET_INCOME" in hist.columns else None
         rev_last  = float(hist["REVENUE"].iloc[-1])
