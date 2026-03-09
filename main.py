@@ -1,378 +1,309 @@
 """
-main.py
-────────
-Pipeline de valuation multi-empresa.
+main.py — ponto de entrada do sistema de valuation.
 
 Uso:
-  python main.py              → roda todas as empresas em COMPANIES
-  python main.py WEG          → roda só WEG
-  python main.py WEG COGNA    → roda WEG e COGNA
-
-Os resultados são salvos em:
-  valuation_output_{EMPRESA}.xlsx
-  valuation_results.json        ← todos os resultados consolidados (para o dashboard)
+  python main.py                    # roda todas as empresas
+  python main.py COGNA              # roda só COGNA
+  python main.py WEG COGNA          # roda lista específica
 """
 
 import sys
-import os
 import json
-import numpy as np
-import pandas as pd
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pathlib import Path
 
-from companies_config import get_company, list_companies
-from data_layer.providers.mz_api_provider import MZAPIProvider
-from data_layer.download.pdf_downloader import PDFDownloader
-from data_layer.storage.document_repository import DocumentRepository
+from companies_config import COMPANIES, get_company
 from app.deterministic_runner import run_deterministic_valuation
 
-import yfinance as yf
 
-IPCA_LONG_TERM = 0.04
+# ─────────────────────────────────────────────────────────────
+# HELPERS
+# ─────────────────────────────────────────────────────────────
+
+def _fmt_bi(v):
+    try:
+        return f"R$ {float(v)/1e9:.1f} bi"
+    except Exception:
+        return str(v)
+
+def _fmt_pct(v):
+    try:
+        return f"{float(v)*100:.1f}%"
+    except Exception:
+        return str(v)
+
+def _fmt_price(v):
+    try:
+        return f"R$ {float(v):.2f} / ação"
+    except Exception:
+        return str(v)
 
 
 # ─────────────────────────────────────────────────────────────
-# KPI HELPERS
+# RUNNER POR EMPRESA
 # ─────────────────────────────────────────────────────────────
 
-def calc_roic(historical_df, tax_rate):
-    try:
-        ebit   = historical_df["EBIT"].iloc[-1]
-        nopat  = ebit * (1 - tax_rate)
-        equity = historical_df.get("EQUITY",     pd.Series([0])).iloc[-1]
-        debt   = (historical_df.get("DEBT_SHORT", pd.Series([0])).iloc[-1] +
-                  historical_df.get("DEBT_LONG",  pd.Series([0])).iloc[-1])
-        cash   = historical_df.get("CASH",        pd.Series([0])).iloc[-1]
-        ic     = equity + debt - cash
-        return nopat / ic if ic > 0 else None
-    except Exception:
-        return None
+def run_company(nome: str) -> dict | None:
+    cfg = get_company(nome)
 
+    ticker        = cfg["ticker"]
+    cvm_code      = cfg["cvm_code"]
+    shares_out    = cfg["shares_out"]
+    term_growth   = cfg.get("terminal_growth", 0.035)
+    cost_of_debt  = cfg.get("cost_of_debt",    0.12)
 
-def calc_roe(historical_df):
-    try:
-        ni  = historical_df.get("NET_INCOME", pd.Series([0])).iloc[-1]
-        eq  = historical_df.get("EQUITY",     pd.Series([0])).iloc[-1]
-        return ni / eq if eq > 0 else None
-    except Exception:
-        return None
+    # ── Overrides forward-looking (opcionais) ──────────────
+    rev_override   = cfg.get("revenue_growth_override")
+    ebit_override  = cfg.get("ebit_margin_override")
 
+    dfp_folder = str(Path("data/raw") / nome)
 
-def calc_ev_ebitda(ev, historical_df):
-    try:
-        ebit = historical_df["EBIT"].iloc[-1]
-        dep  = historical_df.get("DEPRECIATION", pd.Series([0])).iloc[-1]
-        return ev / (ebit + dep) if (ebit + dep) > 0 else None
-    except Exception:
-        return None
-
-
-def calc_ev_ebit(ev, historical_df):
-    try:
-        ebit = historical_df["EBIT"].iloc[-1]
-        return ev / ebit if ebit > 0 else None
-    except Exception:
-        return None
-
-
-def calc_pe(eq_value, historical_df):
-    try:
-        ni = historical_df.get("NET_INCOME", pd.Series([0])).iloc[-1]
-        return eq_value / ni if ni > 0 else None
-    except Exception:
-        return None
-
-
-def calc_cagr(series):
-    try:
-        s = series.dropna()
-        if len(s) < 2:
-            return None
-        years = s.index[-1] - s.index[0]
-        return (s.iloc[-1] / s.iloc[0]) ** (1 / years) - 1
-    except Exception:
-        return None
-
-
-def _calc_irr(cash_flows):
-    """TIR via Newton-Raphson puro (sem scipy)."""
-    if not cash_flows or len(cash_flows) < 2:
-        return None
-    cf   = [float(c) for c in cash_flows]
-    rate = 0.10
-    for _ in range(1000):
-        npv  = sum(c / (1 + rate) ** t for t, c in enumerate(cf))
-        dnpv = sum(-t * c / (1 + rate) ** (t + 1) for t, c in enumerate(cf))
-        if abs(dnpv) < 1e-12:
-            break
-        new_rate = rate - npv / dnpv
-        if abs(new_rate - rate) < 1e-8:
-            rate = new_rate
-            break
-        rate = new_rate
-    npv_check = sum(c / (1 + rate) ** t for t, c in enumerate(cf))
-    if abs(npv_check) > abs(cf[0]) * 0.01 or rate < -0.99 or rate > 100:
-        return None
-    return rate
-
-
-def recommendation(upside_pct):
-    if upside_pct >= 0.20:  return "🟢 COMPRA FORTE"
-    if upside_pct >= 0.05:  return "🟡 COMPRA"
-    if upside_pct >= -0.05: return "⚪ NEUTRO"
-    if upside_pct >= -0.20: return "🟠 VENDA"
-    return "🔴 VENDA FORTE"
-
-
-# ─────────────────────────────────────────────────────────────
-# PIPELINE POR EMPRESA
-# ─────────────────────────────────────────────────────────────
-
-def run_company(empresa_key: str) -> dict:
-    cfg = get_company(empresa_key)
-
-    CVM_CODE      = cfg.get("cvm_code")
-    TICKER        = cfg["ticker"]
-    NOME          = cfg["nome"]
-    COMPANY_ID_MZ = cfg["company_id_mz"]
-    RI_URL        = cfg["ri_url"]
-    SHARES_OUT    = cfg["shares_out"]
-    COST_OF_DEBT  = cfg["cost_of_debt"]
-    TERM_GROWTH   = cfg["terminal_growth"]
-    FORECAST_YRS  = cfg["forecast_years"]
-    TAX_RATE      = cfg["tax_rate"]
-    MIN_YEAR      = cfg["min_year"]
-    DFP_FOLDER    = f"data/raw/{empresa_key}"
-
-    sep  = "=" * 60
-    sep2 = "─" * 60
-
+    sep = "=" * 60
     print(f"\n{sep}")
-    print(f"  🏢 {NOME} ({TICKER})")
+    print(f"  🏢 {ticker}")
     print(sep)
 
-    # ── 1) Documentos MZ ────────────────────────────────────
-    print("\n[1/4] Buscando documentos MZ...")
-    provider   = MZAPIProvider(empresa=empresa_key, company_id=COMPANY_ID_MZ, referer_url=RI_URL)
-    documentos = provider.get_all_available_documents(min_year=MIN_YEAR)
+    # ── MZ API (tenta mas não bloqueia) ───────────────────
+    try:
+        from data_layer.download.mz_downloader import MZDownloader
+        company_id = cfg.get("company_id_mz")
+        if company_id:
+            print(f"\n[1/4] Buscando documentos MZ...")
+            dl = MZDownloader(company_id, nome)
+            dl.download_all(base_folder="data/raw")
+    except Exception as e:
+        print(f"[1/4] MZ indisponível — {e}")
 
-    # ── 2) Banco ─────────────────────────────────────────────
-    repo = DocumentRepository()
-    company_db_id = repo.get_or_create_company(
-        ticker=TICKER, nome=NOME, ri_url=RI_URL,
-        provider="mz_api", company_id_mz=COMPANY_ID_MZ,
-    )
-    if documentos:
-        print(f"  {len(documentos)} documentos encontrados.")
-        repo.save_documents(company_db_id, documentos)
-    repo.close()
-
-    # ── 3) Download ──────────────────────────────────────────
-    arquivos = []
-
-    if documentos:
-        print("[3/4] Baixando arquivos via MZ...")
-        downloader = PDFDownloader(base_folder="data/raw")
-        arquivos   = downloader.download_batch(documentos)
-
-    # Fallback: CVM Dados Abertos (público, sem autenticação)
-    if not arquivos:
-        print("[3/4] MZ indisponível — baixando DFPs direto da CVM...")
+    # ── CVM Downloader ────────────────────────────────────
+    print(f"\n[3/4] MZ indisponível — baixando DFPs direto da CVM...")
+    print(f"  Código CVM: {cvm_code} | Fonte: dados.cvm.gov.br")
+    try:
         from data_layer.download.cvm_downloader import CVMDownloader
-        cvm_dl   = CVMDownloader(base_folder="data/raw")
-        arquivos = cvm_dl.download_dfps_empresa(
-            ticker=TICKER,
-            empresa=empresa_key,
-            min_year=MIN_YEAR,
-            cvm_code=CVM_CODE,
-        )
+        dl_cvm = CVMDownloader(cvm_code=cvm_code, empresa=nome)
+        dl_cvm.download_all(years=list(range(2019, 2026)))
+    except Exception as e:
+        print(f"  [WARN] CVM Downloader: {e}")
 
-    if not arquivos:
-        # Último recurso: verifica se já existem DFPs baixados anteriormente
-        from glob import glob
-        existing = glob(f"{DFP_FOLDER}/**/*.pdf", recursive=True)
-        if existing:
-            print(f"  Usando {len(existing)} DFPs já existentes em {DFP_FOLDER}")
-            arquivos = existing
-        else:
-            raise RuntimeError(
-                f"Nenhum arquivo disponível para {empresa_key}.\n"
-                f"Opções manuais:\n"
-                f"  1. Baixe os DFPs em {DFP_FOLDER}/{{ano}}/4T_DFP.pdf\n"
-                f"  2. Acesse: https://www.rad.cvm.gov.br"
-            )
-
-    # ── 4) Valuation ─────────────────────────────────────────
-    print("[4/4] Calculando valuation...")
-    resultado = run_deterministic_valuation(
-        dfp_folder=DFP_FOLDER,
-        empresa=empresa_key,
-        cvm_code=CVM_CODE,
-        ticker=TICKER,
-        cost_of_debt=COST_OF_DEBT,
-        terminal_growth=TERM_GROWTH,
-        forecast_years=FORECAST_YRS,
-        tax_rate=TAX_RATE,
-    )
-
-    # ── Extração ─────────────────────────────────────────────
-    wacc_data  = resultado["wacc_data"]
-    historical = resultado["historical_df"]
-    combined   = resultado["combined_df"]
-    dcf        = resultado["dcf_results"]
-    ev         = resultado["enterprise_value"]
-    net_debt   = resultado["net_debt"]
-    eq_value   = resultado["equity_value"]
-    fcff_s     = combined["FCFF"]
-    wacc       = wacc_data["wacc"]
-    market_cap = wacc_data.get("market_cap")
-
-    # ── Preço atual ───────────────────────────────────────────
+    # ── Valuation ─────────────────────────────────────────
+    print(f"\n[4/4] Calculando valuation...")
     try:
-        info          = yf.Ticker(TICKER).info
-        current_price = info.get("currentPrice") or info.get("regularMarketPrice")
+        result = run_deterministic_valuation(
+            dfp_folder=dfp_folder,
+            empresa=nome,
+            cvm_code=cvm_code,
+            ticker=ticker,
+            cost_of_debt=cost_of_debt,
+            terminal_growth=term_growth,
+            revenue_growth_override=rev_override,
+            ebit_margin_override=ebit_override,
+        )
+    except Exception as e:
+        print(f"❌ Erro em {nome}: {e}")
+        import traceback; traceback.print_exc()
+        return None
+
+    ev           = result["enterprise_value"]
+    equity_value = result["equity_value"]
+    net_debt     = result["net_debt"]
+    wacc_data    = result["wacc_data"]
+    multiples    = result["multiples"]
+    hist         = result["historical_df"]
+    proj         = result["projection"]
+    combined     = result["combined_df"]
+
+    # ── Preço justo ───────────────────────────────────────
+    try:
+        import yfinance as yf
+        price_now = yf.Ticker(ticker).info.get("currentPrice") or \
+                    yf.Ticker(ticker).info.get("regularMarketPrice", 0)
     except Exception:
-        current_price = None
+        price_now = 0
 
-    price_dcf = eq_value / SHARES_OUT if SHARES_OUT else None
-    upside    = (price_dcf / current_price - 1) if (price_dcf and current_price) else None
+    market_cap    = wacc_data.get("market_cap") or 0
+    price_fair    = equity_value / shares_out if shares_out else 0
+    upside        = (price_fair / price_now - 1) if price_now else None
 
-    # ── KPIs ──────────────────────────────────────────────────
-    roic      = calc_roic(historical, TAX_RATE)
-    roe       = calc_roe(historical)
-    ev_ebitda = calc_ev_ebitda(ev, historical)
-    ev_ebit   = calc_ev_ebit(ev, historical)
-    pe        = calc_pe(eq_value, historical)
-    rev_cagr  = calc_cagr(historical["REVENUE"])
-    ebit_cagr = calc_cagr(historical["EBIT"])
-    rev_last  = historical["REVENUE"].iloc[-1]
-    ebit_last = historical["EBIT"].iloc[-1]
-    ni_last   = historical.get("NET_INCOME", pd.Series([0])).iloc[-1]
-    fcff_last = fcff_s[fcff_s.index <= 2024].iloc[-1] if not fcff_s.empty else None
-    fcff_yld  = fcff_last / market_cap if (fcff_last and market_cap) else None
-    real_ret  = (1 + wacc) / (1 + IPCA_LONG_TERM) - 1
-
-    # TIR
-    proj_fcff = fcff_s[fcff_s.index > 2024]
-    irr = None
-    if market_cap and len(proj_fcff) >= 3:
-        irr = _calc_irr([-market_cap] + list(proj_fcff.values))
-
-    rec = recommendation(upside or 0)
-
-    # ── Salva Excel ───────────────────────────────────────────
-    output_file = f"valuation_output_{empresa_key}.xlsx"
-    with pd.ExcelWriter(output_file) as writer:
-        historical.to_excel(writer, sheet_name="historical")
-        resultado["projection"].to_excel(writer, sheet_name="projection")
-        combined.to_excel(writer, sheet_name="valuation")
-    print(f"  Salvo: {output_file}")
-
-    # ── Dashboard Terminal ────────────────────────────────────
-    print(f"\n{sep}")
-    print(f"  📊 VALUATION — {NOME} ({TICKER})")
-    print(sep)
-
-    print(f"\n  💰 PREÇO & UPSIDE")
-    print(sep2)
-    if current_price: print(f"  Preço de Tela        : R$ {current_price:>10.2f} / ação")
-    if price_dcf:     print(f"  Preço Justo (DCF)    : R$ {price_dcf:>10.2f} / ação")
     if upside is not None:
-        arrow = "▲" if upside > 0 else "▼"
-        label = "(subavaliada)" if upside > 0 else "(sobreavaliada)"
-        print(f"  Upside / Downside    :  {arrow} {abs(upside):.1%}  {label}")
-    if market_cap: print(f"  Market Cap (mercado) : R$ {market_cap/1e9:>8.1f} bi")
-    print(      f"  Equity Value (DCF)   : R$ {eq_value/1e9:>8.1f} bi")
+        if upside > 0.15:
+            rec = "🟢 COMPRA"
+        elif upside > -0.15:
+            rec = "🟡 NEUTRO"
+        elif upside > -0.30:
+            rec = "🟠 VENDA"
+        else:
+            rec = "🔴 VENDA FORTE"
+    else:
+        rec = "⚪ S/D"
 
-    print(f"\n  💡 RECOMENDAÇÃO")
-    print(sep2)
-    print(f"  {rec}")
-    if irr:
-        spread = irr - wacc
-        print(f"  TIR implícita : {irr:.1%}  |  Spread TIR−WACC: {spread:+.1%}")
-        print(f"  Equivalente   : IPCA + {(irr - IPCA_LONG_TERM)*100:.1f}% a.a.")
+    # ── ROIC / ROE ────────────────────────────────────────
+    try:
+        last = hist.iloc[-1]
+        ebit_last = float(last.get("EBIT", 0))
+        equity    = float(last.get("EQUITY", 1)) or 1
+        inv_cap   = float(last.get("TOTAL_ASSETS", 1)) - float(last.get("TOTAL_LIABILITIES", 0))
+        roic      = ebit_last * (1 - 0.34) / (inv_cap or 1)
+        roe       = (float(hist["NET_INCOME"].iloc[-1]) / equity) if "NET_INCOME" in hist.columns else None
+        rev_last  = float(hist["REVENUE"].iloc[-1])
+        margin_ebit = ebit_last / rev_last if rev_last else None
+        net_inc   = float(hist["NET_INCOME"].iloc[-1]) if "NET_INCOME" in hist.columns else 0
+        margin_net  = net_inc / rev_last if rev_last else None
+    except Exception:
+        roic = roe = margin_ebit = margin_net = None
 
-    print(f"\n  📈 VALUATION DCF")
-    print(sep2)
-    print(f"  PV FCFs Explícitos   : R$ {dcf['pv_fcf']/1e9:>8.1f} bi")
-    print(f"  Valor Terminal (PV)  : R$ {dcf['pv_terminal']/1e9:>8.1f} bi")
-    print(f"  Enterprise Value     : R$ {ev/1e9:>8.1f} bi")
-    print(f"  (−) Dívida Líquida   : R$ {net_debt/1e9:>8.1f} bi")
-    print(f"  Equity Value         : R$ {eq_value/1e9:>8.1f} bi")
-    print(f"  % Valor Terminal/EV  :    {dcf['pv_terminal']/ev:.0%}")
+    # ── CAGR Receita / EBIT ───────────────────────────────
+    try:
+        rev_series  = hist["REVENUE"].dropna()
+        ebit_series = hist["EBIT"].dropna()
+        n = len(rev_series) - 1
+        cagr_rev  = (rev_series.iloc[-1]  / rev_series.iloc[0])  ** (1/n) - 1 if n > 0 else None
+        cagr_ebit = (ebit_series.iloc[-1] / ebit_series.iloc[0]) ** (1/n) - 1 \
+                    if n > 0 and ebit_series.iloc[0] > 0 else None
+    except Exception:
+        cagr_rev = cagr_ebit = None
 
-    print(f"\n  ⚙️  WACC")
-    print(sep2)
-    print(f"  Beta                 : {wacc_data['beta']:.2f}")
-    print(f"  Rf (nominal)         : {wacc_data['risk_free_nominal']*100:.2f}%")
-    print(f"  ERP (Damodaran)      : {wacc_data['equity_risk_premium']*100:.2f}%")
-    print(f"  Ke (custo equity)    : {wacc_data['cost_of_equity']*100:.2f}%")
-    print(f"  Kd líq. IR           : {wacc_data['after_tax_cost_of_debt']*100:.2f}%")
-    print(f"  Peso Equity          : {wacc_data.get('equity_weight',0)*100:.1f}%")
-    print(f"  Peso Dívida          : {wacc_data.get('debt_weight',0)*100:.1f}%")
-    print(f"  WACC                 : {wacc*100:.2f}%")
-    print(f"  Retorno Real         : IPCA + {real_ret*100:.1f}% a.a.")
+    # ── WACC ──────────────────────────────────────────────
+    beta   = wacc_data.get("beta", 0)
+    rf_nom = wacc_data.get("risk_free_nominal", 0)
+    erp    = wacc_data.get("equity_risk_premium", 0)
+    ke     = wacc_data.get("cost_of_equity", 0)
+    kd     = wacc_data.get("after_tax_cost_of_debt", 0)
+    eq_w   = wacc_data.get("equity_weight", 0)
+    dbt_w  = wacc_data.get("debt_weight", 0)
+    wacc   = wacc_data.get("wacc", 0)
+    rr     = wacc_data.get("real_return") or (1 + wacc) / 1.04 - 1
 
-    print(f"\n  📉 MÚLTIPLOS")
-    print(sep2)
-    if ev_ebitda:  print(f"  EV/EBITDA            : {ev_ebitda:.1f}x")
-    if ev_ebit:    print(f"  EV/EBIT              : {ev_ebit:.1f}x")
-    if pe:         print(f"  P/E                  : {pe:.1f}x")
-    rev_mult = ev / rev_last if rev_last else None
-    if rev_mult:   print(f"  EV/Receita           : {rev_mult:.2f}x")
-    if fcff_yld:   print(f"  FCF Yield            : {fcff_yld:.2%}")
+    # ── FCF Yield ─────────────────────────────────────────
+    try:
+        fcff_last  = float(combined.loc[combined.index == combined.index.max(), "FCFF"].iloc[0])
+        fcf_yield  = fcff_last / market_cap if market_cap else None
+    except Exception:
+        fcf_yield = None
 
-    print(f"\n  🏭 OPERACIONAL — HISTÓRICO 2024")
-    print(sep2)
-    print(f"  Receita              : R$ {rev_last/1e9:.1f} bi")
-    ebit_mg = ebit_last / rev_last if rev_last else None
-    ni_mg   = ni_last   / rev_last if rev_last else None
-    if ebit_mg:    print(f"  Margem EBIT          : {ebit_mg:.1%}")
-    if ni_mg:      print(f"  Margem Líquida       : {ni_mg:.1%}")
-    if roic:       print(f"  ROIC                 : {roic:.1%}")
-    if roe:        print(f"  ROE                  : {roe:.1%}")
-    if rev_cagr:   print(f"  CAGR Receita (7a)    : {rev_cagr:.1%} a.a.")
-    if ebit_cagr:  print(f"  CAGR EBIT (7a)       : {ebit_cagr:.1%} a.a.")
+    # ── Múltiplos EV ─────────────────────────────────────
+    ev_ebitda = multiples.get("EV/EBITDA")
+    ev_ebit   = multiples.get("EV/EBIT")
+    pe        = multiples.get("P/E")
+    ev_rev    = multiples.get("EV/Revenue")
 
-    print(f"\n  🔮 FCFF PROJETADO")
-    print(sep2)
-    for year, val in fcff_s.items():
-        flag = "  [hist]" if year <= 2024 else "  [proj]"
-        print(f"  {year}: R$ {val/1e9:>6.2f} bi{flag}")
+    # ── Output ───────────────────────────────────────────
+    last_year = hist.index.max()
+    nome_completo = {
+        "WEG":   "WEG S.A.",
+        "COGNA": "Cogna Educação S.A.",
+    }.get(nome, nome)
 
-    print(f"\n  🔮 PREMISSAS")
-    print(sep2)
-    print(f"  Terminal Growth  : {TERM_GROWTH*100:.1f}%")
-    print(f"  Forecast Years   : {FORECAST_YRS}")
-    print(f"  Tax Rate         : {TAX_RATE*100:.0f}%")
-    print(f"  Kd bruto         : {COST_OF_DEBT*100:.1f}%")
-    print(f"  Shares Out       : {SHARES_OUT/1e6:.0f} mi")
-    print(sep)
-    print(f"  {rec}")
-    print(sep)
+    print(f"""
+{sep}
+  📊 VALUATION — {nome_completo} ({ticker})
+{sep}
 
-    # ── Retorna dict para consolidação ────────────────────────
+  💰 PREÇO & UPSIDE
+{'─'*60}
+  Preço de Tela        : {_fmt_price(price_now)}
+  Preço Justo (DCF)    : {_fmt_price(price_fair)}
+  Upside / Downside    :  {'▲' if (upside or 0)>0 else '▼'} {abs(upside*100):.1f}%  ({'subavaliada' if (upside or 0)>0 else 'sobreavaliada'})
+  Market Cap (mercado) : {_fmt_bi(market_cap)}
+  Equity Value (DCF)   : {_fmt_bi(equity_value)}
+
+  💡 RECOMENDAÇÃO
+{'─'*60}
+  {rec}""")
+
+    if rev_override or ebit_override:
+        print(f"""
+  ⚠️  OVERRIDES ATIVOS
+{'─'*60}""")
+        if rev_override:
+            print(f"  Crescimento receita  : {_fmt_pct(rev_override)} (forward override)")
+        if ebit_override:
+            print(f"  Margem EBIT          : {_fmt_pct(ebit_override)} (forward override)")
+
+    print(f"""
+  📈 VALUATION DCF
+{'─'*60}
+  PV FCFs Explícitos   : {_fmt_bi(result['dcf_results'].get('pv_fcf'))}
+  Valor Terminal (PV)  : {_fmt_bi(result['dcf_results'].get('pv_terminal'))}
+  Enterprise Value     : {_fmt_bi(ev)}
+  (−) Dívida Líquida   : {_fmt_bi(net_debt)}
+  Equity Value         : {_fmt_bi(equity_value)}
+  % Valor Terminal/EV  :    {result['dcf_results'].get('pv_terminal',0)/ev*100:.0f}%
+
+  ⚙️  WACC
+{'─'*60}
+  Beta                 : {beta:.2f}
+  Rf (nominal)         : {_fmt_pct(rf_nom)}
+  ERP (Damodaran)      : {_fmt_pct(erp)}
+  Ke (custo equity)    : {_fmt_pct(ke)}
+  Kd líq. IR           : {_fmt_pct(kd)}
+  Peso Equity          : {_fmt_pct(eq_w)}
+  Peso Dívida          : {_fmt_pct(dbt_w)}
+  WACC                 : {_fmt_pct(wacc)}
+  Retorno Real         : IPCA + {_fmt_pct(rr)}
+
+  📉 MÚLTIPLOS
+{'─'*60}
+  EV/EBITDA            : {f'{ev_ebitda:.1f}x' if ev_ebitda else 'n/d'}
+  EV/EBIT              : {f'{ev_ebit:.1f}x' if ev_ebit else 'n/d'}
+  P/E                  : {f'{pe:.1f}x' if pe else 'n/d'}
+  EV/Receita           : {f'{ev_rev:.2f}x' if ev_rev else 'n/d'}
+  FCF Yield            : {_fmt_pct(fcf_yield) if fcf_yield else 'n/d'}
+
+  🏭 OPERACIONAL — HISTÓRICO {last_year}
+{'─'*60}
+  Receita              : {_fmt_bi(hist['REVENUE'].iloc[-1])}
+  Margem EBIT          : {_fmt_pct(margin_ebit) if margin_ebit is not None else 'n/d'}
+  Margem Líquida       : {_fmt_pct(margin_net) if margin_net is not None else 'n/d'}
+  ROIC                 : {_fmt_pct(roic) if roic is not None else 'n/d'}
+  ROE                  : {_fmt_pct(roe) if roe is not None else 'n/d'}
+  CAGR Receita ({len(hist)-1}a)    : {_fmt_pct(cagr_rev) if cagr_rev else 'n/d'} a.a.
+  CAGR EBIT ({len(hist)-1}a)       : {_fmt_pct(cagr_ebit) if cagr_ebit else 'n/d'} a.a.
+
+  🔮 FCFF PROJETADO
+{'─'*60}""")
+
+    for yr, row in combined.iterrows():
+        fcff_val = row.get("FCFF", float("nan"))
+        tag = "[hist]" if yr <= last_year else "[proj]"
+        print(f"  {yr}: R$ {fcff_val/1e9:6.2f} bi  {tag}")
+
+    print(f"""
+  🔮 PREMISSAS
+{'─'*60}
+  Terminal Growth  : {_fmt_pct(term_growth)}
+  Forecast Years   : 6
+  Tax Rate         : 34%
+  Kd bruto         : {_fmt_pct(cost_of_debt)}
+  Shares Out       : {shares_out//1_000_000} mi
+{sep}
+  {rec}
+{sep}""")
+
+    # ── Salva output individual ───────────────────────────
+    try:
+        out_path = f"valuation_output_{nome}.xlsx"
+        with pd.ExcelWriter(out_path) as writer:
+            hist.to_excel(writer,     sheet_name="historical")
+            proj.to_excel(writer,     sheet_name="projection")
+            combined.to_excel(writer, sheet_name="valuation")
+        print(f"  Salvo: {out_path}")
+    except Exception as e:
+        print(f"  [WARN] Excel: {e}")
+
     return {
-        "empresa":        empresa_key,
-        "ticker":         TICKER,
-        "setor":          cfg.get("setor", ""),
-        "current_price":  current_price,
-        "price_dcf":      price_dcf,
-        "upside":         upside,
-        "rec":            rec,
-        "ev":             ev,
-        "eq_value":       eq_value,
-        "net_debt":       net_debt,
-        "market_cap":     market_cap,
-        "wacc":           wacc,
-        "irr":            irr,
-        "roic":           roic,
-        "roe":            roe,
-        "ev_ebitda":      ev_ebitda,
-        "pe":             pe,
-        "rev_cagr":       rev_cagr,
-        "revenue":        rev_last,
-        "ebit_margin":    ebit_mg,
+        "empresa":          nome,
+        "ticker":           ticker,
+        "price_now":        price_now,
+        "price_fair":       price_fair,
+        "upside":           upside,
+        "recomendacao":     rec,
+        "enterprise_value": ev,
+        "equity_value":     equity_value,
+        "net_debt":         net_debt,
+        "wacc":             wacc,
+        "beta":             beta,
+        "overrides": {
+            "revenue_growth": rev_override,
+            "ebit_margin":    ebit_override,
+        },
     }
 
 
@@ -381,59 +312,27 @@ def run_company(empresa_key: str) -> dict:
 # ─────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    args = [a.upper() for a in sys.argv[1:]] if len(sys.argv) > 1 else list(COMPANIES.keys())
 
-    # Quais empresas rodar? Args da linha de comando ou todas
-    args = sys.argv[1:]
-    targets = args if args else list_companies()
+    print(f"🚀 Rodando valuation para: {args}")
 
-    print(f"\n🚀 Rodando valuation para: {targets}")
-
-    all_results = {}
-    errors      = {}
-
-    for empresa in targets:
+    results = {}
+    for nome in args:
         try:
-            result = run_company(empresa)
-            all_results[empresa] = result
+            r = run_company(nome)
+            if r:
+                results[nome] = r
         except Exception as e:
-            print(f"\n❌ Erro em {empresa}: {e}")
-            errors[empresa] = str(e)
+            print(f"❌ Erro fatal em {nome}: {e}")
+            import traceback; traceback.print_exc()
 
-    # ── Sumário Comparativo ───────────────────────────────────
-    if len(all_results) > 1:
-        sep = "=" * 60
-        print(f"\n\n{sep}")
-        print(f"  📊 SUMÁRIO COMPARATIVO — {len(all_results)} EMPRESAS")
-        print(sep)
-        header = f"  {'Empresa':<10} {'Preço':>8} {'Justo':>8} {'Upside':>8} {'WACC':>7} {'ROIC':>7}  Rec"
-        print(header)
-        print("─" * 65)
-        for emp, r in all_results.items():
-            price_s  = f"R${r['current_price']:.2f}" if r['current_price'] else "  N/A  "
-            justo_s  = f"R${r['price_dcf']:.2f}"     if r['price_dcf']     else "  N/A  "
-            upside_s = f"{r['upside']:+.1%}"          if r['upside'] is not None else "  N/A "
-            wacc_s   = f"{r['wacc']:.1%}"
-            roic_s   = f"{r['roic']:.1%}"             if r['roic'] else "  N/A "
-            print(f"  {emp:<10} {price_s:>8} {justo_s:>8} {upside_s:>8} {wacc_s:>7} {roic_s:>7}  {r['rec']}")
-        print(sep)
+    # ── Salva JSON consolidado ────────────────────────────
+    out = {}
+    for nome, r in results.items():
+        out[nome] = {k: (float(v) if hasattr(v, "__float__") else v)
+                     for k, v in r.items() if not callable(v)}
 
-    # ── Salva JSON para o dashboard futuro ───────────────────
-    def to_serializable(obj):
-        if isinstance(obj, (np.floating, float)):
-            return None if (obj != obj) else float(obj)  # NaN → None
-        if isinstance(obj, (np.integer, int)):
-            return int(obj)
-        return obj
-
-    json_results = {
-        k: {kk: to_serializable(vv) for kk, vv in v.items()}
-        for k, v in all_results.items()
-    }
-
-    with open("valuation_results.json", "w", encoding="utf-8") as f:
-        json.dump(json_results, f, ensure_ascii=False, indent=2)
+    with open("valuation_results.json", "w") as f:
+        json.dump(out, f, indent=2, default=str)
 
     print("\n📁 valuation_results.json salvo (pronto para o dashboard)")
-
-    if errors:
-        print(f"\n⚠️  Erros: {errors}")
