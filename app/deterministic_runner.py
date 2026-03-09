@@ -43,6 +43,10 @@ CVM_TO_PIPELINE = {
     "FIN_INVESTMENTS_LT": "FIN_INVESTMENTS_LT",
     "DEBT_SHORT":         "DEBT_SHORT",
     "DEBT_LONG":          "DEBT_LONG",
+    "DEBT_SHORT_FIN":     "DEBT_SHORT_FIN",   # dívida financeira CP (ex-IFRS 16)
+    "DEBT_LONG_FIN":      "DEBT_LONG_FIN",    # dívida financeira LP (ex-IFRS 16)
+    "LEASE_SHORT":        "LEASE_SHORT",      # arrendamento CP (IFRS 16)
+    "LEASE_LONG":         "LEASE_LONG",       # arrendamento LP (IFRS 16)
     "EQUITY":             "EQUITY",
     "TOTAL_ASSETS":       "TOTAL_ASSETS",
     "TOTAL_LIABILITIES":  "TOTAL_LIABILITIES",
@@ -210,6 +214,12 @@ def run_deterministic_valuation(
     # ── Overrides forward-looking (lidos de companies_config) ─
     revenue_growth_override: float = None,
     ebit_margin_override: float = None,
+    # ── Override IFRS 16 ──────────────────────────────────────
+    # Quando a empresa usa estrutura de 3 subcontas para dívida
+    # (empréstimos / debêntures / arrendamentos), DEBT_SHORT_FIN
+    # captura apenas empréstimos. Informe o total de arrendamentos
+    # para excluir da dívida bruta total manualmente.
+    ifrs16_lease_total: float = None,
 ):
     # ===================================================
     # 1) EXTRAÇÃO
@@ -347,16 +357,75 @@ def run_deterministic_valuation(
     print(dcf_results)
 
     # ===================================================
-    # 8) EQUITY VALUE
+    # 8) EQUITY VALUE — dívida financeira líquida (ex-IFRS 16)
     # ===================================================
 
     if "NET_DEBT" in historical_df.columns:
         net_debt = float(historical_df["NET_DEBT"].iloc[-1])
-    elif "DEBT_SHORT" in historical_df.columns and "DEBT_LONG" in historical_df.columns:
-        debt     = historical_df["DEBT_SHORT"].iloc[-1] + historical_df["DEBT_LONG"].iloc[-1]
-        net_debt = debt - _cash
     else:
-        net_debt = 0.0
+        # Tenta usar dívida financeira pura (subcategorias .01 do CVM)
+        has_fin_debt = (
+            "DEBT_SHORT_FIN" in historical_df.columns and
+            "DEBT_LONG_FIN"  in historical_df.columns
+        )
+        has_lease = (
+            "LEASE_SHORT" in historical_df.columns or
+            "LEASE_LONG"  in historical_df.columns
+        )
+
+        if ifrs16_lease_total is not None:
+            # Override manual: usa dívida total menos arrendamentos informados
+            debt_total = (
+                historical_df["DEBT_SHORT"].iloc[-1] +
+                historical_df["DEBT_LONG"].iloc[-1]
+            ) if "DEBT_SHORT" in historical_df.columns else 0.0
+            debt = float(debt_total) - ifrs16_lease_total
+            print(f"[DEBT] Dívida total           : R$ {float(debt_total)/1e9:.3f} bi")
+            print(f"[DEBT] (−) IFRS 16 override   : R$ {ifrs16_lease_total/1e9:.3f} bi")
+            print(f"[DEBT] Dívida financeira líq. : R$ {debt/1e9:.3f} bi")
+        elif has_fin_debt:
+            # Empresa segrega corretamente: usa dívida financeira pura
+            debt_fin = (
+                historical_df["DEBT_SHORT_FIN"].iloc[-1] +
+                historical_df["DEBT_LONG_FIN"].iloc[-1]
+            )
+            debt_total = (
+                historical_df["DEBT_SHORT"].iloc[-1] +
+                historical_df["DEBT_LONG"].iloc[-1]
+            ) if "DEBT_SHORT" in historical_df.columns else 0.0
+            # Sanity check: se FIN < 15% do total, provavelmente estrutura de 3 subcontas
+            ratio = float(debt_fin) / float(debt_total) if float(debt_total) > 0 else 1.0
+            if ratio < 0.15:
+                print(f"[DEBT] ⚠️  DEBT_SHORT/LONG_FIN = {ratio:.1%} da dívida total")
+                print(f"[DEBT]    Possível estrutura 3-subcontas (empréstimos/debêntures/arrendamento)")
+                print(f"[DEBT]    Usando dívida total. Adicione 'ifrs16_lease_total' em companies_config para excluir arrendamentos.")
+                debt = float(debt_total)
+            else:
+                debt = float(debt_fin)
+                print(f"[DEBT] Dívida financeira pura (ex-IFRS 16): R$ {debt/1e9:.3f} bi")
+        elif has_lease:
+            # Empresa não segrega, mas temos as contas de arrendamento separadas
+            lease_s = float(historical_df["LEASE_SHORT"].iloc[-1]) if "LEASE_SHORT" in historical_df.columns else 0.0
+            lease_l = float(historical_df["LEASE_LONG"].iloc[-1])  if "LEASE_LONG"  in historical_df.columns else 0.0
+            lease   = lease_s + lease_l
+            debt_total = (
+                historical_df["DEBT_SHORT"].iloc[-1] +
+                historical_df["DEBT_LONG"].iloc[-1]
+            ) if "DEBT_SHORT" in historical_df.columns else 0.0
+            debt = debt_total - lease
+            print(f"[DEBT] Dívida total           : R$ {debt_total/1e9:.3f} bi")
+            print(f"[DEBT] (−) Arrendamentos IFRS 16: R$ {lease/1e9:.3f} bi")
+            print(f"[DEBT] Dívida financeira líq. : R$ {debt/1e9:.3f} bi")
+        else:
+            # Sem segregação — usa dívida total (inclui IFRS 16)
+            debt = (
+                historical_df["DEBT_SHORT"].iloc[-1] +
+                historical_df["DEBT_LONG"].iloc[-1]
+            ) if "DEBT_SHORT" in historical_df.columns else 0.0
+            print(f"[DEBT] ⚠️  Dívida total (inclui IFRS 16 estimado): R$ {debt/1e9:.3f} bi")
+            print(f"[DEBT]    Para excluir IFRS 16, adicione contas 2.01.04.02/2.02.01.02 ao BPP.")
+
+        net_debt = float(debt) - _cash
 
     equity_value = enterprise_value - net_debt
 
@@ -364,7 +433,13 @@ def run_deterministic_valuation(
     # 9) MULTIPLOS
     # ===================================================
 
-    multiples = compute_multiples(enterprise_value, combined_df)
+    _market_cap = wacc_data.get("market_cap")
+    multiples = compute_multiples(
+        enterprise_value,
+        combined_df,
+        market_cap=_market_cap,
+        last_historical_year=last_historical_year,
+    )
 
     # ===================================================
     # 10) EXPORT

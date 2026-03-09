@@ -55,6 +55,7 @@ def run_company(nome: str) -> dict | None:
     # ── Overrides forward-looking (opcionais) ──────────────
     rev_override   = cfg.get("revenue_growth_override")
     ebit_override  = cfg.get("ebit_margin_override")
+    lease_override = cfg.get("ifrs16_lease_total")
 
     dfp_folder = str(Path("data/raw") / nome)
 
@@ -65,7 +66,7 @@ def run_company(nome: str) -> dict | None:
 
     # ── MZ API (tenta mas não bloqueia) ───────────────────
     try:
-        from data_layer.download.mz_downloader import MZDownloader
+        from data_layer.download.mz_downloader import MZDownloader  # type: ignore[import]
         company_id = cfg.get("company_id_mz")
         if company_id:
             print(f"\n[1/4] Buscando documentos MZ...")
@@ -78,9 +79,14 @@ def run_company(nome: str) -> dict | None:
     print(f"\n[3/4] MZ indisponível — baixando DFPs direto da CVM...")
     print(f"  Código CVM: {cvm_code} | Fonte: dados.cvm.gov.br")
     try:
-        from data_layer.download.cvm_downloader import CVMDownloader
-        dl_cvm = CVMDownloader(cvm_code=cvm_code, empresa=nome)
-        dl_cvm.download_all(years=list(range(2019, 2026)))
+        from data_layer.download.cvm_downloader import CVMDownloader  # type: ignore[import]
+        dl_cvm = CVMDownloader(base_folder="data/raw")
+        dl_cvm.download_dfps_empresa(
+            ticker=ticker,
+            empresa=nome,
+            cvm_code=cvm_code,
+            min_year=2019,
+        )
     except Exception as e:
         print(f"  [WARN] CVM Downloader: {e}")
 
@@ -96,6 +102,7 @@ def run_company(nome: str) -> dict | None:
             terminal_growth=term_growth,
             revenue_growth_override=rev_override,
             ebit_margin_override=ebit_override,
+            ifrs16_lease_total=lease_override,
         )
     except Exception as e:
         print(f"❌ Erro em {nome}: {e}")

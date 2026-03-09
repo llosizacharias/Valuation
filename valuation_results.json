@@ -1,1 +1,36 @@
-{}
+{
+  "WEG": {
+    "empresa": "WEG",
+    "ticker": "WEGE3.SA",
+    "price_now": 46.62,
+    "price_fair": 11.928780975791815,
+    "upside": -0.7441273921966578,
+    "recomendacao": "\ud83d\udd34 VENDA FORTE",
+    "enterprise_value": 44225828083.89099,
+    "equity_value": 50068887083.89099,
+    "net_debt": -5843059000.0,
+    "wacc": 0.1804704055578525,
+    "beta": 0.8751241407122152,
+    "overrides": {
+      "revenue_growth": null,
+      "ebit_margin": null
+    }
+  },
+  "COGNA": {
+    "empresa": "COGNA",
+    "ticker": "COGN3.SA",
+    "price_now": 3.14,
+    "price_fair": 2.934117453492234,
+    "upside": -0.06556768997062612,
+    "recomendacao": "\ud83d\udfe1 NEUTRO",
+    "enterprise_value": 8123259952.976542,
+    "equity_value": 5378727952.976542,
+    "net_debt": 2744532000.0,
+    "wacc": 0.1682364790264271,
+    "beta": 1.8,
+    "overrides": {
+      "revenue_growth": 0.13,
+      "ebit_margin": 0.21
+    }
+  }
+}

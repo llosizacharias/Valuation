@@ -49,6 +49,13 @@ COMPANIES = {
         "terminal_growth": 0.035,
         "cost_of_debt":    0.14,
 
+        # ── Override IFRS 16 (arrendamentos) ───────────────────
+        # COGNA usa subconta .03 para arrendamentos (não .02 como WEG),
+        # então DEBT_SHORT/LONG_FIN capta só empréstimos (~R$83M).
+        # Usamos dívida total (2.01.04 + 2.02.01) menos este valor.
+        # Fonte: 4T24 — dívida bruta financeira ~R$5.2bi, arrendamentos ~R$1.7bi.
+        "ifrs16_lease_total": 1_700_000_000,
+
         # ── Overrides forward-looking ──────────────────────────
         # Fonte: resultado 3T25 (nov/2025) — receita +18.9% a/a no trimestre,
         #        +13% no acumulado 9M25. Dados CVM disponíveis até 2024.
