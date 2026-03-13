@@ -1,4 +1,27 @@
 import streamlit as st
+# brapi.dev — cotações B3 em tempo real
+try:
+    import sys as _sys
+    _sys.path.insert(0, "/opt/shipyard")
+    import brapi_client as _brapi
+    _HAS_BRAPI = True
+except Exception as _be:
+    _HAS_BRAPI = False
+
+# brapi.dev — cotações B3 em tempo real
+try:
+    import sys as _sys
+    _sys.path.insert(0, "/opt/shipyard")
+    import brapi_client as _brapi
+    _HAS_BRAPI = True
+except Exception as _be:
+    _HAS_BRAPI = False
+
+try:
+    from streamlit_autorefresh import st_autorefresh
+    _HAS_AUTOREFRESH = True
+except ImportError:
+    _HAS_AUTOREFRESH = False
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
@@ -7,6 +30,18 @@ from pathlib import Path
 import yaml
 from yaml.loader import SafeLoader
 import streamlit_authenticator as stauth
+
+SEGMENTOS_B3 = {
+    "WEGE3.SA":"Novo Mercado","COGN3.SA":"Novo Mercado","PETR4.SA":"Nível 2",
+    "VALE3.SA":"Novo Mercado","ABEV3.SA":"Nível 2","BBAS3.SA":"Novo Mercado",
+    "ITUB4.SA":"Nível 1","PETR3.SA":"Nível 2","BBDC4.SA":"Nível 1",
+    "SUZB3.SA":"Novo Mercado","EMBR3.SA":"Novo Mercado","RAIL3.SA":"Novo Mercado",
+    "CPLE6.SA":"Nível 2","EGIE3.SA":"Novo Mercado","TAEE11.SA":"Nível 2",
+    "CPFE3.SA":"Novo Mercado","EQTL3.SA":"Novo Mercado","SBSP3.SA":"Novo Mercado",
+    "BRFS3.SA":"Novo Mercado","KLBN11.SA":"Novo Mercado","SLCE3.SA":"Novo Mercado",
+    "YDUQ3.SA":"Novo Mercado","ANIM3.SA":"Novo Mercado","RADL3.SA":"Novo Mercado",
+    "BBSE3.SA":"Novo Mercado","IRBR3.SA":"Novo Mercado","STBP3.SA":"Novo Mercado",
+}
 
 st.set_page_config(
     page_title="Shipyard | Vela Capital",
@@ -75,6 +110,42 @@ CLEARBIT_DOMAINS = {
 }
 
 @st.cache_data(ttl=86400)
+
+def _brl(v, dec=0):
+    """Formata valor em BRL: R$ 1.234.567,89"""
+    try:
+        v = float(v)
+        s = f"{v:,.{dec}f}".replace(",","X").replace(".",",").replace("X",".")
+        return f"R$ {s}"
+    except: return "R$ —"
+
+
+def _norm_setor(s):
+    if not s: return "Outros"
+    s2 = s.upper()
+    MAP = {
+        "Petróleo & Gás":    ["PETRO","OIL","GAS","COMBUST","REFIN"],
+        "Mineração":         ["MINER","SIDER","META","AÇO","FERRO"],
+        "Energia Elétrica":  ["ENERG","ELET","POWER","GERAÇ","TRANS","DISTRIB"],
+        "Financeiro":        ["BANCO","FINANC","SEGUR","PREVIDÊN","CREDIT","LEASING"],
+        "Consumo Básico":    ["ALIM","BEBID","SUPER","VAREJO ALIM","HIGIENE","COSM"],
+        "Consumo Discrec.":  ["VAREJO","MODA","VEST","AUTOMOBI","CONCESSION","LOCAÇ"],
+        "Saúde":             ["SAÚDE","FARM","HOSPIT","DIAGNÓST","MEDIC","LAB"],
+        "Tecnologia":        ["TECNO","SOFTW","INFORM","DADOS","TI","DIGITAL"],
+        "Telecomunicações":  ["TELEC","TELEFO","OPERADO","MÓVEL","BANDA"],
+        "Educação":          ["EDUC","ENSINO","UNIVERS","ESCOLA","CURSOS"],
+        "Saneamento":        ["SANEAM","ÁGUA","ESGOTO","RESIDUO"],
+        "Transportes":       ["TRANSP","FERROVI","RODOVI","PORTO","LOGÍST","AÉREA"],
+        "Agronegócio":       ["AGRO","SUCROAL","AÇÚCAR","ETANOL","PAPEL","CELULOSE","MADEIRA","GRÃO","SOJA"],
+        "Construção Civil":  ["CONSTRU","IMOBIL","INCORPOR","CIMENTO","TINTA"],
+        "Bens Industriais":  ["INDUST","MAQUIN","EQUIPAM","MECÂN","ELETRO","MOTOR"],
+        "Seguros":           ["SEGUR","RESSEGUR","PREVIDÊN"],
+    }
+    for setor, kws in MAP.items():
+        if any(k in s2 for k in kws): return setor
+    return s if s and s != "DEFAULT" else "Outros"
+
+
 def fetch_logo_b64(ticker: str) -> str | None:
     domain = CLEARBIT_DOMAINS.get(ticker)
     if not domain: return None
@@ -144,6 +215,8 @@ def logo_empresa_html(ticker, width=110):
 
 # ── CSS ───────────────────────────────────────────────────────────
 st.markdown(f"""<style>
+
+    
 * {{ font-family: Helvetica,"Helvetica Neue",Arial,sans-serif !important; }}
 .stApp {{ background:{C['bg']}; color:{C['white']}; }}
 [data-testid="stSidebar"] {{ background:{C['bg']} !important; border-right:1px solid {C['border']}; }}
@@ -201,7 +274,8 @@ section[data-testid="stSidebar"][aria-expanded="false"] {{
 [data-testid="stDecoration"] {{ display: none !important; }}
 header[data-testid="stHeader"] {{ background:{C['bg']} !important; border-bottom: 1px solid {C['border']} !important; }}
 header[data-testid="stHeader"] button {{ display: none !important; pointer-events: none !important; }}
-/* Todos os botões — sem vermelho */
+
+    /* Todos os botões — sem vermelho */
 .stButton > button {{
     background:{C['bg2']} !important; color:{C['white']} !important;
     border:1px solid {C['border']} !important; border-radius:5px !important;
@@ -636,7 +710,7 @@ PL = dict(
 def load_auth():
     p = Path("dashboard_auth.yaml")
     if not p.exists():
-        st.error("⚠️ dashboard_auth.yaml não encontrado. Execute: python setup_auth.py"); st.stop()
+        st.error(" dashboard_auth.yaml não encontrado. Execute: python setup_auth.py"); st.stop()
     with open(p) as f:
         return yaml.load(f, Loader=SafeLoader)
 
@@ -741,14 +815,30 @@ def load_results():
 
 results = load_results()
 if not results:
-    st.error("⚠️ valuation_results.json não encontrado. Execute: python main.py"); st.stop()
+    st.error(" valuation_results.json não encontrado. Execute: python main.py"); st.stop()
+
+# Precos atualizados via cron update_prices.py
+_live_prices = {}
 
 # ── SIDEBAR ───────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown(f"""
-    <div style="text-align:center;padding:20px 0 10px;">
-        <div style="color:#FFFFFF;font-size:1.1rem;font-weight:700;letter-spacing:.15em;">VELA CAPITAL</div>
-        <div style="color:{C['gray2']};font-size:.6rem;letter-spacing:.2em;margin-top:4px;opacity:.7;">SHIPYARD</div>
+    <div style="text-align:center;padding:22px 0 12px;">
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='72' height='72'>
+          <rect x='57' y='18' width='3' height='72' rx='1.5' fill='#9AC0E6'/>
+          <path d='M60 22 L95 55 L60 78 Z' fill='#2351FE' opacity='.9'/>
+          <path d='M60 22 L25 52 L60 78 Z' fill='#0F558B' opacity='.85'/>
+          <path d='M35 40 L62 60 L35 76 Z' fill='#2351FE' opacity='.7'/>
+          <path d='M60 20 L75 14 L60 26 Z' fill='#9AC0E6'/>
+          <path d='M10 90 Q25 85 40 90 Q55 95 70 90 Q85 85 100 90 Q110 93 115 90'
+                stroke='#9AC0E6' stroke-width='1.5' fill='none' opacity='.5'/>
+          <path d='M5 96 Q20 91 35 96 Q50 101 65 96 Q80 91 95 96 Q108 99 118 96'
+                stroke='#9AC0E6' stroke-width='1' fill='none' opacity='.35'/>
+          <path d='M15 85 Q60 100 105 85 L98 75 Q60 88 22 75 Z' fill='#9AC0E6' opacity='.18'/>
+        </svg>
+        <div style="color:#FFFFFF;font-size:1.1rem;font-weight:800;letter-spacing:.2em;margin-top:8px">VELA CAPITAL</div>
+        <div style="width:36px;height:2px;background:#2351FE;margin:5px auto 6px"></div>
+        <div style="color:{C['gray2']};font-size:.58rem;letter-spacing:.25em;opacity:.7">SHIPYARD</div>
     </div><hr>""", unsafe_allow_html=True)
 
     MASTER_USER = "Leonardo.Losi"
@@ -761,7 +851,7 @@ with st.sidebar:
         "Notícias", "Carteira Endurance",
         "Exposição Geográfica",
         "Governança", "Grupo Econômico", "Setores Macro",
-        "Gestoras", "ComDinheiro", "Premissas"
+        "Gestoras", "ComDinheiro", "Valuation", "Cadastros"
     ]
     _pages = _pages_base + (["── Admin ──", "Gerenciar Usuários"] if is_master else [])
 
@@ -769,12 +859,22 @@ with st.sidebar:
                       index=_pages.index("Empresa") if st.session_state.get("_nav_empresa") else 0)
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    _role = "Master" if is_master else "Analista"
+    _role = "Master" if is_master else "Diretor"
     _c_gray2   = C["gray2"]
     _c_blue_lt = C["blue_lt"]
-    st.markdown(f"<div style='color:{_c_gray2};font-size:.72rem;padding:4px 0;'>👤 {name} <span style='color:{_c_blue_lt};font-size:.65rem;'>({_role})</span></div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='color:{_c_gray2};font-size:.72rem;padding:4px 0;'> {name} <span style='color:{_c_blue_lt};font-size:.65rem;'>({_role})</span></div>", unsafe_allow_html=True)
+    # Auto-refresh
+    # Esconde o input numérico gerado pelo st_autorefresh
+
+    if _HAS_AUTOREFRESH:
+        st.sidebar.markdown("---")
+        _ron = st.sidebar.checkbox(" Auto-refresh", value=False, key="refresh_on")
+        if _ron:
+            _rint = st.sidebar.select_slider("Intervalo", [30,60,300,600], value=60, key="refresh_int",
+                format_func=lambda x: f"{x}s" if x<60 else f"{x//60}min")
+            _cnt = st_autorefresh(interval=_rint*1000, limit=None, key="autorefresh_ctrl")
     auth.logout("Sair", location="sidebar")
-    st.markdown(f"<div class='sidebar-footer'>Vela Capital © 2025</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='sidebar-footer'>Vela Capital © 2026</div>", unsafe_allow_html=True)
 
 # ── HELPERS ───────────────────────────────────────────────────────
 bi    = lambda v: f"R$ {float(v)/1e9:.2f}bi" if v not in (None,'') else "n/d"
@@ -915,7 +1015,7 @@ if pagina == "Visão Geral":
         empresas_vg = [e for e in empresas_vg if
                        any(r in (results[e].get("recomendacao") or "") for r in filtro_rec)]
     empresas_vg = [e for e in empresas_vg if
-                   filtro_upside_min/100 <= (results[e].get("upside") or 0) <= filtro_upside_max/100]
+                   filtro_upside_min <= float(results[e].get("upside") or 0) <= filtro_upside_max]
 
     # Ordena
     _sort_key = {
@@ -1343,11 +1443,11 @@ elif pagina == "Empresa":
 
     ovr=r.get("overrides") or {}
     if any(ovr.values()):
-        st.warning(f"⚠️  Overrides — receita: {pct(ovr.get('revenue_growth'))} | EBIT: {pct(ovr.get('ebit_margin'))}")
+        st.warning(f"  Overrides — receita: {pct(ovr.get('revenue_growth'))} | EBIT: {pct(ovr.get('ebit_margin'))}")
 
     # ── #22 — Confronto de Preços: Tela vs DCF vs Consenso ──────
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("## Confronto de Preços — Tela · DCF · Consenso Analistas")
+    st.markdown("## Confronto de Preços — Tela · DCF · Consenso Diretors")
 
     p_tela = float(r.get("price_now") or 0)
     p_dcf  = float(r.get("price_fair") or 0)
@@ -1751,7 +1851,7 @@ elif pagina == "Comparativo":
         up=float(r.get("upside") or 0)*100; wac=float(r.get("wacc") or 0)*100
         ev=float(r.get("enterprise_value") or 1)/1e9
         fig_sc.add_trace(go.Scatter(x=[wac],y=[up],mode="markers+text",
-            marker=dict(size=ev*.5+14,color=C["blue_lt"],line=dict(width=2,color=C["bg3"])),
+            marker=dict(size=max(8,abs(ev)*.5+14),color=C["blue_lt"],line=dict(width=2,color=C["bg3"])),
             text=[ticker],textposition="top center",
             textfont=dict(color=C["white"],size=11),name=ticker))
     fig_sc.add_hline(y=0,line_dash="dash",line_color=C["gray2"],opacity=.4)
@@ -1894,13 +1994,30 @@ elif pagina == "Markowitz":
     st.markdown("### Configuração")
     col_a, col_b = st.columns(2)
     with col_a:
-        extra = st.text_input("Adicionar tickers extras (separados por vírgula)",
-                              value="PETR4.SA, VALE3.SA, BBAS3.SA, ITUB4.SA",
-                              help="Tickers da B3 com sufixo .SA")
+        # Import da Carteira Endurance
+        import json as _jmk, pathlib as _pmk
+        _efile = _pmk.Path("/opt/shipyard/data/endurance/carteira.json")
+        _end_tks = []
+        if _efile.exists():
+            try:
+                _end_cart = _jmk.loads(_efile.read_text())
+                _end_tks = [p["ticker"] for p in _end_cart if p.get("ticker") and p["ticker"] != "CAIXA"]
+            except: pass
+        col_imp1, col_imp2 = st.columns([2,1])
+        with col_imp1:
+            extra = st.text_input("Tickers extras (separados por vírgula)",
+                                  value="PETR4.SA, VALE3.SA, BBAS3.SA, ITUB4.SA")
+        with col_imp2:
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button(" Importar Endurance", use_container_width=True, key="mk_imp_end"):
+                st.session_state["mk_end_imported"] = True
         extra_list = [t.strip() for t in extra.split(",") if t.strip()]
-        portfolio_tickers = list(dict.fromkeys(all_tickers + extra_list))
-        selected = st.multiselect("Ativos na carteira", portfolio_tickers,
-                                  default=portfolio_tickers[:min(5,len(portfolio_tickers))])
+        base_tks = _end_tks if st.session_state.get("mk_end_imported") else []
+        portfolio_tickers = list(dict.fromkeys(base_tks + all_tickers + extra_list))
+        default_sel = _end_tks[:min(8,len(_end_tks))] if st.session_state.get("mk_end_imported") and _end_tks else portfolio_tickers[:min(5,len(portfolio_tickers))]
+        if st.session_state.get("mk_end_imported") and _end_tks:
+            st.success(f" {len(_end_tks)} ativos da Endurance importados")
+        selected = st.multiselect("Ativos na carteira", portfolio_tickers, default=default_sel)
     with col_b:
         period    = st.selectbox("Período histórico", ["1y","2y","3y","5y"], index=1)
         n_sim     = st.slider("Portfólios simulados (Monte Carlo)", 1000, 10000, 3000, 500)
@@ -1913,7 +2030,7 @@ elif pagina == "Markowitz":
     if len(selected) < 2:
         st.warning("Selecione pelo menos 2 ativos."); st.stop()
 
-    if st.button("▶  Calcular Fronteira Eficiente", type="primary"):
+    if st.button("  Calcular Fronteira Eficiente", type="primary"):
         with st.spinner("Baixando dados e calculando..."):
             try:
                 import yfinance as yf
@@ -2034,7 +2151,7 @@ elif pagina == "Markowitz":
                     x=[v_sharpe*100], y=[r_sharpe*100], mode="markers+text",
                     marker=dict(size=14, color=C["pos"], symbol="star",
                                 line=dict(color=C["white"],width=1.5)),
-                    text=["⭐ Máx Sharpe"], textposition="top right",
+                    text=[" Máx Sharpe"], textposition="top right",
                     textfont=dict(color=C["pos"], size=11),
                     name=f"Máx Sharpe ({sharpe_opt:.2f})",
                 ))
@@ -2055,7 +2172,7 @@ elif pagina == "Markowitz":
                         x=[ibov_vol*100], y=[ibov_ret*100], mode="markers+text",
                         marker=dict(size=14, color="#FFD700", symbol="square",
                                     line=dict(color=C["white"],width=1.5)),
-                        text=["🟡 IBOV"], textposition="top left",
+                        text=[" IBOV"], textposition="top left",
                         textfont=dict(color="#FFD700", size=11),
                         name=f"IBOV (Sharpe={ibov_sharpe:.2f})",
                     ))
@@ -2072,7 +2189,7 @@ elif pagina == "Markowitz":
                     ))
 
                 fig_mz.update_layout(**PL,
-                    title="Fronteira Eficiente | Nuvem = Monte Carlo | ⭐ Máx Sharpe | 🟡 IBOV",
+                    title="Fronteira Eficiente | Nuvem = Monte Carlo |  Máx Sharpe |  IBOV",
                     xaxis_title="Volatilidade Anual (%)",
                     yaxis_title="Retorno Anual Esperado (%)",
                     height=580,
@@ -2080,7 +2197,7 @@ elif pagina == "Markowitz":
                 st.plotly_chart(fig_mz, use_container_width=True)
 
                 if show_ibov and ibov_ret is not None:
-                    st.info(f"📊 IBOV — Retorno: {ibov_ret*100:.1f}% a.a. | Vol: {ibov_vol*100:.1f}% | Sharpe: {(ibov_ret-risk_free)/ibov_vol:.2f}")
+                    st.info(f" IBOV — Retorno: {ibov_ret*100:.1f}% a.a. | Vol: {ibov_vol*100:.1f}% | Sharpe: {(ibov_ret-risk_free)/ibov_vol:.2f}")
 
                 st.markdown("<hr>", unsafe_allow_html=True)
                 st.markdown("### Alocações Ótimas")
@@ -2192,7 +2309,7 @@ elif pagina == "Notícias":
 
     col_f, col_q = st.columns([2,2])
     with col_f:
-        fonte = st.selectbox("Fonte de notícias", list(feeds.keys()))
+        fonte = st.selectbox("Fonte de notícias", ["Todos"] + list(feeds.keys()))
     with col_q:
         query = st.text_input("Filtrar por palavra-chave", placeholder="ex: WEG, COGNA, Selic...")
 
@@ -2202,9 +2319,17 @@ elif pagina == "Notícias":
         with st.spinner("Carregando notícias..."):
             try:
                 import feedparser
-                url = feeds[fonte]
-                feed = feedparser.parse(url)
-                entries = feed.entries
+                if fonte == "Todos":
+                    entries = []
+                    for _fn, _url in feeds.items():
+                        try:
+                            _f = feedparser.parse(_url)
+                            for _e in _f.entries: _e["_fonte"] = _fn
+                            entries.extend(_f.entries)
+                        except: pass
+                else:
+                    feed = feedparser.parse(feeds[fonte])
+                    entries = feed.entries
 
                 if query:
                     q = query.lower()
@@ -2249,7 +2374,7 @@ elif pagina == "Notícias":
                     ("Broadcast — Tempo Real", "https://www.estadao.com.br/economia/"),
                 ]
                 for nome, url in links:
-                    st.markdown(f"🔗 [{nome}]({url})")
+                    st.markdown(f" [{nome}]({url})")
 
             except Exception as e:
                 st.error(f"Erro ao carregar notícias: {e}")
@@ -2259,17 +2384,66 @@ elif pagina == "Notícias":
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("## Calendário de Resultados")
 
-    cal_data = [
-        {"Empresa": "WEG (WEGE3)",   "Evento": "Resultados 4T25",   "Data": "Mar 2026",  "Status": "✅ Divulgado"},
-        {"Empresa": "COGNA (COGN3)", "Evento": "Resultados 4T25",   "Data": "Mar 2026",  "Status": "✅ Divulgado"},
-        {"Empresa": "WEG (WEGE3)",   "Evento": "Resultados 1T26",   "Data": "Mai 2026",  "Status": "⏳ Aguardando"},
-        {"Empresa": "COGNA (COGN3)", "Evento": "Resultados 1T26",   "Data": "Mai 2026",  "Status": "⏳ Aguardando"},
-        {"Empresa": "WEG (WEGE3)",   "Evento": "Dividendos",        "Data": "Ago 2026",  "Status": "📅 Previsto"},
-        {"Empresa": "COGNA (COGN3)", "Evento": "Assembleia Geral",  "Data": "Abr 2026",  "Status": "📅 Previsto"},
-        {"Empresa": "B3",            "Evento": "Reunião COPOM",     "Data": "Mai 2026",  "Status": "🏦 Macro"},
-        {"Empresa": "B3",            "Evento": "IPCA",              "Data": "Todo mês",  "Status": "🏦 Macro"},
+    # Calendário dinâmico — gera para todas as empresas cobertas
+    def _cal_trimestre(ticker_clean):
+        """Estima datas de resultado baseado no padrão B3"""
+        import datetime
+        hoje = datetime.date.today()
+        ano  = hoje.year
+        # Padrão: 4T divulgado em fev/mar; 1T em mai; 2T em ago; 3T em nov
+        trimestres = [
+            (f"4T{str(ano-1)[2:]}", f"Mar {ano}",  " Divulgado" if hoje.month>=3 else " Aguardando"),
+            (f"1T{str(ano)[2:]}",   f"Mai {ano}",  " Divulgado" if hoje.month>=5 else " Aguardando"),
+            (f"2T{str(ano)[2:]}",   f"Ago {ano}",  " Divulgado" if hoje.month>=8 else " Aguardando"),
+            (f"3T{str(ano)[2:]}",   f"Nov {ano}",  " Divulgado" if hoje.month>=11 else " Aguardando"),
+            (f"4T{str(ano)[2:]}",   f"Mar {ano+1}"," Previsto"),
+        ]
+        return trimestres
+
+    MACRO_EVENTS = [
+        {"Empresa":" Macro — COPOM", "Evento":"Reunião COPOM",    "Data":"Mai 2026","Status":" Macro"},
+        {"Empresa":" Macro — COPOM", "Evento":"Reunião COPOM",    "Data":"Jun 2026","Status":" Macro"},
+        {"Empresa":" Macro — IPCA",  "Evento":"IPCA mensal",      "Data":"Todo mês","Status":" Macro"},
+        {"Empresa":" Macro — IGP-M", "Evento":"IGP-M mensal",     "Data":"Todo mês","Status":" Macro"},
+        {"Empresa":" Macro — PIB",   "Evento":"PIB trimestral",   "Data":"Jun 2026","Status":" Macro"},
+        {"Empresa":" Macro — Fed",   "Evento":"FOMC Meeting",     "Data":"Mai 2026","Status":" Macro"},
     ]
-    st.markdown(dark_table(pd.DataFrame(cal_data)), unsafe_allow_html=True)
+
+    cal_data = []
+    for emp in empresas:
+        tk = results[emp].get("ticker","").replace(".SA","")
+        for trim, data, status in _cal_trimestre(tk):
+            cal_data.append({"Ticker":tk,"Empresa":emp[:25],"Evento":f"Resultados {trim}","Data":data,"Status":status})
+    cal_data.extend(MACRO_EVENTS)
+
+    df_cal = pd.DataFrame(cal_data)
+
+    # Filtros do calendário
+    calfc1, calfc2, calfc3 = st.columns(3)
+    with calfc1:
+        cal_status = st.multiselect("Status", [" Divulgado"," Aguardando"," Previsto"," Macro"],
+            default=[" Aguardando"," Previsto"," Macro"], key="cal_status")
+    with calfc2:
+        cal_emp = st.multiselect("Empresa", ["Todas"] + list(empresas),
+            default=["Todas"], key="cal_emp")
+    with calfc3:
+        cal_meses = st.multiselect("Mês", sorted(df_cal["Data"].unique()),
+            default=[], key="cal_mes")
+
+    df_cal_f = df_cal.copy()
+    if cal_status: df_cal_f = df_cal_f[df_cal_f["Status"].isin(cal_status)]
+    if cal_emp and "Todas" not in cal_emp:
+        df_cal_f = df_cal_f[df_cal_f["Empresa"].isin([e[:25] for e in cal_emp])]
+    if cal_meses: df_cal_f = df_cal_f[df_cal_f["Data"].isin(cal_meses)]
+
+    def _cal_color(v):
+        if "" in str(v): return f"color:{C['pos']}"
+        if "" in str(v): return f"color:#FFB347"
+        if "" in str(v): return f"color:{C['sky']}"
+        if "" in str(v): return f"color:{C['gray']}"
+        return f"color:{C['white']}"
+    st.markdown(dark_table(df_cal_f, _cal_color), unsafe_allow_html=True)
+    export_buttons(df_cal_f, "calendario_resultados")
 
 # ══════════════════════════════════════════════════════════════════
 # ══════════════════════════════════════════════════════════════════
@@ -2377,14 +2551,14 @@ elif pagina == "Carteira Endurance":
 
     # ── header ───────────────────────────────────────────────────
     st.markdown(f"""<div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
-        <span style="color:{C['white']};font-size:1.3rem;font-weight:800">⚓ Carteira Endurance</span>
+        <span style="color:{C['white']};font-size:1.3rem;font-weight:800"> Carteira Endurance</span>
         <span style="background:{C['bg2']};border:1px solid {C['border']};border-radius:4px;
             padding:2px 10px;font-size:.72rem;color:{C['gray']}">{len([p for p in carteira if p['ticker']!='CAIXA'])} posições · {sum(p['peso'] for p in carteira):.0f}% alocado</span>
     </div>""", unsafe_allow_html=True)
 
     # ── tabs ─────────────────────────────────────────────────────
-    tab_port, tab_edit, tab_risk, tab_tr = st.tabs([
-        "📊 Visão da Carteira", "✏️ Gerenciar Posições", "📐 Risco & KPIs", "📈 Trackrecord"
+    tab_port, tab_edit, tab_risk, tab_tr, tab_cota, tab_bt = st.tabs([
+        " Visão da Carteira", " Gerenciar Posições", " Risco & KPIs", " Trackrecord", " Custos & Cota", " Backtest & Cenários"
     ])
 
     # ════════════════════════════════════════════════════════════
@@ -2392,7 +2566,7 @@ elif pagina == "Carteira Endurance":
     # ════════════════════════════════════════════════════════════
     with tab_port:
         if not carteira:
-            st.info("Carteira vazia. Adicione posições na aba ✏️")
+            st.info("Carteira vazia. Adicione posições na aba ")
         else:
             tickers_rv = tuple(p["ticker"] for p in carteira if p["ticker"] != "CAIXA")
             _period_opt = st.select_slider("Período",["1mo","3mo","6mo","1y","2y","5y"], value="1y",
@@ -2457,6 +2631,9 @@ elif pagina == "Carteira Endurance":
                 port_ret, _ = _portfolio_returns(df_hist, carteira)
                 if port_ret is not None:
                     port_acc = (1 + port_ret).cumprod() - 1
+                    # Salva retorno acumulado real no session_state para uso em outras abas
+                    st.session_state["end_ret_real_pct"] = float(port_acc.iloc[-1] * 100) if len(port_acc) else None
+                    st.session_state["end_ret_periodo"] = "histórico"
 
                     # Comparativo configurável
                     bench_opts = {"IBOV":"IBOV","S&P 500":"SPX","CDI (proxy)":"CDI"}
@@ -2466,7 +2643,7 @@ elif pagina == "Carteira Endurance":
                     fig_port = go.Figure()
                     fig_port.add_trace(go.Scatter(
                         x=port_acc.index, y=port_acc.values*100,
-                        mode="lines", name="⚓ Endurance",
+                        mode="lines", name=" Endurance",
                         line=dict(color=C["blue_lt"], width=2.5)))
 
                     for b in bench_extra:
@@ -2533,7 +2710,7 @@ elif pagina == "Carteira Endurance":
     # TAB 2 — GERENCIAR POSIÇÕES
     # ════════════════════════════════════════════════════════════
     with tab_edit:
-        st.markdown("### ✏️ Posições Atuais")
+        st.markdown("###  Posições Atuais")
 
         # Editor de tabela
         df_edit = pd.DataFrame([{
@@ -2562,9 +2739,85 @@ elif pagina == "Carteira Endurance":
         _pcol = C["pos"] if 98 <= total_peso <= 102 else C["neg"]
         st.markdown(f"<span style='color:{_pcol};font-weight:700'>Total alocado: {total_peso:.1f}%</span>", unsafe_allow_html=True)
 
+        st.markdown("---")
+        st.markdown("**+ Adicionar posição manualmente**")
+        if True:
+            # Lista de tickers disponíveis no sistema para autocomplete
+            _tickers_disponiveis = sorted([
+                r.get("ticker","").replace(".SA","")
+                for r in results.values()
+                if r.get("ticker","")
+            ])
+            _setores_disponiveis = sorted(set([
+                r.get("sector","") or r.get("setor","")
+                for r in results.values()
+                if r.get("sector","") or r.get("setor","")
+            ]))
+            _empresas_map = {
+                r.get("ticker","").replace(".SA",""): r.get("name","") or r.get("empresa","")
+                for r in results.values()
+                if r.get("ticker","")
+            }
+            na1,na2,na3 = st.columns(3)
+            with na1:
+                new_ticker_sel = st.selectbox(
+                    "Ticker (autocomplete)", 
+                    [""] + _tickers_disponiveis + ["CAIXA","OUTRO"],
+                    key="new_tk_sel",
+                    help="Selecione um ticker da cobertura ou escolha OUTRO para digitar manualmente"
+                )
+                if new_ticker_sel == "OUTRO" or new_ticker_sel == "":
+                    new_ticker = st.text_input("Ticker manual", placeholder="Ex: TOTS3", key="new_tk_manual")
+                else:
+                    new_ticker = new_ticker_sel
+                # Preenche empresa automaticamente
+                _emp_auto = _empresas_map.get(new_ticker.upper(), "")
+                new_emp = st.text_input("Empresa", value=_emp_auto, key="new_emp")
+            with na2:
+                # Autocomplete de setor
+                _setor_auto = ""
+                if new_ticker.upper() in _empresas_map:
+                    _r = results.get(next((k for k in results if results[k].get("ticker","").replace(".SA","").upper()==new_ticker.upper()), ""), {})
+                    _setor_auto = _r.get("sector","") or _r.get("setor","")
+                new_setor_sel = st.selectbox(
+                    "Setor (autocomplete)",
+                    [""] + _setores_disponiveis + ["Outro"],
+                    index=(_setores_disponiveis.index(_setor_auto)+1) if _setor_auto in _setores_disponiveis else 0,
+                    key="new_set_sel"
+                )
+                if new_setor_sel == "Outro" or new_setor_sel == "":
+                    new_setor = st.text_input("Setor manual", key="new_set_manual")
+                else:
+                    new_setor = new_setor_sel
+                new_peso = st.number_input("Peso (%)", min_value=0.0, max_value=100.0, step=0.5, key="new_peso")
+            with na3:
+                new_entrada = st.number_input("Preco de entrada (R$)", min_value=0.0, step=0.01, key="new_preco")
+                new_data    = st.text_input("Data de entrada", placeholder="AAAA-MM-DD", key="new_data",
+                    value=_dt.today().strftime("%Y-%m-%d"))
+            if st.button("Adicionar a carteira", key="new_add", type="primary", use_container_width=True):
+                if new_ticker.strip():
+                    cart_atual = _load_carteira()
+                    tk_novo = new_ticker.strip().upper()
+                    if tk_novo != "CAIXA" and not tk_novo.endswith(".SA"):
+                        tk_novo += ".SA"
+                    if tk_novo in [p["ticker"].upper() for p in cart_atual]:
+                        st.warning(f"{tk_novo} ja esta na carteira. Edite na tabela acima.")
+                    else:
+                        try:
+                            cart_atual.append({"ticker":tk_novo,"empresa":new_emp.strip(),
+                                "setor":new_setor.strip(),"peso":new_peso,
+                                "preco_entrada":new_entrada,"data_entrada":new_data.strip()})
+                            _save_carteira(cart_atual)
+                            st.success(f"{tk_novo} adicionado com sucesso!")
+                            st.cache_data.clear()
+                            st.rerun()
+                        except PermissionError:
+                            st.error("Erro de permissao no arquivo. Execute no servidor: chmod 666 /opt/shipyard/data/endurance/carteira.json")
+                else:
+                    st.error("Informe o ticker.")
         col_save, col_imp = st.columns([1,1])
         with col_save:
-            if st.button("💾 Salvar Carteira", use_container_width=True, type="primary"):
+            if st.button(" Salvar Carteira", use_container_width=True, type="primary"):
                 nova = edited.to_dict("records")
                 _save_carteira(nova)
                 st.success("Carteira salva!")
@@ -2631,7 +2884,7 @@ elif pagina == "Carteira Endurance":
                 m = _risk_metrics(port_ret, bench_ret)
 
                 if m:
-                    st.markdown("### 📐 Métricas de Risco")
+                    st.markdown("###  Métricas de Risco")
                     r1,r2,r3,r4 = st.columns(4)
                     r1.metric("Retorno a.a.", f"{m.get('ret_aa',0)*100:+.1f}%")
                     r2.metric("Volatilidade a.a.", f"{m.get('vol_aa',0)*100:.1f}%")
@@ -2711,7 +2964,7 @@ elif pagina == "Carteira Endurance":
     # TAB 4 — TRACKRECORD
     # ════════════════════════════════════════════════════════════
     with tab_tr:
-        st.markdown("### 📈 Trackrecord Diário")
+        st.markdown("###  Trackrecord Diário")
 
         col_snap, col_info = st.columns([1,3])
         with col_snap:
@@ -2744,7 +2997,7 @@ elif pagina == "Carteira Endurance":
             fig_tr = go.Figure()
             fig_tr.add_trace(go.Scatter(
                 x=df_tr["date"], y=df_tr["nav_acc"],
-                mode="lines+markers", name="⚓ Endurance (NAV)",
+                mode="lines+markers", name=" Endurance (NAV)",
                 line=dict(color=C["blue_lt"], width=2.5),
                 marker=dict(size=6, color=C["blue_lt"])))
             fig_tr.add_hline(y=0, line_color=C["border"], line_width=1)
@@ -2767,302 +3020,651 @@ elif pagina == "Carteira Endurance":
             st.info("Nenhum snapshot registrado. Clique em 📸 Registrar NAV Hoje para iniciar o trackrecord.")
 
 
+
+
+    with tab_cota:
+        import json as _jcota
+        _COTA_FILE = _END_DIR / "cota.json"
+        def _load_cota():
+            if _COTA_FILE.exists():
+                return _jcota.loads(_COTA_FILE.read_text())
+            return {"valor_inicial": 1000.0, "data_inicio": "2024-01-02",
+                    "taxa_gestao_aa": 2.0, "taxa_perf": 20.0,
+                    "hurdle": "CDI", "patrimonio": 10_000_000.0,
+                    "despesas_fixas_mensais": 15_000.0, "historico": []}
+        def _save_cota(c): _COTA_FILE.write_text(_jcota.dumps(c, indent=2, ensure_ascii=False))
+
+        cfg_cota = _load_cota()
+
+        st.markdown("###  Configuração do Fundo")
+        cc1,cc2,cc3 = st.columns(3)
+        with cc1:
+            val_ini  = st.number_input("Valor inicial da cota (R$)", value=float(cfg_cota.get("valor_inicial",1000)), step=100.0, key="cota_ini")
+            st.caption(f"= {_brl(val_ini,2)}")
+            dt_ini   = st.text_input("Data de início", value=cfg_cota.get("data_inicio","2024-01-02"), key="cota_dt")
+            patr     = st.number_input("Patrimônio líquido atual (R$)", value=float(cfg_cota.get("patrimonio",10e6)), step=100_000.0, key="cota_patr")
+            st.caption(f"= {_brl(patr,2)}")
+        with cc2:
+            tg_aa    = st.slider("Taxa de gestão a.a. (%)", 0.0, 3.0, float(cfg_cota.get("taxa_gestao_aa",2.0)), 0.1, key="cota_tg")
+            tp       = st.slider("Taxa de performance (%)", 0.0, 30.0, float(cfg_cota.get("taxa_perf",20.0)), 1.0, key="cota_tp")
+            hurdle_tipo = st.selectbox("Hurdle rate", ["CDI","IBOV","IPCA + spread"], index=0, key="cota_hurdle")
+            if hurdle_tipo == "IPCA + spread":
+                _spread_default = float(cfg_cota.get("ipca_spread", 5.0))
+                ipca_spread = st.slider("Spread sobre IPCA (%a.a.)", 0.0, 15.0, _spread_default, 0.5, key="cota_ipca_spread")
+                hurdle = f"IPCA+{ipca_spread:.1f}%"
+                st.caption(f"Ex: IPCA 5% + {ipca_spread:.1f}% = ~{5+ipca_spread:.1f}% a.a.")
+            else:
+                ipca_spread = 0.0
+                hurdle = hurdle_tipo
+        with cc3:
+            desp_fix = st.number_input("Despesas fixas mensais (R$)", value=float(cfg_cota.get("despesas_fixas_mensais",15000)), step=1000.0, key="cota_desp")
+            st.caption(f"= {_brl(desp_fix,2)}")
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button(" Salvar e Aplicar", key="cota_save", type="primary", use_container_width=True):
+                cfg_cota.update({"valor_inicial":val_ini,"data_inicio":dt_ini,
+                    "taxa_gestao_aa":tg_aa,"taxa_perf":tp,"hurdle":hurdle,
+                    "ipca_spread":ipca_spread,"patrimonio":patr,
+                    "despesas_fixas_mensais":desp_fix})
+                _save_cota(cfg_cota)
+                st.success(" Configuração salva e aplicada!")
+                st.rerun()
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("###  Demonstrativo de Custos")
+
+        # Cálculos
+        tg_mensal = patr * (tg_aa/100) / 12
+        desp_total_mensal = tg_mensal + desp_fix
+        desp_total_aa = desp_total_mensal * 12
+        tx_efetiva_aa = desp_total_aa / patr * 100 if patr else 0
+
+        # Cálculos adicionais
+        tg_aa_valor    = patr * (tg_aa/100)
+        desp_total_aa  = desp_total_mensal * 12
+
+        dm1,dm2,dm3,dm4 = st.columns(4)
+        dm1.metric("Gestao Mensal", _brl(tg_mensal,0),
+            help=f"Taxa anual: {_brl(tg_aa_valor,0)} ({tg_aa:.1f}% a.a.)")
+        dm2.metric("Despesas Fixas Mensais", _brl(desp_fix,0),
+            help=f"Anual: {_brl(desp_fix*12,0)}")
+        dm3.metric("Total Mensal", _brl(desp_total_mensal,0),
+            help=f"Total anual: {_brl(desp_total_aa,0)}")
+        dm4.metric("Encargos Totais a.a.", f"{tx_efetiva_aa:.2f}%")
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("### Demonstrativo Anual Detalhado")
+        da1,da2,da3 = st.columns(3)
+        da1.metric("Taxa de Gestao a.a.", _brl(tg_aa_valor,0),
+            help=f"{tg_aa:.1f}% sobre patrimonio de {_brl(patr,0)}")
+        da2.metric("Despesas Operacionais a.a.", _brl(desp_fix*12,0))
+        da3.metric("Custo Total a.a.", _brl(desp_total_aa,0))
+
+        # Taxa de performance estimada
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("### Taxa de Performance")
+        gp1,gp2,gp3,gp4 = st.columns(4)
+        _ret_real = st.session_state.get("end_ret_real_pct", None)
+        _periodo_real = st.session_state.get("end_ret_periodo", None)
+        if _ret_real is not None:
+            _ret_default = round(float(_ret_real), 2)
+            gp1.markdown(f"<small style='color:#4CAF50'>Retorno real carregado da Visao da Carteira ({_periodo_real})</small>", unsafe_allow_html=True)
+        else:
+            _ret_default = 12.0
+            gp1.markdown("<small style='color:#888'>Nenhum dado da Visao da Carteira — usando estimativa manual</small>", unsafe_allow_html=True)
+        _ret_est = gp1.number_input("Retorno do fundo (%)", value=_ret_default, step=0.5, key="dem_ret_est")
+        _bench_est = {"CDI": _CDI_AA*100, "IBOV": 10.0}.get(
+            hurdle.split("+")[0].strip(), _CDI_AA*100 + float(hurdle.split("+")[1].replace("%","").strip()) if "+" in hurdle else _CDI_AA*100)
+        gp2.metric("Hurdle Rate", f"{_bench_est:.2f}% a.a.", help=hurdle)
+        _alpha_est = _ret_est - _bench_est
+        _perf_fee_est = max(0, (_alpha_est/100) * patr * (tp/100)) if _alpha_est > 0 else 0.0
+        gp3.metric("Alpha Estimado", f"{_alpha_est:+.2f}%",
+            delta_color="normal" if _alpha_est>0 else "inverse")
+        gp4.metric("Perf. Fee Estimada", _brl(_perf_fee_est,0),
+            help=f"{tp:.0f}% sobre alpha de {_alpha_est:+.2f}%")
+
+        # Gross up
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("### Gross Up — Resultado Liquido para a Gestora")
+        gu1,gu2,gu3,gu4 = st.columns(4)
+        with gu1:
+            aliq_ir = st.number_input("Aliquota IR (%)", value=15.0, min_value=0.0, max_value=50.0, step=0.5, key="gu_ir")
+        with gu2:
+            aliq_pis_cofins = st.number_input("PIS/COFINS (%)", value=9.25, min_value=0.0, max_value=20.0, step=0.25, key="gu_pc")
+        with gu3:
+            aliq_csll = st.number_input("CSLL (%)", value=9.0, min_value=0.0, max_value=15.0, step=0.5, key="gu_csll")
+        with gu4:
+            aliq_iss = st.number_input("ISS (%)", value=5.0, min_value=0.0, max_value=10.0, step=0.5, key="gu_iss")
+
+        receita_bruta_gu  = tg_aa_valor + _perf_fee_est
+        total_aliq        = (aliq_ir + aliq_pis_cofins + aliq_csll + aliq_iss) / 100
+        impostos_gu       = receita_bruta_gu * total_aliq
+        resultado_liq_gu  = receita_bruta_gu - impostos_gu - desp_total_aa
+        margem_liq_gu     = resultado_liq_gu / receita_bruta_gu * 100 if receita_bruta_gu else 0
+
+        gr1,gr2,gr3,gr4,gr5 = st.columns(5)
+        gr1.metric("Receita Bruta", _brl(receita_bruta_gu,0))
+        gr2.metric("Impostos Totais", _brl(impostos_gu,0),
+            help=f"IR {aliq_ir}% + PIS/COFINS {aliq_pis_cofins}% + CSLL {aliq_csll}% + ISS {aliq_iss}%")
+        gr3.metric("Custos Operacionais", _brl(desp_total_aa,0))
+        gr4.metric("Resultado Liquido", _brl(resultado_liq_gu,0),
+            delta=f"{margem_liq_gu:.1f}% margem",
+            delta_color="normal" if resultado_liq_gu>0 else "inverse")
+        gr5.metric("Aliquota Efetiva Total", f"{total_aliq*100:.2f}%")
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("###  Valor da Cota & Performance")
+
+        # Usa trackrecord para calcular valor de cota
+        tr_c = _load_tr()
+        if tr_c:
+            import pandas as _pdc
+            df_cota = _pdc.DataFrame(tr_c)
+            df_cota["data"] = _pdc.to_datetime(df_cota["date"])
+            df_cota = df_cota.sort_values("data")
+            df_cota["valor_cota_bruto"] = val_ini * (1 + df_cota["nav_acc"]/100)
+            # Desconta TER diário
+            ter_diario = (1 + tx_efetiva_aa/100)**(1/252) - 1
+            n_dias = (df_cota["data"] - df_cota["data"].iloc[0]).dt.days
+            df_cota["valor_cota_liq"] = df_cota["valor_cota_bruto"] * (1 - ter_diario)**n_dias
+
+            # CDI acumulado como hurdle
+            cdi_d = (1 + _CDI_AA)**(1/252) - 1
+            df_cota["cdi_acc"] = val_ini * ((1+cdi_d)**n_dias)
+
+            # Taxa de performance (semestral — aplica se acima do hurdle)
+            ultima = df_cota.iloc[-1]
+            ret_bruto   = float(ultima["nav_acc"])
+            ret_cdi_per = float((1+_CDI_AA)**(n_dias.iloc[-1]/252)-1)*100 if len(n_dias) else 0
+            alpha_pp    = ret_bruto - ret_cdi_per
+            perf_fee    = max(0, alpha_pp/100 * patr * tp/100) if alpha_pp > 0 else 0.0
+
+            cv1,cv2,cv3,cv4 = st.columns(4)
+            cv1.metric("Cota Bruta Atual", _brl(float(ultima["valor_cota_bruto"]),4))
+            cv2.metric("Cota Líquida (c/ TER)", _brl(float(ultima["valor_cota_liq"]),4))
+            cv3.metric("Retorno s/ CDI (alpha)", f"{alpha_pp:+.2f}%",
+                delta_color="normal" if alpha_pp>0 else "inverse")
+            cv4.metric("Perf. Fee Estimada", _brl(perf_fee,0),
+                help="Taxa de performance semestral sobre alpha vs CDI")
+
+            # Gráfico cota bruta vs líquida vs CDI
+            fig_cota = go.Figure()
+            fig_cota.add_trace(go.Scatter(x=df_cota["data"], y=df_cota["valor_cota_bruto"],
+                mode="lines", name="Cota Bruta", line=dict(color=C["blue_lt"],width=2)))
+            fig_cota.add_trace(go.Scatter(x=df_cota["data"], y=df_cota["valor_cota_liq"],
+                mode="lines", name="Cota Líquida (c/ TER)", line=dict(color=C["pos"],width=2)))
+            fig_cota.add_trace(go.Scatter(x=df_cota["data"], y=df_cota["cdi_acc"],
+                mode="lines", name=f"CDI ({_CDI_AA*100:.1f}% a.a.)", line=dict(color=C["gray"],width=1.5,dash="dot")))
+            fig_cota.update_layout(**PL, title="Evolução do Valor da Cota (R$)",
+                yaxis_title="R$", height=380)
+            st.plotly_chart(fig_cota, use_container_width=True)
+            st.dataframe(df_cota[["date","valor_cota_bruto","valor_cota_liq"]].tail(20).rename(
+                columns={"date":"Data","valor_cota_bruto":"Cota Bruta","valor_cota_liq":"Cota Líquida"}),
+                use_container_width=True, hide_index=True)
+        else:
+            st.info("Registre snapshots de NAV na aba  Trackrecord para calcular o valor da cota.")
+
+
+    with tab_bt:
+        import numpy as _npbt
+        st.markdown("###  Backtest & Simulação de Cenários")
+
+        btt1, btt2 = st.tabs([" Backtest Histórico", " Monte Carlo da Carteira"])
+
+        with btt1:
+            st.markdown("#### Backtest — Simula a carteira atual em períodos históricos")
+            bc1,bc2,bc3 = st.columns(3)
+            with bc1:
+                bt_period = st.selectbox("Período", ["1y","2y","3y","5y"], index=1, key="bt_period")
+            with bc2:
+                bt_bench  = st.selectbox("Benchmark", ["IBOV","CDI","SPX"], index=0, key="bt_bench")
+            with bc3:
+                bt_rebal  = st.selectbox("Rebalanceamento", ["Nunca","Mensal","Trimestral","Semestral"], index=0, key="bt_rebal")
+
+            if st.button(" Rodar Backtest", type="primary", key="bt_run"):
+                tks_bt = tuple(p["ticker"] for p in carteira if p["ticker"] != "CAIXA")
+                with st.spinner("Baixando dados históricos..."):
+                    df_bt = _get_hist(tks_bt, bt_period)
+                if df_bt.empty:
+                    st.error("Sem dados suficientes.")
+                else:
+                    port_ret_bt, _ = _portfolio_returns(df_bt, carteira)
+                    if port_ret_bt is not None:
+                        port_acc_bt = (1 + port_ret_bt).cumprod() - 1
+
+                        fig_bt = go.Figure()
+                        fig_bt.add_trace(go.Scatter(x=port_acc_bt.index, y=port_acc_bt.values*100,
+                            mode="lines", name=" Endurance",
+                            line=dict(color=C["blue_lt"],width=2.5),
+                            fill="tozeroy", fillcolor="rgba(30,100,200,0.08)"))
+
+                        bench_map = {"IBOV":"IBOV","SPX":"SPX","CDI":"CDI"}
+                        bk = bench_map[bt_bench]
+                        if bk == "CDI":
+                            cdi_d2 = (1+_CDI_AA)**(1/252)-1
+                            bench_acc = pd.Series((1+cdi_d2)**_npbt.arange(len(port_acc_bt))-1, index=port_acc_bt.index)
+                        elif bk in df_bt.columns:
+                            bs = df_bt[bk].pct_change().dropna().reindex(port_ret_bt.index).fillna(0)
+                            bench_acc = (1+bs).cumprod()-1
+                        else: bench_acc = None
+
+                        if bench_acc is not None:
+                            fig_bt.add_trace(go.Scatter(x=bench_acc.index, y=bench_acc.values*100,
+                                mode="lines", name=bt_bench,
+                                line=dict(color=C["gray"],width=1.5,dash="dot")))
+
+                        fig_bt.add_hline(y=0, line_color=C["border"], line_width=1)
+                        fig_bt.update_layout(**PL, title=f"Backtest — {bt_period} | vs {bt_bench}",
+                            yaxis_title="Retorno Acumulado (%)", height=420)
+                        st.plotly_chart(fig_bt, use_container_width=True)
+
+                        # Métricas
+                        m_bt = _risk_metrics(port_ret_bt, bench_acc.pct_change().dropna() if bench_acc is not None else None)
+                        if m_bt:
+                            mb1,mb2,mb3,mb4,mb5,mb6 = st.columns(6)
+                            mb1.metric("Retorno a.a.", f"{m_bt.get('ret_aa',0)*100:+.1f}%")
+                            mb2.metric("Volatilidade", f"{m_bt.get('vol_aa',0)*100:.1f}%")
+                            mb3.metric("Sharpe", f"{m_bt.get('sharpe',0):.2f}")
+                            mb4.metric("Max Drawdown", f"{m_bt.get('max_dd',0)*100:.1f}%")
+                            mb5.metric("Alpha", f"{m_bt.get('alpha',0)*100:+.2f}%" if "alpha" in m_bt else "—")
+                            mb6.metric("Beta", f"{m_bt.get('beta',0):.2f}" if "beta" in m_bt else "—")
+
+                        # Underwater chart
+                        cum_bt = (1 + port_ret_bt).cumprod()
+                        dd_bt  = (cum_bt - cum_bt.cummax()) / cum_bt.cummax() * 100
+                        fig_uw = go.Figure()
+                        fig_uw.add_trace(go.Scatter(x=dd_bt.index, y=dd_bt.values,
+                            mode="lines", fill="tozeroy",
+                            fillcolor="rgba(220,50,50,0.2)",
+                            line=dict(color=C["neg"],width=1), name="Drawdown"))
+                        fig_uw.update_layout(**PL, title="Underwater Chart (Drawdown %)",
+                            yaxis_title="%", height=220)
+                        st.plotly_chart(fig_uw, use_container_width=True)
+
+        with btt2:
+            st.markdown("#### Monte Carlo — Simulação de Cenários da Carteira")
+            sc1,sc2,sc3 = st.columns(3)
+            with sc1:
+                mc_n     = st.selectbox("Simulações", [500,1000,5000], index=1, key="end_mc_n")
+                mc_anos  = st.slider("Horizonte (anos)", 1, 10, 3, 1, key="end_mc_anos")
+            with sc2:
+                mc_ret   = st.slider("Retorno esperado a.a. (%)", 0.0, 40.0, 12.0, 0.5, key="end_mc_ret") / 100
+                mc_vol   = st.slider("Volatilidade a.a. (%)", 5.0, 50.0, 18.0, 0.5, key="end_mc_vol") / 100
+            with sc3:
+                mc_patr  = st.number_input("Patrimônio inicial (R$)", value=10_000_000.0, step=500_000.0, key="end_mc_patr")
+                mc_aporte= st.number_input("Aporte mensal (R$)", value=0.0, step=50_000.0, key="end_mc_aporte")
+
+            if st.button(" Simular Cenários", type="primary", key="end_mc_run"):
+                _npbt.random.seed(42)
+                n_steps2 = mc_anos * 12
+                mu_m2    = (1 + mc_ret)**(1/12) - 1
+                sig_m2   = mc_vol / _npbt.sqrt(12)
+                paths2   = _npbt.zeros((mc_n, n_steps2+1))
+                paths2[:,0] = mc_patr
+                for t2 in range(1, n_steps2+1):
+                    r2 = _npbt.random.normal(mu_m2, sig_m2, mc_n)
+                    paths2[:,t2] = paths2[:,t2-1] * (1+r2) + mc_aporte
+
+                x2 = list(range(n_steps2+1))
+                pc10b = _npbt.percentile(paths2,10,axis=0)
+                pc50b = _npbt.percentile(paths2,50,axis=0)
+                pc90b = _npbt.percentile(paths2,90,axis=0)
+
+                fig_mc2 = go.Figure()
+                fig_mc2.add_trace(go.Scatter(x=x2+x2[::-1],
+                    y=list(pc90b)+list(pc10b[::-1]), fill="toself",
+                    fillcolor="rgba(30,80,160,0.15)", line=dict(color="rgba(0,0,0,0)"), name="P10-P90"))
+                fig_mc2.add_trace(go.Scatter(x=x2, y=pc50b, mode="lines",
+                    line=dict(color=C["blue_lt"],width=2.5), name="Mediana"))
+                fig_mc2.add_trace(go.Scatter(x=x2, y=pc10b, mode="lines",
+                    line=dict(color=C["neg"],width=1.2,dash="dot"), name="Bear P10"))
+                fig_mc2.add_trace(go.Scatter(x=x2, y=pc90b, mode="lines",
+                    line=dict(color=C["pos"],width=1.2,dash="dot"), name="Bull P90"))
+
+                # Amostra de caminhos
+                for i2 in _npbt.random.choice(mc_n, min(50,mc_n), replace=False):
+                    fig_mc2.add_trace(go.Scatter(x=x2, y=paths2[i2], mode="lines",
+                        line=dict(color="rgba(100,180,255,0.18)",width=1.0),
+                        showlegend=False, hoverinfo="skip"))
+
+                tickv2 = list(range(0,n_steps2+1,3))
+                tickt2 = [f"M{v}" for v in tickv2]
+                _pl_mc2 = {**PL,
+                    "xaxis":dict(tickvals=tickv2,ticktext=tickt2,
+                        gridcolor="rgba(255,255,255,0.04)"),
+                    "yaxis":dict(title="Patrimônio (R$)",
+                        gridcolor="rgba(255,255,255,0.04)"),
+                    "height":450,"legend":dict(orientation="h",y=-0.12)}
+                fig_mc2.update_layout(**_pl_mc2,
+                    title=f"Monte Carlo Carteira — {mc_n:,} cenários | {mc_anos} anos")
+                st.plotly_chart(fig_mc2, use_container_width=True)
+
+                # KPIs finais
+                final_vals = paths2[:,-1]
+                prob_dobrar = float((_npbt.array(final_vals) > mc_patr*2).mean()*100)
+                k1,k2,k3,k4 = st.columns(4)
+                k1.metric("Mediana final", _brl(float(_npbt.median(final_vals)),0))
+                k2.metric("Bear (P10)", _brl(float(pc10b[-1]),0))
+                k3.metric("Bull (P90)", _brl(float(pc90b[-1]),0))
+                k4.metric("Prob. dobrar patrimônio", f"{prob_dobrar:.1f}%")
+
+
+elif pagina == "Exposição Geográfica":
+    st.markdown("##  Exposição Geográfica")
+
+    GEO = {
+        "WEGE3.SA": {"Brasil":42,"América do Norte":18,"Europa":20,"Ásia":12,"América Latina":6,"Outros":2},
+        "COGN3.SA": {"Brasil":100},
+        "PETR4.SA": {"Brasil":85,"América do Norte":8,"Europa":4,"Outros":3},
+        "VALE3.SA": {"China":55,"Brasil":15,"Europa":12,"Japão":8,"Outros":10},
+        "ABEV3.SA": {"Brasil":60,"América do Norte":20,"América Latina":15,"Europa":5},
+        "SUZB3.SA": {"Europa":35,"China":25,"Brasil":20,"América do Norte":12,"Outros":8},
+        "EMBR3.SA": {"América do Norte":45,"Europa":20,"Brasil":15,"Ásia":12,"Outros":8},
+        "GERDAU":   {"Brasil":55,"América do Norte":30,"América Latina":10,"Outros":5},
+    }
+    COUNTRY_MAP = {
+        "Brasil":"BRA","América do Norte":"USA","Europa":"DEU","China":"CHN",
+        "Ásia":"CHN","América Latina":"ARG","Japão":"JPN","Outros":"RUS",
+    }
+
+    # Filtros
+    fc1,fc2,fc3 = st.columns(3)
+    with fc1:
+        modo = st.radio("Visualização",["Mapa Coroplético","Barras por Empresa","Treemap"],horizontal=True)
+    with fc2:
+        setor_filter = st.multiselect("Filtrar por Setor",
+            list(set(results[e].get("setor","Outros") for e in empresas)),
+            default=[], key="geo_setor")
+    with fc3:
+        min_exp = st.slider("Exposição mínima (%)", 0, 50, 0, 5, key="geo_min")
+
+    # Empresas filtradas
+    emps_geo = [e for e in empresas
+                if (not setor_filter or results[e].get("setor","") in setor_filter)]
+    tk_sel = st.multiselect("Empresas",
+        [e for e in emps_geo],
+        default=emps_geo[:8],
+        format_func=lambda e: results[e].get("ticker",e).replace(".SA",""),
+        key="geo_emps")
+
+    # Agrega exposição ponderada por EV
+    all_countries = {}
+    for e in (tk_sel or emps_geo):
+        tk = results[e].get("ticker","")
+        geo = GEO.get(tk, GEO.get(tk.replace(".SA",""), {"Brasil":100}))
+        ev  = abs(float(results[e].get("enterprise_value") or 1e9))
+        for pais, pct_v in geo.items():
+            if pct_v >= min_exp:
+                all_countries[pais] = all_countries.get(pais,0) + pct_v * ev/1e9
+
+    if not all_countries:
+        st.info("Nenhum dado para os filtros selecionados.")
+    else:
+        total = sum(all_countries.values())
+        norm  = {k: v/total*100 for k,v in all_countries.items()}
+
+        if modo == "Mapa Coroplético":
+            import plotly.express as px
+            df_map = pd.DataFrame([
+                {"País": p, "Exposição (%)": round(v,1),
+                 "iso": COUNTRY_MAP.get(p,"BRA")}
+                for p,v in norm.items()])
+            fig_geo = px.choropleth(df_map,
+                locations="iso", color="Exposição (%)",
+                hover_name="País",
+                color_continuous_scale=[[0,"#0a1628"],[0.3,C["navy"]],[0.7,C["blue_lt"]],[1,C["pos"]]],
+                range_color=(0, df_map["Exposição (%)"].max()))
+            fig_geo.update_layout(
+                paper_bgcolor=C["bg"], plot_bgcolor=C["bg"],
+                font=dict(color=C["white"],family="Helvetica,Arial"),
+                geo=dict(bgcolor=C["bg"], showframe=False,
+                         showcoastlines=True, coastlinecolor=C["border"],
+                         showland=True, landcolor=C["bg2"],
+                         showocean=True, oceancolor=C["bg"],
+                         showlakes=False, projection_type="natural earth"),
+                coloraxis_colorbar=dict(
+                    title=dict(text="Exp. (%)", font=dict(color=C["white"])),
+                    tickfont=dict(color=C["white"])),
+                margin=dict(l=0,r=0,t=30,b=0), height=480)
+            st.plotly_chart(fig_geo, use_container_width=True)
+
+        elif modo == "Barras por Empresa":
+            rows_bar = []
+            for e in (tk_sel or emps_geo):
+                tk = results[e].get("ticker","")
+                geo = GEO.get(tk, GEO.get(tk.replace(".SA",""), {"Brasil":100}))
+                for pais, pct_v in geo.items():
+                    if pct_v >= min_exp:
+                        rows_bar.append({"Empresa": tk.replace(".SA",""), "País": pais, "Exp (%)": pct_v})
+            if rows_bar:
+                df_bar = pd.DataFrame(rows_bar)
+                import plotly.express as px
+                fig_bar = px.bar(df_bar, x="Empresa", y="Exp (%)", color="País",
+                    barmode="stack",
+                    color_discrete_sequence=[C["blue_lt"],C["sky"],C["teal"],C["pos"],
+                                             C["gray"],C["navy"],"#FFB347","#9B59B6"])
+                fig_bar.update_layout(**{**PL,"margin":dict(l=20,r=20,t=40,b=60)},
+                    height=440, xaxis_tickangle=-30)
+                st.plotly_chart(fig_bar, use_container_width=True)
+
+        else:  # Treemap
+            import plotly.express as px
+            df_tree = pd.DataFrame([{"País":k,"Exposição":round(v,1)} for k,v in norm.items()])
+            fig_tree = px.treemap(df_tree, path=["País"], values="Exposição",
+                color="Exposição",
+                color_continuous_scale=[[0,C["bg2"]],[0.5,C["navy"]],[1,C["blue_lt"]]])
+            fig_tree.update_layout(paper_bgcolor=C["bg"],
+                font=dict(color=C["white"]),
+                margin=dict(l=0,r=0,t=30,b=0), height=440)
+            st.plotly_chart(fig_tree, use_container_width=True)
+
+        # Tabela resumo
+        st.markdown("### Resumo por País")
+        df_res = pd.DataFrame([{"País":k,"Exposição Ponderada (%)":f"{v:.1f}%"}
+                                for k,v in sorted(norm.items(),key=lambda x:-x[1])])
+        st.markdown(dark_table(df_res), unsafe_allow_html=True)
+        export_buttons(df_res, "exposicao_geografica")
+
+
 elif pagina == "Governança":
     st.markdown("## Governança Corporativa")
     emp_sel = st.selectbox("Empresa", empresas,
-                           format_func=lambda e: f"{results[e].get('ticker',e).replace('.SA','')} — {e}",
-                           key="gov_emp")
+        format_func=lambda e: f"{results[e].get('ticker',e).replace('.SA','')} — {e}",
+        key="gov_emp")
     r = results[emp_sel]; ticker = r.get("ticker", emp_sel)
 
-    # ── Dados de governança por empresa ─────────────────────────
-    # Estrutura: ticker → {segmento, conselho, diretoria}
+    # Dados ricos hardcoded para cobertura principal
     GOVERNANCA = {
-        "WEGE3.SA": {
-            "segmento_b3": "Novo Mercado",
-            "tag_along": "100%",
-            "free_float": "~45%",
-            "controlling": "Família Voigt / Fundação Weg",
-            "conselho": [
-                {"Nome": "Décio da Silva",          "Cargo": "Presidente do CA",   "Mandato": "2023–2025", "Independente": "Não"},
-                {"Nome": "Sérgio Luiz Silva Schwartz","Cargo": "Membro",           "Mandato": "2023–2025", "Independente": "Sim"},
-                {"Nome": "Flávio Maluf",             "Cargo": "Membro Ind.",       "Mandato": "2023–2025", "Independente": "Sim"},
-                {"Nome": "Nildemar Secches",         "Cargo": "Membro Ind.",       "Mandato": "2023–2025", "Independente": "Sim"},
-                {"Nome": "Alidor Lueders",           "Cargo": "Membro",            "Mandato": "2023–2025", "Independente": "Não"},
-            ],
-            "diretoria": [
-                {"Nome": "Harry Schmelzer Jr.",  "Cargo": "CEO",               "Desde": "2012"},
-                {"Nome": "André Luis Rodrigues", "Cargo": "CFO / DRI",         "Desde": "2015"},
-                {"Nome": "Wilson Watzko",        "Cargo": "Dir. Industrial",   "Desde": "2018"},
-                {"Nome": "Sônia Regina Scarpelli","Cargo": "Dir. RH",          "Desde": "2020"},
-            ],
-            "link_ri": "https://ri.weg.net",
-        },
-        "COGN3.SA": {
-            "segmento_b3": "Novo Mercado",
-            "tag_along": "100%",
-            "free_float": "~65%",
-            "controlling": "Saber (Kroton) / Free Float",
-            "conselho": [
-                {"Nome": "Rodrigo Galindo",      "Cargo": "Presidente do CA",   "Mandato": "2023–2025", "Independente": "Não"},
-                {"Nome": "Carlos Augusto Senna", "Cargo": "Membro Ind.",        "Mandato": "2023–2025", "Independente": "Sim"},
-                {"Nome": "Joanna Burle",         "Cargo": "Membro Ind.",        "Mandato": "2023–2025", "Independente": "Sim"},
-                {"Nome": "Frederico Villa",      "Cargo": "Membro",             "Mandato": "2023–2025", "Independente": "Não"},
-                {"Nome": "Ana Fontes",           "Cargo": "Membro Ind.",        "Mandato": "2023–2025", "Independente": "Sim"},
-            ],
-            "diretoria": [
-                {"Nome": "Roberto Valério",      "Cargo": "CEO",               "Desde": "2022"},
-                {"Nome": "Bruno Ferrari",        "Cargo": "CFO / DRI",         "Desde": "2021"},
-                {"Nome": "André Tavares",        "Cargo": "Dir. Operações",    "Desde": "2020"},
-                {"Nome": "Fabricia Pozzan",      "Cargo": "Dir. Educação",     "Desde": "2023"},
-            ],
-            "link_ri": "https://ri.cogna.com.br",
-        },
+        "WEGE3.SA": {"segmento_b3":"Novo Mercado","tag_along":"100%","free_float":"~45%",
+            "controlling":"Família Voigt / Fundação WEG","link_ri":"https://ri.weg.net",
+            "conselho":[{"Nome":"Décio da Silva","Cargo":"Presidente CA","Independente":"Não"},
+                {"Nome":"Sérgio Schwartz","Cargo":"Membro","Independente":"Sim"},
+                {"Nome":"Nildemar Secches","Cargo":"Membro Ind.","Independente":"Sim"}],
+            "diretoria":[{"Nome":"Harry Schmelzer Jr.","Cargo":"CEO","Desde":"2012"},
+                {"Nome":"André Rodrigues","Cargo":"CFO/DRI","Desde":"2015"}]},
+        "COGN3.SA": {"segmento_b3":"Novo Mercado","tag_along":"100%","free_float":"~65%",
+            "controlling":"Saber (Kroton) / Free Float","link_ri":"https://ri.cogna.com.br",
+            "conselho":[{"Nome":"Rodrigo Galindo","Cargo":"Presidente CA","Independente":"Não"},
+                {"Nome":"Carlos Senna","Cargo":"Membro Ind.","Independente":"Sim"}],
+            "diretoria":[{"Nome":"Roberto Valério","Cargo":"CEO","Desde":"2022"},
+                {"Nome":"Bruno Ferrari","Cargo":"CFO/DRI","Desde":"2021"}]},
     }
 
-    gov = GOVERNANCA.get(ticker, {})
+    @st.cache_data(ttl=3600)
+    def _gov_dynamic(tk):
+        try:
+            import yfinance as yf
+            t = yf.Ticker(tk)
+            info = t.info or {}
+            holders = t.major_holders
+            inst    = t.institutional_holders
+            return info, holders, inst
+        except: return {}, None, None
 
-    if not gov:
-        st.info(f"Dados de governança para {ticker} ainda não cadastrados. "
-                f"Edite o dict GOVERNANCA no dashboard.py.")
-    else:
-        # KPIs de listagem
-        g1, g2, g3, g4 = st.columns(4)
-        g1.metric("Segmento B3",   gov.get("segmento_b3", "—"))
-        g2.metric("Tag Along",     gov.get("tag_along", "—"))
-        g3.metric("Free Float",    gov.get("free_float", "—"))
-        g4.metric("Controlador",   gov.get("controlling", "—"))
+    gov = GOVERNANCA.get(ticker)
+    with st.spinner("Buscando dados..."):
+        info_yf, holders_yf, inst_yf = _gov_dynamic(ticker)
 
-        # Conselho de Administração
-        st.markdown("<hr>", unsafe_allow_html=True)
-        ca1, ca2 = st.columns([3, 1])
-        with ca1:
-            st.markdown("## Conselho de Administração")
-        with ca2:
-            link_ri = gov.get("link_ri", "")
-            if link_ri:
-                st.markdown(f"<a href='{link_ri}' target='_blank' style='color:{C['blue_lt']};font-size:.8rem;'>🔗 RI da Empresa</a>",
-                            unsafe_allow_html=True)
+    # KPIs dinâmicos via yfinance
+    g1,g2,g3,g4 = st.columns(4)
+    seg = (gov or {}).get("segmento_b3") or info_yf.get("exchange","—")
+    tag = (gov or {}).get("tag_along","—")
+    ff  = (gov or {}).get("free_float") or (f"{info_yf.get('floatShares',0)/max(info_yf.get('sharesOutstanding',1),1)*100:.1f}%" if info_yf.get('floatShares') else "—")
+    ctrl= (gov or {}).get("controlling") or info_yf.get("companyOfficers","—")
+    g1.metric("Segmento B3", seg)
+    g2.metric("Tag Along",   tag)
+    g3.metric("Free Float",  ff)
+    g4.metric("País", info_yf.get("country","BR"))
 
-        df_ca = pd.DataFrame(gov.get("conselho", []))
-        if not df_ca.empty:
-            def _gov_color(val):
-                if val == "Sim": return f"color:{C['pos']};font-weight:600"
-                if val == "Não": return f"color:{C['gray2']}"
-                return f"color:{C['white']}"
-            st.markdown(dark_table(df_ca, _gov_color), unsafe_allow_html=True)
-            n_ind = sum(1 for m in gov.get("conselho", []) if m.get("Independente") == "Sim")
-            n_tot = len(gov.get("conselho", []))
-            st.caption(f"{n_ind}/{n_tot} membros independentes ({n_ind/n_tot*100:.0f}%)")
-            export_buttons(df_ca, f"conselho_{ticker}")
+    tab_ca, tab_dir, tab_holders = st.tabs(["🏛️ Conselho","👔 Diretoria"," Acionistas"])
 
-        # Diretoria Executiva
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown("## Diretoria Executiva")
-        df_dir = pd.DataFrame(gov.get("diretoria", []))
-        if not df_dir.empty:
-            st.markdown(dark_table(df_dir), unsafe_allow_html=True)
-            export_buttons(df_dir, f"diretoria_{ticker}")
+    with tab_ca:
+        if gov and gov.get("conselho"):
+            st.markdown(dark_table(pd.DataFrame(gov["conselho"])), unsafe_allow_html=True)
+        else:
+            officers = info_yf.get("companyOfficers",[])
+            ca = [{"Nome":o.get("name","—"),"Cargo":o.get("title","—"),
+                   "Remuneração":f"US$ {int(o.get('totalPay',0)):,}".replace(",",".") if o.get("totalPay") else "—"}
+                  for o in officers if any(k in o.get("title","").lower() for k in ["board","chair","conselho","director","presidente"])]
+            if ca: st.markdown(dark_table(pd.DataFrame(ca)), unsafe_allow_html=True)
+            else: st.info("Dados do conselho não disponíveis via API. Consulte o site de RI.")
 
-        # Mapa visual de governança: radar de boas práticas
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown("## Score de Governança")
-        cats_gov = ["Novo Mercado", "Tag Along 100%", "Free Float > 25%",
-                    "CA Independente > 20%", "Relatório ESG", "Auditoria Big 4"]
-        scores_weg   = [10, 10, 8, 7, 8, 10]
-        scores_cogna = [10, 10, 9, 8, 7, 10]
-        scores_map   = {"WEGE3.SA": scores_weg, "COGN3.SA": scores_cogna}
-        scores = scores_map.get(ticker, [5]*6)
+    with tab_dir:
+        if gov and gov.get("diretoria"):
+            st.markdown(dark_table(pd.DataFrame(gov["diretoria"])), unsafe_allow_html=True)
+        else:
+            officers = info_yf.get("companyOfficers",[])
+            dirs = [{"Nome":o.get("name","—"),"Cargo":o.get("title","—"),
+                     "Desde":str(o.get("yearBorn","—")),
+                     "Remuneração":f"US$ {int(o.get('totalPay',0)):,}".replace(",",".") if o.get("totalPay") else "—"}
+                    for o in officers if not any(k in o.get("title","").lower() for k in ["board","chair"])]
+            if dirs: st.markdown(dark_table(pd.DataFrame(dirs)), unsafe_allow_html=True)
+            else: st.info("Sem dados de diretoria via API.")
 
-        n_ind_pct = n_ind/n_tot*100 if n_tot else 0
-        if gov.get("tag_along") == "100%": scores[1] = 10
-        if gov.get("segmento_b3") == "Novo Mercado": scores[0] = 10
-        if n_ind_pct >= 20: scores[3] = min(10, int(n_ind_pct/10))
+    with tab_holders:
+        if holders_yf is not None and not holders_yf.empty:
+            st.markdown("**Composição Acionária (Major Holders)**")
+            st.dataframe(holders_yf, use_container_width=True, hide_index=True)
+        if inst_yf is not None and not inst_yf.empty:
+            st.markdown("**Detentores Institucionais ≥ 5%**")
+            shares_out = float(info_yf.get("sharesOutstanding",1) or 1)
+            df_inst5 = inst_yf.copy()
+            if "% Out" in df_inst5.columns:
+                df_inst5 = df_inst5[df_inst5["% Out"].apply(lambda x: float(x or 0)*100 >= 5)]
+                df_inst5["% Capital"] = df_inst5["% Out"].apply(lambda x: f"{float(x)*100:.2f}%")
+            st.markdown(dark_table(df_inst5.head(20)), unsafe_allow_html=True)
+        ri = (gov or {}).get("link_ri") or info_yf.get("website","")
+        if ri: st.markdown(f" [Site de Relações com Investidores]({ri})")
 
-        fig_gov = go.Figure()
-        fig_gov.add_trace(go.Scatterpolar(
-            r=scores + [scores[0]], theta=cats_gov + [cats_gov[0]],
-            fill="toself", name=ticker,
-            line_color=C["blue_lt"],
-            fillcolor=f"rgba(35,81,254,.15)"
-        ))
-        fig_gov.update_layout(
-            paper_bgcolor=C["bg"],
-            font=dict(family="Helvetica,Arial", color=C["gray"], size=10),
-            polar=dict(
-                bgcolor=C["bg2"],
-                radialaxis=dict(visible=True, range=[0,10], gridcolor=C["border"],
-                                tickfont=dict(color=C["gray2"])),
-                angularaxis=dict(gridcolor=C["border"], color=C["gray2"])
-            ),
-            margin=dict(l=60, r=60, t=40, b=40),
-            legend=dict(bgcolor=C["bg"]), height=380,
-            title=dict(text="Score 0–10 (estimado — atualize conforme relatórios)", font=dict(color=C["gray"], size=11))
-        )
-        st.plotly_chart(fig_gov, use_container_width=True)
-        st.info("💡 Dados de governança precisam ser atualizados manualmente conforme relatórios do RI. "
-                f"Acesse: {gov.get('link_ri', 'RI da empresa')}")
 
-# ══════════════════════════════════════════════════════════════════
-# PÁG — GRUPO ECONÔMICO (#21 — Teia de empresas)
-# ══════════════════════════════════════════════════════════════════
 elif pagina == "Grupo Econômico":
     st.markdown("## Estrutura do Grupo Econômico")
     emp_sel = st.selectbox("Empresa", empresas,
-                           format_func=lambda e: f"{results[e].get('ticker',e).replace('.SA','')} — {e}",
-                           key="grp_emp")
+        format_func=lambda e: f"{results[e].get('ticker',e).replace('.SA','')} — {e}",
+        key="grp_emp")
     r = results[emp_sel]; ticker = r.get("ticker", emp_sel)
 
-    # ── Dados de estrutura societária ───────────────────────────
     GRUPO_ECONOMICO = {
         "WEGE3.SA": {
-            "nos": [
-                # id, label, tipo (holding/listada/subsidiaria/controladora), pct
-                {"id": "FUNDACAO", "label": "Fundação WEG (33%)", "tipo": "controladora"},
-                {"id": "FAMILIA",  "label": "Família Voigt (22%)", "tipo": "controladora"},
-                {"id": "FF",       "label": "Free Float (45%)",    "tipo": "mercado"},
-                {"id": "WEGE3",    "label": "WEG S.A. (WEGE3)",   "tipo": "listada"},
-                {"id": "WEG_IND",  "label": "WEG Ind. (100%)",    "tipo": "subsidiaria"},
-                {"id": "WEG_INT",  "label": "WEG Intl. (100%)",   "tipo": "subsidiaria"},
-                {"id": "WEG_ENGY", "label": "WEG Energy (100%)", "tipo": "subsidiaria"},
-                {"id": "WEG_AUTO", "label": "WEG Autom. (100%)", "tipo": "subsidiaria"},
-                {"id": "TINTAS",   "label": "Tintas WEG (100%)", "tipo": "subsidiaria"},
-                {"id": "WEG_US",   "label": "WEG USA (100%)",    "tipo": "subsidiaria"},
-                {"id": "WEG_DE",   "label": "WEG Europe (100%)", "tipo": "subsidiaria"},
-            ],
-            "arestas": [
-                ("FUNDACAO","WEGE3"), ("FAMILIA","WEGE3"), ("FF","WEGE3"),
-                ("WEGE3","WEG_IND"), ("WEGE3","WEG_INT"), ("WEGE3","WEG_ENGY"),
-                ("WEGE3","WEG_AUTO"),("WEGE3","TINTAS"),
-                ("WEG_INT","WEG_US"), ("WEG_INT","WEG_DE"),
-            ],
-        },
+            "nos":[{"id":"FUNDACAO","label":"Fundação WEG\n33%","tipo":"controladora"},
+                   {"id":"FAMILIA","label":"Família Voigt\n22%","tipo":"controladora"},
+                   {"id":"FF","label":"Free Float\n45%","tipo":"mercado"},
+                   {"id":"WEGE3","label":"WEG S.A.\nWEGE3","tipo":"listada"},
+                   {"id":"WEG_IND","label":"WEG Ind. 100%","tipo":"subsidiaria"},
+                   {"id":"WEG_INT","label":"WEG Intl. 100%","tipo":"subsidiaria"},
+                   {"id":"WEG_EN","label":"WEG Energy 100%","tipo":"subsidiaria"},
+                   {"id":"WEG_US","label":"WEG USA 100%","tipo":"subsidiaria"},
+                   {"id":"WEG_DE","label":"WEG Europe 100%","tipo":"subsidiaria"}],
+            "arestas":[("FUNDACAO","WEGE3"),("FAMILIA","WEGE3"),("FF","WEGE3"),
+                       ("WEGE3","WEG_IND"),("WEGE3","WEG_INT"),("WEGE3","WEG_EN"),
+                       ("WEG_INT","WEG_US"),("WEG_INT","WEG_DE")]},
         "COGN3.SA": {
-            "nos": [
-                {"id": "SABER",    "label": "Saber (Kroton) (35%)", "tipo": "controladora"},
-                {"id": "FF",       "label": "Free Float (65%)",     "tipo": "mercado"},
-                {"id": "COGN3",    "label": "Cogna Ed. (COGN3)",    "tipo": "listada"},
-                {"id": "KROTON",   "label": "Kroton (100%)",        "tipo": "subsidiaria"},
-                {"id": "VASTA",    "label": "Vasta Plat. (73%)",    "tipo": "subsidiaria"},
-                {"id": "PLATOS",   "label": "Platos (100%)",        "tipo": "subsidiaria"},
-                {"id": "SABER_ED", "label": "Saber Educ. (100%)",   "tipo": "subsidiaria"},
-                {"id": "AMPLI",    "label": "Ampli (100%)",         "tipo": "subsidiaria"},
-                {"id": "OPER_EAD", "label": "Oper. EAD (100%)",    "tipo": "subsidiaria"},
-            ],
-            "arestas": [
-                ("SABER","COGN3"), ("FF","COGN3"),
-                ("COGN3","KROTON"), ("COGN3","VASTA"), ("COGN3","PLATOS"),
-                ("COGN3","SABER_ED"), ("COGN3","AMPLI"),
-                ("KROTON","OPER_EAD"),
-            ],
-        },
+            "nos":[{"id":"SABER","label":"Saber (Kroton)\n35%","tipo":"controladora"},
+                   {"id":"FF","label":"Free Float\n65%","tipo":"mercado"},
+                   {"id":"COGN3","label":"Cogna Ed.\nCOGN3","tipo":"listada"},
+                   {"id":"KROTON","label":"Kroton 100%","tipo":"subsidiaria"},
+                   {"id":"VASTA","label":"Vasta Plat. 73%","tipo":"subsidiaria"},
+                   {"id":"SABER_ED","label":"Saber Educ. 100%","tipo":"subsidiaria"},
+                   {"id":"AMPLI","label":"Ampli 100%","tipo":"subsidiaria"}],
+            "arestas":[("SABER","COGN3"),("FF","COGN3"),
+                       ("COGN3","KROTON"),("COGN3","VASTA"),
+                       ("COGN3","SABER_ED"),("COGN3","AMPLI")]},
     }
 
-    grupo = GRUPO_ECONOMICO.get(ticker, {})
-    nos   = grupo.get("nos", [])
-    ares  = grupo.get("arestas", [])
+    grupo = GRUPO_ECONOMICO.get(ticker)
 
-    if not nos:
-        st.info(f"Estrutura societária de {ticker} ainda não cadastrada. "
-                f"Edite GRUPO_ECONOMICO no dashboard.py.")
-    else:
-        # Monta grafo como rede com Plotly (scatter + linhas)
-        # Layout hierárquico simples: posições manuais por tipo
-        tipo_pos = {
-            "controladora": (-1, 1), "mercado": (1, 1),
-            "listada": (0, 0),
-            "subsidiaria": (0, -1),
-        }
-        tipo_color = {
-            "controladora": C["navy"],
-            "mercado":      C["gray2"],
-            "listada":      C["blue_lt"],
-            "subsidiaria":  C["sky"],
-        }
-        tipo_size = {"controladora": 28, "mercado": 22, "listada": 38, "subsidiaria": 20}
+    @st.cache_data(ttl=3600)
+    def _grp_dynamic(tk):
+        try:
+            import yfinance as yf
+            info = yf.Ticker(tk).info or {}
+            return info
+        except: return {}
 
-        # Distribui subsidiárias horizontalmente
-        subs = [n for n in nos if n["tipo"] == "subsidiaria"]
-        ctrls = [n for n in nos if n["tipo"] == "controladora"]
-        mkts  = [n for n in nos if n["tipo"] == "mercado"]
-        main  = [n for n in nos if n["tipo"] == "listada"]
+    info_g = _grp_dynamic(ticker)
 
+    if grupo:
+        # Monta grafo com plotly
+        nos = grupo["nos"]; arestas = grupo["arestas"]
+        cores_tipo = {"controladora":C["blue_lt"],"listada":C["pos"],
+                      "subsidiaria":C["sky"],"mercado":C["gray"]}
+        import math
+        n = len(nos)
+        # Layout radial simples
         pos = {}
-        for i, n in enumerate(ctrls):
-            pos[n["id"]] = (i - len(ctrls)/2 + 0.5, 2)
-        for i, n in enumerate(mkts):
-            pos[n["id"]] = (i - len(mkts)/2 + 0.5 + len(ctrls), 2)
-        for n in main:
-            pos[n["id"]] = (0, 0)
-        n_cols = max(4, len(subs))
-        for i, n in enumerate(subs):
-            x = (i - (len(subs)-1)/2) * (6/n_cols)
-            pos[n["id"]] = (x, -2)
+        listada = next((nd["id"] for nd in nos if nd["tipo"]=="listada"), nos[0]["id"])
+        pos[listada] = (0,0)
+        outros = [nd for nd in nos if nd["id"]!=listada]
+        for i,nd in enumerate(outros):
+            ang = 2*math.pi*i/len(outros)
+            r_  = 1.8 if nd["tipo"] in ["controladora","mercado"] else 1.0
+            pos[nd["id"]] = (r_*math.cos(ang), r_*math.sin(ang))
+
+        edge_x=[]; edge_y=[]
+        for a,b in arestas:
+            if a in pos and b in pos:
+                edge_x+=[pos[a][0],pos[b][0],None]
+                edge_y+=[pos[a][1],pos[b][1],None]
 
         fig_grp = go.Figure()
-
-        # Linhas de conexão
-        for (src, dst) in ares:
-            if src in pos and dst in pos:
-                x0,y0 = pos[src]; x1,y1 = pos[dst]
-                fig_grp.add_trace(go.Scatter(
-                    x=[x0,x1,None], y=[y0,y1,None],
-                    mode="lines",
-                    line=dict(color=C["border"], width=1.5),
-                    hoverinfo="none", showlegend=False
-                ))
-
-        # Nós
-        for n in nos:
-            if n["id"] not in pos: continue
-            x, y = pos[n["id"]]
-            cor  = tipo_color.get(n["tipo"], C["gray"])
-            sz   = tipo_size.get(n["tipo"], 20)
+        fig_grp.add_trace(go.Scatter(x=edge_x,y=edge_y,mode="lines",
+            line=dict(color=C["border"],width=1.5),hoverinfo="none",showlegend=False))
+        for nd in nos:
+            x,y = pos.get(nd["id"],(0,0))
+            cor = cores_tipo.get(nd["tipo"],C["gray"])
             fig_grp.add_trace(go.Scatter(
-                x=[x], y=[y],
-                mode="markers+text",
-                marker=dict(size=sz, color=cor,
-                            line=dict(width=2, color=C["bg"])),
-                text=[n["label"]],
-                textposition="bottom center",
-                textfont=dict(color=C["white"], size=9),
-                name=n["tipo"].capitalize(),
-                showlegend=False,
-                hovertemplate=f"<b>{n['label'].replace(chr(10),' ')}</b><br>Tipo: {n['tipo']}<extra></extra>",
-            ))
-
-        # Legenda manual
-        for tipo, cor in tipo_color.items():
-            fig_grp.add_trace(go.Scatter(
-                x=[None], y=[None], mode="markers",
-                marker=dict(size=10, color=cor),
-                name=tipo.capitalize(), showlegend=True
-            ))
-
-        fig_grp.update_layout(
-            paper_bgcolor=C["bg"], plot_bgcolor=C["bg"],
-            font=dict(family="Helvetica,Arial", color=C["white"], size=10),
-            xaxis=dict(visible=False, range=[-4,4]),
-            yaxis=dict(visible=False, range=[-3.5,3]),
-            legend=dict(bgcolor=C["bg2"], bordercolor=C["border"],
-                        font=dict(color=C["white"]), orientation="h",
-                        yanchor="bottom", y=1.01),
-            margin=dict(l=20,r=20,t=50,b=20), height=500,
-            title=dict(text=f"Estrutura Societária — {ticker}", font=dict(color=C["white"]))
-        )
+                x=[x],y=[y],mode="markers+text",
+                marker=dict(size=38 if nd["tipo"]=="listada" else 28,
+                            color=cor,line=dict(width=2,color=C["bg"])),
+                text=[nd["label"]],textposition="bottom center",
+                textfont=dict(color=C["white"],size=9),
+                name=nd["tipo"],showlegend=False,
+                hovertext=nd["label"],hoverinfo="text"))
+        fig_grp.update_layout(**{**PL,"margin":dict(l=20,r=20,t=40,b=20)},
+            title="Estrutura Societária",height=500,
+            xaxis=dict(showgrid=False,zeroline=False,showticklabels=False),
+            yaxis=dict(showgrid=False,zeroline=False,showticklabels=False))
         st.plotly_chart(fig_grp, use_container_width=True)
 
-        # Tabela de subsidiárias
-        st.markdown("## Entidades do Grupo")
-        df_nos = pd.DataFrame([{
-            "Entidade": n["label"],
-            "Tipo":     n["tipo"].capitalize(),
-        } for n in nos])
-        st.markdown(dark_table(df_nos), unsafe_allow_html=True)
-        st.info("💡 Atualize GRUPO_ECONOMICO no dashboard.py conforme organograma do RI / CVM.")
+        # Legenda
+        lc1,lc2,lc3,lc4 = st.columns(4)
+        _c1=C["blue_lt"];_c2=C["pos"];_c3=C["sky"];_c4=C["gray"]
+        lc1.markdown(f"<span style='color:{_c1}'>⬤</span> Controladora", unsafe_allow_html=True)
+        lc2.markdown(f"<span style='color:{_c2}'>⬤</span> Listada (B3)", unsafe_allow_html=True)
+        lc3.markdown(f"<span style='color:{_c3}'>⬤</span> Subsidiária", unsafe_allow_html=True)
+        lc4.markdown(f"<span style='color:{_c4}'>⬤</span> Mercado", unsafe_allow_html=True)
+    else:
+        st.info(f"Estrutura societária detalhada de {ticker.replace('.SA','')} não cadastrada.")
+        # Mostra o que temos via yfinance
+        if info_g:
+            st.markdown("**Dados disponíveis via Yahoo Finance:**")
+            campos = ["longName","sector","industry","country","website",
+                      "fullTimeEmployees","marketCap","enterpriseValue"]
+            rows_g = [{"Campo": c, "Valor": str(info_g.get(c,"—"))} for c in campos if info_g.get(c)]
+            if rows_g: st.dataframe(pd.DataFrame(rows_g),use_container_width=True,hide_index=True)
+        st.markdown(" Para adicionar a estrutura completa, entre em contato com o administrador do sistema.")
 
-# ══════════════════════════════════════════════════════════════════
-# PÁG — SETORES MACRO (#26 — Teia de ações por setor)
-# ══════════════════════════════════════════════════════════════════
+
 elif pagina == "Setores Macro":
     st.markdown("## Teia de Empresas por Setor Macro")
     st.caption("Agrupa todas as empresas da cobertura + carteira Endurance por setor. "
@@ -3257,7 +3859,7 @@ elif pagina == "Gerenciar Usuários":
                 "Login":  uname,
                 "Nome":   udata.get("name", "—"),
                 "E-mail": udata.get("email", "—"),
-                "Master": "✅" if uname == "Leonardo.Losi" else "—",
+                "Master": "" if uname == "Leonardo.Losi" else "—",
             })
         st.markdown(dark_table(pd.DataFrame(rows_u)), unsafe_allow_html=True)
     else:
@@ -3304,7 +3906,7 @@ elif pagina == "Gerenciar Usuários":
                     "password": hashed,
                 }
                 _save_cfg(cfg_data)
-                st.success(f"✅ Usuário '{new_login}' criado com sucesso!")
+                st.success(f" Usuário '{new_login}' criado com sucesso!")
                 st.rerun()
 
     with tab_senha:
@@ -3326,11 +3928,11 @@ elif pagina == "Gerenciar Usuários":
                 hashed = stauth.Hasher([nova_senha]).generate()[0]
                 cfg_data["credentials"]["usernames"][sel_user]["password"] = hashed
                 _save_cfg(cfg_data)
-                st.success(f"✅ Senha de '{sel_user}' alterada com sucesso!")
+                st.success(f" Senha de '{sel_user}' alterada com sucesso!")
 
     with tab_remover:
         st.markdown("#### Remover usuário")
-        st.warning("⚠️ Esta ação é irreversível. O usuário master não pode ser removido.")
+        st.warning(" Esta ação é irreversível. O usuário master não pode ser removido.")
         logins_del = [u for u in users_dict.keys() if u != "Leonardo.Losi"]
         if logins_del:
             del_user = st.selectbox("Usuário a remover", logins_del, key="sel_del_user")
@@ -3342,7 +3944,7 @@ elif pagina == "Gerenciar Usuários":
                 else:
                     del cfg_data["credentials"]["usernames"][del_user]
                     _save_cfg(cfg_data)
-                    st.success(f"✅ Usuário '{del_user}' removido.")
+                    st.success(f" Usuário '{del_user}' removido.")
                     st.rerun()
         else:
             st.info("Não há outros usuários para remover.")
@@ -3352,257 +3954,196 @@ elif pagina == "Gerenciar Usuários":
 # PÁG — GESTORAS (Posições em Carteira via CVM / Yahoo)
 # ══════════════════════════════════════════════════════════════════
 elif pagina == "Gestoras":
-    st.markdown("## Gestoras com Posição nas Empresas Cobertas")
-    st.caption("Dados de carteiras declaradas — fonte: CVM (Formulário de Referência) e Yahoo Finance institutional holders")
+    st.markdown("##  Gestoras com Posição Relevante (≥5%)")
+    st.caption("Fonte: CVM Dados Abertos — Composição Acionária (FRE) e Yahoo Finance institutional holders")
 
-    # ── Seletor de empresa ────────────────────────────────────
     emp_g = st.selectbox("Empresa", empresas,
-                         format_func=lambda e: f"{results[e].get('ticker','').replace('.SA','')} — {e}",
-                         key="gest_emp")
-    r_g   = results[emp_g]
-    tk_g  = r_g.get("ticker","")
+        format_func=lambda e: f"{results[e].get('ticker','').replace('.SA','')} — {e}",
+        key="gest_emp")
+    r_g  = results[emp_g]
+    tk_g = r_g.get("ticker","")
+    cvm_g= str(r_g.get("cvm_code","") or "")
 
-    tab_inst, tab_cvm, tab_hist = st.tabs(["🏦 Institucionais (Yahoo)", "📋 CVM — FII / FI", "📊 Histórico de Posições"])
+    tab_cvm_g, tab_yf_g, tab_map_g = st.tabs([" CVM — Composição Acionária"," Yahoo Finance","🗺️ Mapa de Acionistas"])
 
-    # ── Tab 1: Holders institucionais via yfinance ────────────
-    with tab_inst:
+    # ── CVM Dados Abertos ─────────────────────────────────────────
+    with tab_cvm_g:
+        @st.cache_data(ttl=86400)
+        def _get_cvm_acionistas(cvm_code):
+            try:
+                import requests, zipfile, io
+                results_rows = []
+                for ano in [2024, 2023, 2022]:
+                    url = f"https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_composicao_capital_{ano}.zip"
+                    try:
+                        r = requests.get(url, timeout=20)
+                        if r.status_code != 200: continue
+                        with zipfile.ZipFile(io.BytesIO(r.content)) as z:
+                            fname = [f for f in z.namelist() if f.endswith(".csv")][0]
+                            import csv, io as _io
+                            txt = z.read(fname).decode("latin1")
+                            reader = csv.DictReader(_io.StringIO(txt), delimiter=";")
+                            for row in reader:
+                                if str(row.get("CD_CVM","")).zfill(6) == cvm_code.zfill(6):
+                                    pct = float((row.get("PCT_PART_ACOES_CAPITAL","0") or "0").replace(",","."))
+                                    if pct >= 5.0:
+                                        results_rows.append({
+                                            "Acionista": row.get("NOME_ACIONISTA","—"),
+                                            "Tipo":      row.get("TP_ACIONISTA","—"),
+                                            "Ações ON":  row.get("QT_ACOES_ORDINARIAS","—"),
+                                            "Ações PN":  row.get("QT_ACOES_PREFERENCIAIS","—"),
+                                            "% Capital": f"{pct:.2f}%",
+                                            "Ano":       str(ano),
+                                        })
+                    except: continue
+                return results_rows
+            except Exception as e:
+                return []
+
+        if not cvm_g:
+            st.warning("Código CVM não disponível para esta empresa.")
+        else:
+            with st.spinner("Consultando CVM Dados Abertos..."):
+                acionistas = _get_cvm_acionistas(cvm_g)
+
+            if acionistas:
+                df_ac = pd.DataFrame(acionistas)
+                st.markdown(f"**{len(df_ac)} acionistas com participação ≥ 5%**")
+                def _ac_color(v):
+                    if "%" in str(v):
+                        try:
+                            vv = float(str(v).replace("%",""))
+                            if vv >= 25: return f"color:{C['blue_lt']};font-weight:bold"
+                            if vv >= 10: return f"color:{C['sky']}"
+                            return f"color:{C['white']}"
+                        except: pass
+                    return f"color:{C['white']}"
+                st.markdown(dark_table(df_ac, _ac_color), unsafe_allow_html=True)
+
+                # Gráfico pizza
+                df_pie_ac = df_ac.copy()
+                df_pie_ac["pct_num"] = df_pie_ac["% Capital"].str.replace("%","").astype(float)
+                outros = max(0, 100 - df_pie_ac["pct_num"].sum())
+                if outros > 0:
+                    df_pie_ac = pd.concat([df_pie_ac, pd.DataFrame([{"Acionista":"Free Float","pct_num":outros,"% Capital":f"{outros:.1f}%","Ano":"—","Tipo":"—","Ações ON":"—","Ações PN":"—"}])])
+                fig_ac = go.Figure(go.Pie(
+                    labels=df_pie_ac["Acionista"], values=df_pie_ac["pct_num"],
+                    hole=0.45,
+                    marker_colors=[C["blue_lt"],C["sky"],C["teal"],C["pos"],C["gray"],C["navy"],"#FFB347"],
+                    textfont=dict(color=C["white"],size=10), textinfo="label+percent"))
+                fig_ac.update_layout(paper_bgcolor=C["bg"],
+                    font=dict(color=C["white"],family="Helvetica,Arial"),
+                    legend=dict(bgcolor=C["bg"],bordercolor=C["border"]),
+                    margin=dict(l=10,r=10,t=30,b=10), height=320)
+                st.plotly_chart(fig_ac, use_container_width=True)
+                export_buttons(df_ac, "acionistas_cvm")
+            else:
+                st.info("Nenhum acionista com ≥5% encontrado no FRE da CVM para esta empresa. Pode ser que o FRE mais recente ainda não tenha sido publicado.")
+                st.markdown(f" [Consultar no CVM Dados Abertos](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fre)")
+
+    # ── Yahoo Finance ─────────────────────────────────────────────
+    with tab_yf_g:
         @st.cache_data(ttl=3600)
-        def get_holders(ticker):
+        def _get_yf_holders(tk):
             try:
                 import yfinance as yf
-                t = yf.Ticker(ticker)
-                inst = t.institutional_holders
-                major = t.major_holders
-                return inst, major
-            except Exception as e:
-                return None, None
+                t = yf.Ticker(tk)
+                return t.institutional_holders, t.major_holders, t.mutualfund_holders
+            except: return None, None, None
 
-        with st.spinner("Buscando holders institucionais..."):
-            df_inst, df_major = get_holders(tk_g)
+        with st.spinner("Buscando via Yahoo Finance..."):
+            df_inst, df_major, df_mf = _get_yf_holders(tk_g)
+
+        st.caption(" Yahoo Finance tem cobertura limitada para ações brasileiras. Para dados completos, use a aba CVM.")
+        if df_major is not None and not df_major.empty:
+            st.markdown("**Resumo de Participações**")
+            st.dataframe(df_major, use_container_width=True, hide_index=True)
 
         if df_inst is not None and not df_inst.empty:
-            # Métricas rápidas
-            total_shares = float(r_g.get("shares_out", 0)) or 1
-            total_held   = float(df_inst["Shares"].sum()) if "Shares" in df_inst.columns else 0
-            pct_inst     = total_held / total_shares * 100 if total_shares else 0
+            shares_out = float(r_g.get("shares_out",1) or 1)
+            df_i = df_inst.copy()
+            if "% Out" in df_i.columns:
+                df_i["% Capital"] = df_i["% Out"].apply(lambda x: f"{float(x or 0)*100:.2f}%")
+                df_i = df_i[df_i["% Out"].apply(lambda x: float(x or 0)*100 >= 5)]
+            if "Shares" in df_i.columns:
+                df_i["Ações (M)"] = df_i["Shares"].apply(lambda x: f"{int(x)/1e6:.1f}M" if x else "—")
+            if "Value" in df_i.columns:
+                df_i["Valor"] = df_i["Value"].apply(lambda x: f"US${int(x)/1e6:.1f}M" if x else "—")
+            rename = {"Holder":"Gestora","Date Reported":"Data"}
+            df_i = df_i.rename(columns={k:v for k,v in rename.items() if k in df_i.columns})
+            if not df_i.empty:
+                st.markdown("**Institucionais ≥ 5%**")
+                st.markdown(dark_table(df_i.head(20)), unsafe_allow_html=True)
 
-            mc1, mc2, mc3 = st.columns(3)
-            mc1.metric("Institucionais listados", f"{len(df_inst)}")
-            mc2.metric("Total de ações em inst.", f"{total_held/1e6:.1f}M")
-            mc3.metric("% do free-float em inst.", f"{pct_inst:.1f}%")
-
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.markdown("### Principais Gestoras / Fundos Institucionais")
-
-            # Formata e colore tabela
-            df_show = df_inst.copy()
-            if "Date Reported" in df_show.columns:
-                df_show["Data"] = pd.to_datetime(df_show["Date Reported"]).dt.strftime("%d/%m/%Y")
-                df_show = df_show.drop(columns=["Date Reported"])
-            if "% Out" in df_show.columns:
-                df_show["% Out"] = df_show["% Out"].apply(lambda x: f"{float(x)*100:.2f}%" if x else "—")
-            if "Shares" in df_show.columns:
-                df_show["Shares"] = df_show["Shares"].apply(lambda x: f"{int(x):,}".replace(",","."))
-            if "Value" in df_show.columns:
-                df_show["Valor (USD)"] = df_show["Value"].apply(lambda x: f"US$ {int(x)/1e6:.1f}M" if x else "—")
-                df_show = df_show.drop(columns=["Value"])
-
-            # Renomeia colunas
-            rename_map = {"Holder":"Gestora / Fundo","Shares":"Ações","% Out":"% Capital"}
-            df_show = df_show.rename(columns={k:v for k,v in rename_map.items() if k in df_show.columns})
-
-            # Gera HTML colorido
-            rows_h = []
-            for _, row in df_show.iterrows():
-                rows_h.append({k: str(v) for k, v in row.items()})
-            if rows_h:
-                st.markdown(dark_table(pd.DataFrame(rows_h)), unsafe_allow_html=True)
-
-            # Gráfico barras — top 10
-            if "Shares" in df_inst.columns and "Holder" in df_inst.columns:
-                top10 = df_inst.nlargest(10, "Shares")
-                fig_gest = go.Figure(go.Bar(
-                    x=top10["Shares"]/1e6,
-                    y=top10["Holder"],
-                    orientation="h",
-                    marker_color=C["blue_lt"],
-                    text=[f"{v/1e6:.1f}M" for v in top10["Shares"]],
-                    textposition="outside",
-                    textfont=dict(color=C["white"], size=10)
-                ))
-                fig_gest.update_layout(
-                    **PL, title="Top 10 Maiores Posições Institucionais",
-                    xaxis_title="Milhões de ações", height=380,
-                    yaxis=dict(autorange="reversed", tickfont=dict(color=C["white"], size=10))
-                )
-                st.plotly_chart(fig_gest, use_container_width=True)
-        else:
-            st.info(f"Dados institucionais não disponíveis para {tk_g} via Yahoo Finance. "
-                    f"Ações brasileiras podem ter cobertura limitada nesta fonte.")
-
-    # ── Tab 2: CVM — extrai de formulário de referência ───────
-    with tab_cvm:
-        st.markdown("### Composição Acionária — CVM")
-
-        cvm_code = r_g.get("cvm_code","") or ""
-        if not cvm_code:
-            st.warning("Código CVM não configurado para esta empresa.")
-        else:
-            @st.cache_data(ttl=86400)
-            def get_cvm_shareholders(cvm_code):
-                """Busca acionistas no CVM dados abertos"""
-                try:
-                    import requests, io
-                    # Endpoint CVM dados abertos — composição acionária
-                    url = f"https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/"
-                    # Tenta o arquivo mais recente de FRE
-                    anos = [2024, 2023, 2022]
-                    for ano in anos:
-                        try:
-                            r = requests.get(
-                                f"https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_composicao_capital_{ano}.csv",
-                                timeout=15
-                            )
-                            if r.status_code == 200:
-                                df = pd.read_csv(io.StringIO(r.text), sep=";", encoding="latin-1",
-                                                on_bad_lines="skip")
-                                df_emp = df[df["CD_CVM"].astype(str) == str(cvm_code)]
-                                if not df_emp.empty:
-                                    return df_emp, ano
-                        except Exception:
-                            continue
-                    return pd.DataFrame(), None
-                except Exception as e:
-                    return pd.DataFrame(), None
-
-            with st.spinner("Consultando CVM dados abertos..."):
-                df_cvm, ano_cvm = get_cvm_shareholders(cvm_code)
-
-            if df_cvm is not None and not df_cvm.empty:
-                st.success(f"Dados do FRE {ano_cvm} carregados — {len(df_cvm)} registros")
-                st.dataframe(df_cvm.head(30), use_container_width=True)
+                if "Shares" in df_inst.columns:
+                    top = df_inst.nlargest(10,"Shares")
+                    fig_yf = go.Figure(go.Bar(
+                        x=top["Shares"]/1e6, y=top["Holder"], orientation="h",
+                        marker_color=C["blue_lt"],
+                        text=[f"{v/1e6:.1f}M" for v in top["Shares"]],
+                        textposition="outside", textfont=dict(color=C["white"],size=10)))
+                    fig_yf.update_layout(**{**PL,"yaxis":dict(autorange="reversed",tickfont=dict(color=C["white"]))},
+                        title="Top 10 Institucionais", xaxis_title="Milhões de ações", height=350)
+                    st.plotly_chart(fig_yf, use_container_width=True)
             else:
-                st.info("Buscando composição acionária via CVM dados abertos...")
-
-                # Fallback: mostra dados conhecidos hardcoded para WEG e COGNA
-                SHAREHOLDERS_KNOWN = {
-                    "5410": {  # WEG
-                        "nome": "WEG S.A.",
-                        "acionistas": [
-                            {"Acionista": "Família Werninghaus / Fundadores", "Tipo": "Controlador", "% ON": "55.3%", "% Total": "55.3%"},
-                            {"Acionista": "BlackRock", "Tipo": "Institucional", "% ON": "5.2%", "% Total": "5.2%"},
-                            {"Acionista": "Vanguard Group", "Tipo": "Institucional", "% ON": "3.1%", "% Total": "3.1%"},
-                            {"Acionista": "Capital Research", "Tipo": "Institucional", "% ON": "2.8%", "% Total": "2.8%"},
-                            {"Acionista": "Itaú Asset Management", "Tipo": "Fundo BR", "% ON": "2.1%", "% Total": "2.1%"},
-                            {"Acionista": "BTG Pactual Asset", "Tipo": "Fundo BR", "% ON": "1.4%", "% Total": "1.4%"},
-                            {"Acionista": "Free Float / Outros", "Tipo": "Mercado", "% ON": "30.1%", "% Total": "30.1%"},
-                        ]
-                    },
-                    "17973": {  # COGNA
-                        "nome": "Cogna Educação S.A.",
-                        "acionistas": [
-                            {"Acionista": "Roberto Shindler Marinho / Família", "Tipo": "Controlador", "% ON": "28.5%", "% Total": "28.5%"},
-                            {"Acionista": "BlackRock", "Tipo": "Institucional", "% ON": "6.1%", "% Total": "6.1%"},
-                            {"Acionista": "Fidelity Investments", "Tipo": "Institucional", "% ON": "4.3%", "% Total": "4.3%"},
-                            {"Acionista": "XP Asset Management", "Tipo": "Fundo BR", "% ON": "3.8%", "% Total": "3.8%"},
-                            {"Acionista": "Itaú Asset Management", "Tipo": "Fundo BR", "% ON": "2.9%", "% Total": "2.9%"},
-                            {"Acionista": "Vanguard Group", "Tipo": "Institucional", "% ON": "2.1%", "% Total": "2.1%"},
-                            {"Acionista": "Free Float / Outros", "Tipo": "Mercado", "% ON": "52.3%", "% Total": "52.3%"},
-                        ]
-                    },
-                }
-                known = SHAREHOLDERS_KNOWN.get(str(cvm_code))
-                if known:
-                    st.caption(f"⚠️ Dados de referência (última divulgação CVM conhecida) — atualize via FRE")
-                    df_k = pd.DataFrame(known["acionistas"])
-                    # Colore por tipo
-                    rows_cvm = []
-                    for _, row in df_k.iterrows():
-                        tipo_c = C["blue_lt"] if "Institucional" in row["Tipo"] else (
-                                 C["pos"] if "Controlador" in row["Tipo"] else (
-                                 C["sky"] if "Fundo" in row["Tipo"] else C["gray"]))
-                        rows_cvm.append({
-                            "Acionista": f'<b style="color:{C["white"]}">{row["Acionista"]}</b>',
-                            "Tipo": f'<span style="color:{tipo_c}">{row["Tipo"]}</span>',
-                            "% ON": row["% ON"],
-                            "% Total": f'<b>{row["% Total"]}</b>',
-                        })
-                    st.markdown(dark_table(pd.DataFrame(rows_cvm)), unsafe_allow_html=True)
-
-                    # Pizza
-                    df_k_num = pd.DataFrame(known["acionistas"])
-                    vals = [float(v.replace("%","")) for v in df_k_num["% Total"]]
-                    nomes = df_k_num["Acionista"].tolist()
-                    cores = [C["blue_lt"], C["sky"], "#6EB5E8", C["pos"], "#FFD700", C["gray2"],
-                             C["border"], "#2B7EC2", C["white"]][:len(nomes)]
-
-                    fig_pie_sh = go.Figure(go.Pie(
-                        labels=nomes, values=vals, hole=0.45,
-                        marker=dict(colors=cores,
-                                    line=dict(color=C["bg"], width=2)),
-                        textfont=dict(color=C["white"], size=10),
-                        hovertemplate="<b>%{label}</b><br>%{value:.1f}%<extra></extra>"
-                    ))
-                    fig_pie_sh.update_layout(
-                        paper_bgcolor=C["bg"], font=dict(family="Helvetica,Arial", color=C["white"]),
-                        legend=dict(bgcolor=C["bg"], bordercolor=C["border"], font=dict(color=C["white"])),
-                        margin=dict(l=20,r=20,t=30,b=20), height=380,
-                        annotations=[dict(text=f"<b>{tk_g.replace('.SA','')}</b>",
-                                         font=dict(size=14,color=C["white"]), showarrow=False)]
-                    )
-                    st.plotly_chart(fig_pie_sh, use_container_width=True)
-                else:
-                    st.info("Dados de composição acionária não disponíveis para esta empresa no cache local.")
-
-    # ── Tab 3: Histórico de posições no tempo ─────────────────
-    with tab_hist:
-        st.markdown("### Evolução das Posições Institucionais")
-
-        @st.cache_data(ttl=86400)
-        def get_inst_history(ticker):
-            try:
-                import yfinance as yf
-                t = yf.Ticker(ticker)
-                return t.institutional_holders
-            except Exception:
-                return None
-
-        df_ih = get_inst_history(tk_g)
-        if df_ih is not None and not df_ih.empty and "Date Reported" in df_ih.columns:
-            df_ih2 = df_ih.copy()
-            df_ih2["Data"] = pd.to_datetime(df_ih2["Date Reported"])
-            df_ih2 = df_ih2.sort_values("Data")
-
-            # Agrupar por data e somar
-            if "Shares" in df_ih2.columns:
-                df_agg = df_ih2.groupby("Data")["Shares"].sum().reset_index()
-                df_agg["Shares_M"] = df_agg["Shares"] / 1e6
-
-                fig_hist_g = go.Figure(go.Scatter(
-                    x=df_agg["Data"], y=df_agg["Shares_M"],
-                    mode="lines+markers",
-                    line=dict(color=C["blue_lt"], width=2),
-                    marker=dict(color=C["blue_lt"], size=6),
-                    fill="tozeroy",
-                    fillcolor=f"rgba(35,81,254,.08)",
-                    name="Total Institucional"
-                ))
-                fig_hist_g.update_layout(
-                    **PL, title="Total de Ações em Mãos Institucionais",
-                    yaxis_title="Milhões de ações", height=320
-                )
-                st.plotly_chart(fig_hist_g, use_container_width=True)
-
-            # Top holders com sparkline de posição
-            st.markdown("#### Posições individuais declaradas")
-            st.markdown(dark_table(df_ih.head(20)), unsafe_allow_html=True)
+                st.info("Nenhum institucional com ≥5% encontrado via Yahoo Finance.")
         else:
-            st.info("Histórico de posições institucionais não disponível para este ativo.")
+            st.info("Dados institucionais não disponíveis via Yahoo Finance para este ticker.")
 
-# ══════════════════════════════════════════════════════════════════
-# ══════════════════════════════════════════════════════════════════
-# PÁG — COMDINHEIRO (#19)
-# ══════════════════════════════════════════════════════════════════
+    # ── Mapa de Acionistas ────────────────────────────────────────
+    with tab_map_g:
+        st.markdown("### 🗺️ Estrutura de Controle")
+        if not cvm_g:
+            st.warning("Código CVM necessário.")
+        else:
+            with st.spinner("Carregando..."):
+                acs = _get_cvm_acionistas(cvm_g)
+            if acs:
+                import math as _math
+                nos_m = [{"id":"EMPRESA","label":tk_g.replace(".SA",""),"tipo":"listada"}]
+                arestas_m = []
+                for i,ac in enumerate(acs[:8]):
+                    nid = f"AC_{i}"
+                    pct_v = float(ac["% Capital"].replace("%",""))
+                    tipo_m = "controladora" if pct_v >= 50 else ("relevante" if pct_v >= 20 else "minoritario")
+                    nos_m.append({"id":nid,"label":f"{ac['Acionista'][:20]}\n{ac['% Capital']}","tipo":tipo_m})
+                    arestas_m.append((nid,"EMPRESA"))
+                ff = max(0,100-sum(float(a["% Capital"].replace("%","")) for a in acs))
+                if ff > 0:
+                    nos_m.append({"id":"FF","label":f"Free Float\n{ff:.1f}%","tipo":"mercado"})
+                    arestas_m.append(("FF","EMPRESA"))
+                cores_m = {"listada":C["pos"],"controladora":C["blue_lt"],"relevante":C["sky"],"minoritario":C["teal"],"mercado":C["gray"]}
+                pos_m = {"EMPRESA":(0,0)}
+                outros_m = [n for n in nos_m if n["id"]!="EMPRESA"]
+                for i,n in enumerate(outros_m):
+                    ang = 2*_math.pi*i/len(outros_m)
+                    pos_m[n["id"]] = (2.0*_math.cos(ang), 2.0*_math.sin(ang))
+                ex,ey=[],[]
+                for a,b in arestas_m:
+                    if a in pos_m and b in pos_m:
+                        ex+=[pos_m[a][0],pos_m[b][0],None]
+                        ey+=[pos_m[a][1],pos_m[b][1],None]
+                fig_map = go.Figure()
+                fig_map.add_trace(go.Scatter(x=ex,y=ey,mode="lines",
+                    line=dict(color=C["border"],width=1.5),hoverinfo="none",showlegend=False))
+                for n in nos_m:
+                    x,y=pos_m.get(n["id"],(0,0))
+                    fig_map.add_trace(go.Scatter(x=[x],y=[y],mode="markers+text",
+                        marker=dict(size=40 if n["tipo"]=="listada" else 30,
+                            color=cores_m.get(n["tipo"],C["gray"]),
+                            line=dict(width=2,color=C["bg"])),
+                        text=[n["label"]],textposition="bottom center",
+                        textfont=dict(color=C["white"],size=9),
+                        showlegend=False,hovertext=n["label"],hoverinfo="text"))
+                fig_map.update_layout(**{**PL,"margin":dict(l=20,r=20,t=40,b=20)},
+                    title="Mapa de Controle Acionário",height=480,
+                    xaxis=dict(showgrid=False,zeroline=False,showticklabels=False),
+                    yaxis=dict(showgrid=False,zeroline=False,showticklabels=False))
+                st.plotly_chart(fig_map, use_container_width=True)
+            else:
+                st.info("Carregue dados na aba CVM primeiro.")
+
+
 elif pagina == "ComDinheiro":
     st.markdown("## ComDinheiro — Dados Fundamentalistas")
 
@@ -3680,10 +4221,7 @@ elif pagina == "ComDinheiro":
             try: return f"{float(v):.{d}f}{suffix}"
             except: return "—"
 
-        def _brl(v, d=2):
-            if v is None: return "—"
-            try: return f"R$ {float(v):.{d}f}"
-            except: return "—"
+
 
         def _section(title, color=None):
             _c = color or C["blue_lt"]
@@ -4011,62 +4549,335 @@ elif pagina == "ComDinheiro":
 # ══════════════════════════════════════════════════════════════════
 # PÁG 10 — PREMISSAS
 # ══════════════════════════════════════════════════════════════════
-elif pagina == "Premissas":
-    st.markdown("## Premissas & Configuração")
-    emp_sel=st.selectbox("Empresa",empresas,
-                         format_func=lambda e:f"{results[e].get('ticker',e)} — {e}")
-    r=results[emp_sel]; ticker=r.get("ticker",emp_sel)
-    st.markdown(logo_empresa_html(ticker,110), unsafe_allow_html=True)
-    st.markdown(f"<br><b style='color:{C['blue_lt']};font-size:1.1rem;'>{ticker}</b>",
-                unsafe_allow_html=True)
+elif pagina == "Valuation":
+    st.markdown("##  Valuation Interativo")
+    emp_sel = st.selectbox("Empresa", empresas,
+        format_func=lambda e: f"{results[e].get('ticker',e).replace('.SA','')} — {e}",
+        key="val_emp")
+    r = results[emp_sel]; ticker = r.get("ticker", emp_sel)
+    wd = r.get("wacc_data") or {}
+    ovr = r.get("overrides") or {}
+
+    col_logo, col_title = st.columns([1,5])
+    with col_logo: st.markdown(logo_empresa_html(ticker,80), unsafe_allow_html=True)
+    with col_title:
+        pn = float(r.get("price_now") or 0)
+        pf = float(r.get("price_fair") or 0)
+        up = float(r.get("upside") or 0)
+        cor_up = C["pos"] if up > 0 else C["neg"]
+        st.markdown(f"""<div style='margin-top:10px'>
+            <span style='color:{C["blue_lt"]};font-size:1.2rem;font-weight:800'>{ticker.replace(".SA","")}</span>
+            &nbsp;{badge(r.get("recomendacao",""))}
+            <span style='color:{C["gray2"]};font-size:.85rem;margin-left:12px'>
+            Tela: <b style='color:{C["white"]}'>{price(pn)}</b> &nbsp;|&nbsp;
+            Justo: <b style='color:{C["blue_lt"]}'>{price(pf)}</b> &nbsp;|&nbsp;
+            Upside: <b style='color:{cor_up}'>{up*100:+.1f}%</b>
+            </span></div>""", unsafe_allow_html=True)
+
     st.markdown("<hr>", unsafe_allow_html=True)
+    tab_prem, tab_sim, tab_cmp = st.tabs([" Premissas & WACC", " Simulador DCF", " Comparar Valuations"])
 
-    c1,c2=st.columns(2)
-    with c1:
-        st.markdown("#### DCF")
-        st.table(pd.DataFrame([
-            ("Terminal Growth",pct(r.get("terminal_growth"))),
-            ("Kd bruto",pct(r.get("cost_of_debt"))),
-            ("Tax Rate","34%"),
-            (f"Shares Out",f"{int(r.get('shares_out',0))//1_000_000:,} mi"),
-            ("Forecast Years","6"),
-        ],columns=["Premissa","Valor"]))
-    with c2:
-        st.markdown("#### WACC Decomposição")
-        wd=r.get("wacc_data") or {}
-        st.table(pd.DataFrame([
-            ("WACC",pct(r.get("wacc"))),("Beta",f_(r.get("beta"))),
-            ("Ke",pct(wd.get("cost_of_equity"))),
-            ("Kd líq. IR",pct(wd.get("after_tax_cost_of_debt"))),
-            ("Rf nominal",pct(wd.get("risk_free_nominal"))),
-            ("ERP",pct(wd.get("equity_risk_premium"))),
-            ("Peso Equity",pct(wd.get("equity_weight"))),
-            ("Peso Dívida",pct(wd.get("debt_weight"))),
-        ],columns=["Parâmetro","Valor"]))
+    # ── Tab 1: Premissas ───────────────────────────────────────────
+    with tab_prem:
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("#### DCF")
+            tg  = st.slider("Terminal Growth (%)", 0.0, 8.0,
+                float((r.get("terminal_growth") or 0.04)*100), 0.25, key="val_tg") / 100
+            kd  = st.slider("Custo da Dívida Bruto (%)", 5.0, 25.0,
+                float((r.get("cost_of_debt") or 0.12)*100), 0.25, key="val_kd") / 100
+            tax = st.slider("Tax Rate (%)", 10.0, 45.0, 34.0, 1.0, key="val_tax") / 100
+            anos= st.slider("Anos de projeção", 3, 10, 6, 1, key="val_anos")
+        with c2:
+            st.markdown("#### Crescimento & Margem")
+            rev_g = st.slider("CAGR Receita (%)", -10.0, 40.0,
+                float((ovr.get("revenue_growth") or r.get("cagr_receita") or 0.10)*100), 0.5, key="val_rev") / 100
+            ebit_m= st.slider("Margem EBIT (%)", 0.0, 60.0,
+                float((ovr.get("ebit_margin") or r.get("ebit_margin") or 0.15)*100), 0.5, key="val_ebit") / 100
+            beta_v= st.slider("Beta", 0.3, 2.5,
+                float(r.get("beta") or 1.0), 0.05, key="val_beta")
+            rf_v  = st.slider("Risk-free nominal (%)", 5.0, 18.0,
+                float((wd.get("risk_free_nominal") or 0.13)*100), 0.25, key="val_rf") / 100
+            erp_v = st.slider("ERP (%)", 3.0, 10.0,
+                float((wd.get("equity_risk_premium") or 0.055)*100), 0.25, key="val_erp") / 100
 
-    ovr=r.get("overrides") or {}
-    if any(ovr.values()):
-        st.warning(f"⚠️  Overrides — receita:{pct(ovr.get('revenue_growth'))} | EBIT:{pct(ovr.get('ebit_margin'))}")
+        # Recalcula WACC e preço justo simplificado
+        ke_v    = rf_v + beta_v * erp_v
+        kd_liq  = kd * (1 - tax)
+        ew      = float(wd.get("equity_weight") or 0.7)
+        dw      = 1 - ew
+        wacc_v  = ke_v * ew + kd_liq * dw
 
-    pn=float(r.get("price_now") or 0); pf=float(r.get("price_fair") or 0)
-    if pn and pf:
-        st.markdown("#### Preço de Tela vs Preço Justo")
-        maximo=max(pn,pf)*1.3
-        fig_g=go.Figure(go.Indicator(
-            mode="gauge+number+delta", value=pn,
-            delta=dict(reference=pf,valueformat=".2f",
-                       increasing=dict(color=C["neg"]),decreasing=dict(color=C["pos"])),
-            number=dict(prefix="R$ ",font=dict(color=C["white"],size=28)),
-            gauge=dict(
-                axis=dict(range=[0,maximo],tickcolor=C["gray2"],tickfont=dict(color=C["gray2"])),
-                bar=dict(color=C["bg3"]),bgcolor=C["bg2"],bordercolor=C["border"],
-                steps=[dict(range=[0,pf*.85],color="#0a1e14"),
-                       dict(range=[pf*.85,pf*1.15],color=C["bg4"]),
-                       dict(range=[pf*1.15,maximo],color="#1e0a0a")],
-                threshold=dict(line=dict(color=C["blue_lt"],width=3),value=pf)),
-            title=dict(text=f"Linha azul = justo R${pf:.2f}",
-                       font=dict(color=C["gray2"],size=11))))
-        fig_g.update_layout(paper_bgcolor=C["bg"],
-            font=dict(family="Helvetica,Arial",color=C["gray"]),
-            margin=dict(l=30,r=30,t=50,b=20),height=270)
-        st.plotly_chart(fig_g,use_container_width=True)
+        # DCF simplificado (FCFF atual como base)
+        ebit_base = float(r.get("ebit_last") or r.get("revenue_last",1e9) * ebit_m)
+        fcff_base = ebit_base * (1-tax) * 0.65  # proxy FCFF
+        shares    = float(r.get("shares_out") or 1)
+        net_debt  = float(r.get("net_debt") or 0)
+
+        pv = 0.0
+        fcff_i = fcff_base
+        for i in range(1, anos+1):
+            fcff_i *= (1 + rev_g)
+            pv += fcff_i / (1 + wacc_v)**i
+        tv = fcff_i * (1 + tg) / (wacc_v - tg) / (1 + wacc_v)**anos if wacc_v > tg else 0
+        ev_sim   = pv + tv
+        eq_sim   = ev_sim - net_debt
+        pj_sim   = eq_sim / shares if shares else 0
+        up_sim   = (pj_sim - pn) / pn if pn else 0
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+        m1,m2,m3,m4,m5 = st.columns(5)
+        m1.metric("WACC estimado", f"{wacc_v*100:.2f}%")
+        m2.metric("Ke", f"{ke_v*100:.2f}%")
+        m3.metric("Kd líq.", f"{kd_liq*100:.2f}%")
+        m4.metric("Preço Justo Simulado", f"R$ {pj_sim:.2f}")
+        m5.metric("Upside Simulado", f"{up_sim*100:+.1f}%",
+                  delta_color="normal" if up_sim>0 else "inverse")
+
+        # Gauge
+        if pn and pj_sim > 0:
+            maximo = max(pn, pj_sim) * 1.4
+            fig_g = go.Figure(go.Indicator(
+                mode="gauge+number+delta", value=pn,
+                delta=dict(reference=pj_sim, valueformat=".2f",
+                    increasing=dict(color=C["neg"]), decreasing=dict(color=C["pos"])),
+                number=dict(prefix="R$ ", font=dict(color=C["white"], size=28)),
+                gauge=dict(
+                    axis=dict(range=[0,maximo], tickcolor=C["gray2"]),
+                    bar=dict(color=C["bg3"]), bgcolor=C["bg2"], bordercolor=C["border"],
+                    steps=[dict(range=[0,pj_sim*.85], color="#0a1e14"),
+                           dict(range=[pj_sim*.85,pj_sim*1.15], color=C["bg4"]),
+                           dict(range=[pj_sim*1.15,maximo], color="#1e0a0a")],
+                    threshold=dict(line=dict(color=C["blue_lt"],width=3), value=pj_sim)),
+                title=dict(text=f"Linha azul = justo simulado R${pj_sim:.2f}",
+                           font=dict(color=C["gray2"],size=11))))
+            fig_g.update_layout(paper_bgcolor=C["bg"],
+                font=dict(family="Helvetica,Arial",color=C["gray"]),
+                margin=dict(l=30,r=30,t=50,b=20), height=260)
+            st.plotly_chart(fig_g, use_container_width=True)
+
+    # ── Tab 2: Simulador Monte Carlo ──────────────────────────────
+    with tab_sim:
+        st.markdown("###  Monte Carlo — Distribuição de Preço Justo")
+        mc1, mc2 = st.columns(2)
+        with mc1:
+            n_sim   = st.selectbox("Simulações", [500,1000,2000,5000,10000], index=2, key="val_mc_n")
+            std_rev = st.slider("Desvio padrão CAGR (%)", 1.0, 15.0, 5.0, 0.5, key="val_mc_sr") / 100
+        with mc2:
+            std_ebit= st.slider("Desvio padrão Margem EBIT (%)", 1.0, 10.0, 3.0, 0.5, key="val_mc_se") / 100
+            std_wacc= st.slider("Desvio padrão WACC (%)", 0.5, 5.0, 1.5, 0.25, key="val_mc_sw") / 100
+
+        if st.button(" Rodar Simulação", type="primary", key="val_mc_run"):
+            import numpy as _np2
+            _np2.random.seed(42)
+            rev_sims  = _np2.random.normal(rev_g,  std_rev,  n_sim)
+            ebit_sims = _np2.random.normal(ebit_m, std_ebit, n_sim)
+            wacc_sims = _np2.random.normal(wacc_v, std_wacc, n_sim)
+            wacc_sims = _np2.clip(wacc_sims, 0.04, 0.35)
+
+            pj_sims = []
+            for rg_i, em_i, wc_i in zip(rev_sims, ebit_sims, wacc_sims):
+                if wc_i <= tg: continue
+                eb_i = float(r.get("revenue_last",1e9) or 1e9) * em_i
+                fc_i = eb_i * (1-tax) * 0.65
+                pv_i = 0.0; fc_j = fc_i
+                for j in range(1, anos+1):
+                    fc_j *= (1+rg_i)
+                    pv_i += fc_j/(1+wc_i)**j
+                tv_i = fc_j*(1+tg)/(wc_i-tg)/(1+wc_i)**anos
+                eq_i = (pv_i+tv_i) - net_debt
+                pj_i = eq_i/shares if shares else 0
+                if -500 < pj_i < 5000: pj_sims.append(pj_i)
+
+            if pj_sims:
+                arr = _np2.array(pj_sims)
+                p10,p25,p50,p75,p90 = _np2.percentile(arr,[10,25,50,75,90])
+                prob_up = float((_np2.array(arr) > pn).mean()*100) if pn else 50.0
+
+                # Histograma destacado
+                import numpy as _np3
+                # ── Fan chart estilo TradingView ──────────────────
+                # Simula caminhos de preço ao longo de N períodos
+                n_steps = anos * 12  # mensal
+                mu_m  = (1 + rev_g)**(1/12) - 1
+                sig_m = std_rev / _np3.sqrt(12)
+                _np3.random.seed(42)
+                n_paths = min(n_sim, 2000)
+                paths = _np3.zeros((n_paths, n_steps+1))
+                paths[:,0] = pn if pn else p50
+                for t in range(1, n_steps+1):
+                    shocks = _np3.random.normal(mu_m, sig_m, n_paths)
+                    paths[:,t] = paths[:,t-1] * (1 + shocks)
+                paths = _np3.clip(paths, 0, paths[:,0].max()*10)
+                x_axis = list(range(n_steps+1))
+
+                # Percentis por passo
+                pc10 = _np3.percentile(paths, 10, axis=0)
+                pc25 = _np3.percentile(paths, 25, axis=0)
+                pc50 = _np3.percentile(paths, 50, axis=0)
+                pc75 = _np3.percentile(paths, 75, axis=0)
+                pc90 = _np3.percentile(paths, 90, axis=0)
+
+                fig_mc = go.Figure()
+                # Fan P10-P90 (zona vermelha)
+                fig_mc.add_trace(go.Scatter(x=x_axis+x_axis[::-1],
+                    y=list(pc90)+list(pc10[::-1]), fill="toself",
+                    fillcolor="rgba(30,80,160,0.15)", line=dict(color="rgba(0,0,0,0)"),
+                    name="P10-P90", showlegend=True))
+                # Fan P25-P75 (zona azul)
+                fig_mc.add_trace(go.Scatter(x=x_axis+x_axis[::-1],
+                    y=list(pc75)+list(pc25[::-1]), fill="toself",
+                    fillcolor="rgba(30,80,160,0.30)", line=dict(color="rgba(0,0,0,0)"),
+                    name="P25-P75", showlegend=True))
+                # Mediana
+                fig_mc.add_trace(go.Scatter(x=x_axis, y=pc50, mode="lines",
+                    line=dict(color=C["blue_lt"], width=2.5), name="Mediana (P50)"))
+                # Bear e Bull
+                fig_mc.add_trace(go.Scatter(x=x_axis, y=pc10, mode="lines",
+                    line=dict(color=C["neg"], width=1.2, dash="dot"), name="Bear (P10)"))
+                fig_mc.add_trace(go.Scatter(x=x_axis, y=pc90, mode="lines",
+                    line=dict(color=C["pos"], width=1.2, dash="dot"), name="Bull (P90)"))
+                # Preço atual (linha horizontal)
+                if pn:
+                    fig_mc.add_hline(y=pn, line_color=C["sky"], line_dash="dash", line_width=1.5,
+                        annotation_text=f"Preço atual R${pn:.2f}",
+                        annotation_font_color=C["sky"], annotation_position="top left")
+                # Amostra de 30 caminhos aleatórios
+                for i in _np3.random.choice(n_paths, min(50,n_paths), replace=False):
+                    fig_mc.add_trace(go.Scatter(x=x_axis, y=paths[i], mode="lines",
+                        line=dict(color="rgba(100,180,255,0.18)", width=1.0),
+                        showlegend=False, hoverinfo="skip"))
+                # Histograma lateral (distribuição final)
+                fig_mc.add_trace(go.Violin(x=paths[:,-1], side="positive",
+                    line_color=C["blue_lt"], fillcolor="rgba(30,80,160,0.3)",
+                    opacity=0.6, name="Dist. final", showlegend=False,
+                    yaxis="y2"))
+
+                # Labels no eixo X — meses
+                tickvals = list(range(0, n_steps+1, 6))
+                ticktext = [f"Mês {v}" for v in tickvals]
+
+                _pl2 = {**PL,
+                    "xaxis":dict(tickvals=tickvals,ticktext=ticktext,
+                        tickfont=dict(color=C["gray2"]),
+                        gridcolor="rgba(255,255,255,0.04)", showgrid=True),
+                    "yaxis":dict(title="Preço (R$)",
+                        gridcolor="rgba(255,255,255,0.04)", showgrid=True),
+                    "yaxis2":dict(overlaying="y",side="right",showgrid=False,showticklabels=False),
+                    "height":480,"legend":dict(orientation="h",y=-0.12)}
+                fig_mc.update_layout(**_pl2,
+                    title=f"Monte Carlo — {n_paths:,} caminhos | {anos} anos | Prob. upside: {prob_up:.1f}%")
+                st.plotly_chart(fig_mc, use_container_width=True)
+
+                # Histograma de distribuição final separado
+                fig_hist2 = go.Figure()
+                fig_hist2.add_trace(go.Histogram(x=paths[:,-1], nbinsx=80,
+                    marker_color=C["blue_lt"], opacity=0.8, name="Preço final"))
+                for pv2,lb2,cl2 in [(p10,"P10",C["neg"]),(p50,"P50",C["white"]),(p90,"P90",C["pos"])]:
+                    fig_hist2.add_vline(x=pv2, line_color=cl2, line_dash="dash",
+                        annotation_text=f"{lb2}: R${pv2:.2f}", annotation_font_color=cl2)
+                if pn:
+                    fig_hist2.add_vline(x=pn, line_color=C["sky"], line_width=2,
+                        annotation_text=f"Tela: R${pn:.2f}", annotation_font_color=C["sky"])
+                fig_hist2.update_layout(**PL,
+                    title="Distribuição de Preços no Final do Período",
+                    xaxis_title="Preço Justo (R$)", height=300)
+                st.plotly_chart(fig_hist2, use_container_width=True)
+
+                r1,r2,r3,r4,r5 = st.columns(5)
+                r1.metric("P10 (Bear)", f"R$ {p10:.2f}")
+                r2.metric("P25", f"R$ {p25:.2f}")
+                r3.metric("P50 (Base)", f"R$ {p50:.2f}")
+                r4.metric("P75", f"R$ {p75:.2f}")
+                r5.metric("P90 (Bull)", f"R$ {p90:.2f}")
+                st.metric("Probabilidade de Upside", f"{prob_up:.1f}%",
+                    delta_color="normal" if prob_up>50 else "inverse")
+
+    # ── Tab 3: Comparar Valuations ─────────────────────────────────
+    with tab_cmp:
+        st.markdown("###  Comparar com outras empresas")
+        emps_cmp = st.multiselect("Empresas para comparar", empresas,
+            default=[emp_sel] + [e for e in empresas if e!=emp_sel][:3], key="val_cmp")
+        if emps_cmp:
+            rows_cmp = []
+            for ec in emps_cmp:
+                rc = results[ec]
+                rows_cmp.append({
+                    "Empresa": ec[:25],
+                    "Ticker": rc.get("ticker","").replace(".SA",""),
+                    "P. Tela": price(rc.get("price_now")),
+                    "P. Justo": price(rc.get("price_fair")),
+                    "Upside": f"{float(rc.get('upside') or 0)*100:+.1f}%",
+                    "WACC": pct(rc.get("wacc")),
+                    "Mg EBIT": pct(rc.get("ebit_margin")),
+                    "ROIC": pct(rc.get("roic")),
+                    "Rec.": rc.get("recomendacao","—"),
+                })
+            def _cmp_color(v):
+                if "%" in str(v):
+                    try:
+                        vv = float(str(v).replace("%","").replace("+",""))
+                        if vv>20: return f"color:{C['pos']};font-weight:bold"
+                        if vv>0:  return f"color:{C['sky']}"
+                        if vv<0:  return f"color:{C['neg']}"
+                    except: pass
+                return f"color:{C['white']}"
+            st.markdown(dark_table(pd.DataFrame(rows_cmp), _cmp_color), unsafe_allow_html=True)
+
+            # Scatter upside vs WACC
+            fig_sc2 = go.Figure()
+            for row in rows_cmp:
+                up2  = float(str(row["Upside"]).replace("%","").replace("+","") or 0)
+                wc2  = float(str(row["WACC"]).replace("%","") or 0)
+                rc2  = results.get(next((e for e in emps_cmp if results[e].get("ticker","").replace(".SA","")==row["Ticker"]), emps_cmp[0]), {})
+                ev2  = abs(float(rc2.get("enterprise_value") or 1e9))/1e9
+                fig_sc2.add_trace(go.Scatter(
+                    x=[wc2], y=[up2], mode="markers+text",
+                    marker=dict(size=max(8,ev2*.5+14), color=C["blue_lt"],
+                                line=dict(width=2,color=C["bg3"])),
+                    text=[row["Ticker"]], textposition="top center",
+                    textfont=dict(color=C["white"],size=11), name=row["Ticker"]))
+            fig_sc2.add_hline(y=0, line_dash="dash", line_color=C["gray2"], opacity=.4)
+            fig_sc2.update_layout(**PL, title="Upside vs WACC (tamanho = EV)",
+                xaxis_title="WACC (%)", yaxis_title="Upside (%)", height=420)
+            st.plotly_chart(fig_sc2, use_container_width=True)
+
+
+elif pagina == "Cadastros":
+    import json as _jc, hashlib as _hc
+    _USERS_FILE = "/opt/shipyard/data/users.json"
+    import os as _os
+    def _load_users():
+        if _os.path.exists(_USERS_FILE):
+            return _jc.loads(open(_USERS_FILE).read())
+        return {"Leonardo Losi": {"senha": _hc.md5(b"velacapital@2025").hexdigest(), "perfil": "Diretor"}}
+    def _save_users(u):
+        open(_USERS_FILE,"w").write(_jc.dumps(u, indent=2, ensure_ascii=False))
+
+    users = _load_users()
+    st.markdown("##  Gestão de Usuários")
+    tab_list, tab_new = st.tabs([" Usuários Cadastrados", " Novo Usuário"])
+    with tab_list:
+        rows_u = [{"Nome": n, "Perfil": v.get("perfil","Analista")} for n,v in users.items()]
+        st.dataframe(pd.DataFrame(rows_u), use_container_width=True, hide_index=True)
+        st.markdown("### Excluir Usuário")
+        del_user = st.selectbox("Selecione", [n for n in users if n != "Leonardo Losi"], key="del_u")
+        if del_user and st.button(" Excluir", type="secondary"):
+            users.pop(del_user, None)
+            _save_users(users)
+            st.success(f"{del_user} excluído.")
+            st.rerun()
+    with tab_new:
+        with st.form("form_new_user"):
+            nu_nome  = st.text_input("Nome completo")
+            nu_senha = st.text_input("Senha", type="password")
+            nu_perf  = st.selectbox("Perfil", ["Analista","Gestor","Diretor"])
+            if st.form_submit_button("Criar Usuário", type="primary"):
+                if nu_nome and nu_senha:
+                    users[nu_nome] = {"senha": _hc.md5(nu_senha.encode()).hexdigest(), "perfil": nu_perf}
+                    _save_users(users)
+                    st.success(f"Usuário '{nu_nome}' criado!")
+                    st.rerun()
+                else:
+                    st.warning("Preencha nome e senha.")
+
