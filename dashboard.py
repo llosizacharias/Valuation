@@ -1150,10 +1150,10 @@ elif pagina == "Empresa":
     with cl: st.markdown(logo_empresa_html(ticker,110), unsafe_allow_html=True)
     with cr:
         _tk_clean = ticker.replace(".SA","")
+        _up_str = f"{(upside or 0)*100:+.1f}%"
         st.markdown(f"""
         <div style="margin-top:8px;">
             <span style="color:{C['blue_lt']};font-size:1.15rem;font-weight:700;">{_tk_clean}</span>
-    _up_str = f'{upside*100:+.1f}%'
             &nbsp;&nbsp;{badge(r.get('recomendacao',''))}
         </div>
         <div style="color:{C['gray2']};font-size:.8rem;margin-top:6px;">
@@ -2276,371 +2276,497 @@ elif pagina == "Notícias":
 # PÁG 9 — CARTEIRA ENDURANCE + EXPOSIÇÃO SETORIAL (#15 e #27)
 # ══════════════════════════════════════════════════════════════════
 elif pagina == "Carteira Endurance":
-    st.markdown("## Carteira Teórica — Fundo Endurance")
-    st.caption("Posições teóricas para acompanhamento de trackrecord. Atualize os dados abaixo conforme os relatórios do fundo.")
+    import json as _json
+    from pathlib import Path as _Path
+    from datetime import datetime as _dt, date as _date
+    import numpy as _np
 
-    # ── Carteira Endurance — editável pelo usuário ───────────────
-    # Dados base (atualizar conforme último relatório disponível)
-    ENDURANCE_CARTEIRA = [
-        {"Ticker": "WEGE3.SA",  "Empresa": "WEG",             "Setor": "Bens Industriais", "Peso (%)": 12.0, "Preço Entrada": 38.50},
-        {"Ticker": "ITUB4.SA",  "Empresa": "Itaú Unibanco",   "Setor": "Financeiro",       "Peso (%)": 10.5, "Preço Entrada": 31.20},
-        {"Ticker": "PETR4.SA",  "Empresa": "Petrobras",        "Setor": "Petróleo & Gás",  "Peso (%)": 9.0,  "Preço Entrada": 37.80},
-        {"Ticker": "VALE3.SA",  "Empresa": "Vale",             "Setor": "Mineração",        "Peso (%)": 8.5,  "Preço Entrada": 62.40},
-        {"Ticker": "BBAS3.SA",  "Empresa": "Banco do Brasil",  "Setor": "Financeiro",       "Peso (%)": 7.5,  "Preço Entrada": 25.10},
-        {"Ticker": "RENT3.SA",  "Empresa": "Localiza",         "Setor": "Consumo Discr.",   "Peso (%)": 7.0,  "Preço Entrada": 42.90},
-        {"Ticker": "MGLU3.SA",  "Empresa": "Magazine Luiza",   "Setor": "Consumo Discr.",   "Peso (%)": 5.5,  "Preço Entrada": 8.20},
-        {"Ticker": "RADL3.SA",  "Empresa": "Raia Drogasil",    "Setor": "Saúde",            "Peso (%)": 5.0,  "Preço Entrada": 28.60},
-        {"Ticker": "COGN3.SA",  "Empresa": "Cogna",            "Setor": "Educação",         "Peso (%)": 4.5,  "Preço Entrada": 3.50},
-        {"Ticker": "ABEV3.SA",  "Empresa": "Ambev",            "Setor": "Consumo Básico",   "Peso (%)": 4.0,  "Preço Entrada": 12.40},
-        {"Ticker": "CAIXA",     "Empresa": "Caixa / CDI",      "Setor": "Renda Fixa",       "Peso (%)": 26.5, "Preço Entrada": 0.0},
-    ]
+    _END_DIR  = _Path("/opt/shipyard/data/endurance")
+    _END_DIR.mkdir(parents=True, exist_ok=True)
+    _CART_FILE = _END_DIR / "carteira.json"
+    _TR_FILE   = _END_DIR / "trackrecord.json"
+    _CDI_AA    = 0.1075  # CDI aproximado a.a.
 
-    df_end = pd.DataFrame(ENDURANCE_CARTEIRA)
+    # ── helpers ──────────────────────────────────────────────────
+    def _load_carteira():
+        if _CART_FILE.exists():
+            return _json.loads(_CART_FILE.read_text())
+        return []
 
-    # Busca preços atuais
-    @st.cache_data(ttl=600)
-    def get_prices_endurance(tickers):
+    def _save_carteira(c):
+        _CART_FILE.write_text(_json.dumps(c, indent=2, ensure_ascii=False))
+
+    def _load_tr():
+        if _TR_FILE.exists():
+            return _json.loads(_TR_FILE.read_text())
+        return []
+
+    def _save_tr(t):
+        _TR_FILE.write_text(_json.dumps(t, indent=2, ensure_ascii=False))
+
+    @st.cache_data(ttl=300)
+    def _get_hist(tickers_tuple, period="2y"):
+        import yfinance as yf
+        tks = [t for t in tickers_tuple if t != "CAIXA"]
+        if not tks:
+            return pd.DataFrame()
         try:
-            import yfinance as yf
-            prices = {}
-            for tk in tickers:
-                if tk == "CAIXA": continue
-                try:
-                    info = yf.Ticker(tk).fast_info
-                    prices[tk] = float(info.last_price or 0)
-                except Exception:
-                    prices[tk] = 0.0
-            return prices
-        except Exception:
-            return {}
-
-    tickers_end = [row["Ticker"] for row in ENDURANCE_CARTEIRA if row["Ticker"] != "CAIXA"]
-    with st.spinner("Carregando cotações..."):
-        precos_atuais = get_prices_endurance(tuple(tickers_end))
-
-    # Monta tabela de performance
-    rows_end = []
-    total_retorno_pond = 0.0
-    for row in ENDURANCE_CARTEIRA:
-        tk   = row["Ticker"]
-        peso = row["Peso (%)"] / 100
-        p_in = row["Preço Entrada"]
-        if tk == "CAIXA":
-            p_at = 0.0
-            ret  = None
-            ret_str = "CDI"
-        else:
-            p_at = precos_atuais.get(tk, 0.0)
-            ret  = (p_at - p_in) / p_in * 100 if p_in and p_at else None
-            ret_str = f"{ret:+.1f}%" if ret is not None else "—"
-            if ret is not None:
-                total_retorno_pond += ret * peso
-
-        rows_end.append({
-            "Ticker":         tk,
-            "Empresa":        row["Empresa"],
-            "Setor":          row["Setor"],
-            "Peso":           f"{row['Peso (%)']:.1f}%",
-            "P. Entrada":     f"R$ {p_in:.2f}" if p_in else "—",
-            "P. Atual":       f"R$ {p_at:.2f}" if p_at else "CDI",
-            "Retorno":        ret_str,
-        })
-
-    def _end_color(val):
-        if "%" in str(val):
-            try:
-                v = float(str(val).replace("%","").replace("+",""))
-                if v > 10:  return f"color:{C['blue_lt']};font-weight:bold"
-                if v > 0:   return f"color:{C['sky']}"
-                if v < -10: return f"color:{C['neg']}"
-                return f"color:{C['gray']}"
-            except: pass
-        return f"color:{C['white']}"
-
-    st.markdown(dark_table(pd.DataFrame(rows_end), _end_color), unsafe_allow_html=True)
-
-    # KPI da carteira
-    k1, k2, k3 = st.columns(3)
-    k1.metric("Retorno Ponderado (posições com preço)", f"{total_retorno_pond:+.2f}%")
-    n_pos = sum(1 for r in ENDURANCE_CARTEIRA if r["Ticker"] != "CAIXA")
-    k2.metric("Posições em Renda Variável", f"{n_pos}")
-    k3.metric("Caixa / Renda Fixa", f"{next(r['Peso (%)'] for r in ENDURANCE_CARTEIRA if r['Ticker']=='CAIXA'):.1f}%")
-
-    # ── Trackrecord — Retorno acumulado vs IBOV ─────────────────
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("## Trackrecord — Retorno Acumulado vs IBOV")
-
-    tickers_rv = [r["Ticker"] for r in ENDURANCE_CARTEIRA if r["Ticker"] != "CAIXA"]
-    pesos_rv   = {r["Ticker"]: r["Peso (%)"] / 100 for r in ENDURANCE_CARTEIRA if r["Ticker"] != "CAIXA"}
-    peso_caixa = next(r["Peso (%)"] for r in ENDURANCE_CARTEIRA if r["Ticker"]=="CAIXA") / 100
-
-    @st.cache_data(ttl=3600)
-    def get_trackrecord(tickers, periodo="2y"):
-        try:
-            import yfinance as yf
-            dfs = []
-            for tk in tickers:
-                df = yf.download(tk, period=periodo, auto_adjust=True, progress=False)["Close"].squeeze()
-                dfs.append(df.rename(tk))
-            ibov = yf.download("^BVSP", period=periodo, auto_adjust=True, progress=False)["Close"].squeeze().rename("IBOV")
-            dfs.append(ibov)
-            return pd.concat(dfs, axis=1).dropna(how="all")
-        except Exception:
+            raw = yf.download(tks + ["^BVSP","^GSPC","USDBRL=X"],
+                              period=period, auto_adjust=True, progress=False)["Close"]
+            if isinstance(raw, pd.Series):
+                raw = raw.to_frame(tks[0])
+            raw = raw.rename(columns={"^BVSP":"IBOV","^GSPC":"SPX","USDBRL=X":"USDBRL"})
+            return raw.dropna(how="all")
+        except Exception as e:
+            st.warning(f"yfinance: {e}")
             return pd.DataFrame()
 
-    with st.spinner("Calculando trackrecord..."):
-        df_track = get_trackrecord(tuple(tickers_rv))
+    def _portfolio_returns(df, carteira):
+        rv  = [p for p in carteira if p["ticker"] != "CAIXA" and p["ticker"] in df.columns]
+        if not rv: return None, None
+        total_rv  = sum(p["peso"] for p in rv)
+        total_cx  = sum(p["peso"] for p in carteira if p["ticker"] == "CAIXA")
+        total_all = total_rv + total_cx
+        if total_all == 0: return None, None
+        w_rv = {p["ticker"]: p["peso"]/total_all for p in rv}
+        w_cx = total_cx / total_all
+        rets = df[[p["ticker"] for p in rv]].pct_change().dropna()
+        port_ret = sum(rets[tk] * w for tk, w in w_rv.items())
+        cdi_d = (1 + _CDI_AA)**(1/252) - 1
+        port_ret += cdi_d * w_cx
+        return port_ret, rets
 
-    if not df_track.empty:
-        # Retornos diários
-        rets = df_track.pct_change().dropna()
+    def _risk_metrics(port_ret, bench_ret=None):
+        if port_ret is None or len(port_ret) < 5:
+            return {}
+        r = _np.array(port_ret.dropna())
+        ann = 252
+        cdi_d = (1 + _CDI_AA)**(1/252) - 1
+        ret_aa  = float((1 + r).prod() ** (ann/len(r)) - 1)
+        vol_aa  = float(r.std() * ann**0.5)
+        sharpe  = (ret_aa - _CDI_AA) / vol_aa if vol_aa else 0
+        neg     = r[r < 0]
+        sortino_vol = float(neg.std() * ann**0.5) if len(neg) else vol_aa
+        sortino = (ret_aa - _CDI_AA) / sortino_vol if sortino_vol else 0
+        cum     = (1 + r).cumprod()
+        roll_max= _np.maximum.accumulate(cum)
+        dd      = (cum - roll_max) / roll_max
+        max_dd  = float(dd.min())
+        calmar  = ret_aa / abs(max_dd) if max_dd else 0
+        var95   = float(_np.percentile(r, 5))
+        cvar95  = float(r[r <= var95].mean()) if len(r[r <= var95]) else var95
+        out = dict(ret_aa=ret_aa, vol_aa=vol_aa, sharpe=sharpe,
+                   sortino=sortino, max_dd=max_dd, calmar=calmar,
+                   var95=var95, cvar95=cvar95)
+        if bench_ret is not None:
+            br = _np.array(bench_ret.reindex(port_ret.index).dropna())
+            pr = _np.array(port_ret.reindex(port_ret.index).dropna())
+            n  = min(len(br), len(pr))
+            if n > 5:
+                cov   = _np.cov(pr[:n], br[:n])
+                beta  = cov[0,1] / cov[1,1] if cov[1,1] else 1.0
+                alpha = ret_aa - (_CDI_AA + beta * (float((1+br).prod()**(ann/n)-1) - _CDI_AA))
+                corr  = _np.corrcoef(pr[:n], br[:n])[0,1]
+                bench_aa = float((1+br).prod()**(ann/n)-1)
+                out.update(beta=beta, alpha=alpha, corr=corr, bench_aa=bench_aa)
+        return out
 
-        # Carteira ponderada (apenas RV, normaliza os pesos sem caixa)
-        tickers_ok = [tk for tk in tickers_rv if tk in rets.columns]
-        peso_total_rv = sum(pesos_rv.get(tk, 0) for tk in tickers_ok)
-        if peso_total_rv > 0:
-            pesos_norm = {tk: pesos_rv.get(tk, 0) / peso_total_rv * (1 - peso_caixa)
-                         for tk in tickers_ok}
+    # ── estado ───────────────────────────────────────────────────
+    carteira = _load_carteira()
+    tr_data  = _load_tr()
+
+    # ── header ───────────────────────────────────────────────────
+    st.markdown(f"""<div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
+        <span style="color:{C['white']};font-size:1.3rem;font-weight:800">⚓ Carteira Endurance</span>
+        <span style="background:{C['bg2']};border:1px solid {C['border']};border-radius:4px;
+            padding:2px 10px;font-size:.72rem;color:{C['gray']}">{len([p for p in carteira if p['ticker']!='CAIXA'])} posições · {sum(p['peso'] for p in carteira):.0f}% alocado</span>
+    </div>""", unsafe_allow_html=True)
+
+    # ── tabs ─────────────────────────────────────────────────────
+    tab_port, tab_edit, tab_risk, tab_tr = st.tabs([
+        "📊 Visão da Carteira", "✏️ Gerenciar Posições", "📐 Risco & KPIs", "📈 Trackrecord"
+    ])
+
+    # ════════════════════════════════════════════════════════════
+    # TAB 1 — VISÃO DA CARTEIRA
+    # ════════════════════════════════════════════════════════════
+    with tab_port:
+        if not carteira:
+            st.info("Carteira vazia. Adicione posições na aba ✏️")
         else:
-            pesos_norm = {}
+            tickers_rv = tuple(p["ticker"] for p in carteira if p["ticker"] != "CAIXA")
+            _period_opt = st.select_slider("Período",["1mo","3mo","6mo","1y","2y","5y"], value="1y",
+                                           key="end_period")
+            with st.spinner("Carregando cotações..."):
+                df_hist = _get_hist(tickers_rv, _period_opt)
 
-        if pesos_norm:
-            carteira_ret = sum(rets[tk] * pesos_norm[tk] for tk in tickers_ok)
-            # CDI proxy: ~13.75% a.a. → ~0.0529% por dia útil
-            cdi_diario = (1 + 0.1375) ** (1/252) - 1
-            caixa_ret  = pd.Series(cdi_diario, index=rets.index)
-            port_ret   = carteira_ret + caixa_ret * peso_caixa
+            # Cotações atuais
+            precos = {}
+            if not df_hist.empty:
+                for tk in tickers_rv:
+                    if tk in df_hist.columns:
+                        s = df_hist[tk].dropna()
+                        precos[tk] = float(s.iloc[-1]) if not s.empty else 0.0
 
-            # Retorno acumulado
-            port_acc  = (1 + port_ret).cumprod() - 1
-            ibov_acc  = (1 + rets["IBOV"]).cumprod() - 1 if "IBOV" in rets.columns else None
+            # Tabela de posições
+            rows = []
+            total_pond = 0.0
+            for p in carteira:
+                tk = p["ticker"]
+                pe = p.get("preco_entrada", 0)
+                pa = precos.get(tk, 0.0)
+                peso = p["peso"]
+                if tk == "CAIXA":
+                    ret = None; ret_s = "CDI"
+                else:
+                    ret = (pa - pe)/pe*100 if pe and pa else None
+                    ret_s = f"{ret:+.1f}%" if ret is not None else "—"
+                    if ret: total_pond += ret * peso/100
+                rows.append({"Ticker": tk.replace(".SA",""),
+                             "Empresa": p.get("empresa",""),
+                             "Setor": p.get("setor",""),
+                             "Peso": f"{peso:.1f}%",
+                             "Entrada": f"R${pe:.2f}" if pe else "—",
+                             "Atual": f"R${pa:.2f}" if pa else ("CDI" if tk=="CAIXA" else "—"),
+                             "Retorno": ret_s})
+
+            def _color(val):
+                if "%" in str(val) and val not in ["CDI","—"]:
+                    try:
+                        v = float(str(val).replace("%","").replace("+",""))
+                        if v > 15:  return f"color:{C['pos']};font-weight:bold"
+                        if v > 0:   return f"color:{C['sky']}"
+                        if v < -10: return f"color:{C['neg']};font-weight:bold"
+                        if v < 0:   return f"color:{C['gray2']}"
+                    except: pass
+                return f"color:{C['white']}"
+
+            st.markdown(dark_table(pd.DataFrame(rows), _color), unsafe_allow_html=True)
+
+            # KPIs rápidos
+            peso_cx = sum(p["peso"] for p in carteira if p["ticker"]=="CAIXA")
+            k1,k2,k3,k4 = st.columns(4)
+            k1.metric("Retorno Ponderado", f"{total_pond:+.2f}%")
+            k2.metric("Posições RV", f"{len(tickers_rv)}")
+            k3.metric("Caixa / RF", f"{peso_cx:.1f}%")
+            k4.metric("Concentração Top3",
+                f"{sum(sorted([p['peso'] for p in carteira if p['ticker']!='CAIXA'],reverse=True)[:3]):.1f}%")
+
+            # Gráfico retorno acumulado
+            if not df_hist.empty:
+                port_ret, _ = _portfolio_returns(df_hist, carteira)
+                if port_ret is not None:
+                    port_acc = (1 + port_ret).cumprod() - 1
+
+                    # Comparativo configurável
+                    bench_opts = {"IBOV":"IBOV","S&P 500":"SPX","CDI (proxy)":"CDI"}
+                    bench_extra = st.multiselect("Comparar com", list(bench_opts.keys()),
+                                                 default=["IBOV"], key="end_bench")
+
+                    fig_port = go.Figure()
+                    fig_port.add_trace(go.Scatter(
+                        x=port_acc.index, y=port_acc.values*100,
+                        mode="lines", name="⚓ Endurance",
+                        line=dict(color=C["blue_lt"], width=2.5)))
+
+                    for b in bench_extra:
+                        bk = bench_opts[b]
+                        if bk == "CDI":
+                            cdi_d = (1+_CDI_AA)**(1/252)-1
+                            cdi_acc = pd.Series((1+cdi_d)**_np.arange(len(port_acc))-1,
+                                                index=port_acc.index)
+                            fig_port.add_trace(go.Scatter(
+                                x=cdi_acc.index, y=cdi_acc.values*100,
+                                mode="lines", name="CDI",
+                                line=dict(color=C["teal"], width=1.5, dash="dot")))
+                        elif bk in df_hist.columns:
+                            s = df_hist[bk].dropna().pct_change().dropna()
+                            s = s.reindex(port_ret.index).fillna(0)
+                            acc = (1+s).cumprod()-1
+                            fig_port.add_trace(go.Scatter(
+                                x=acc.index, y=acc.values*100,
+                                mode="lines", name=b,
+                                line=dict(color=C["gray"], width=1.5, dash="dot")))
+
+                    fig_port.add_hline(y=0, line_color=C["border"], line_width=1)
+                    fig_port.update_layout(**PL,
+                        title="Retorno Acumulado — base 0%",
+                        yaxis_title="Retorno (%)", height=420)
+                    st.plotly_chart(fig_port, use_container_width=True)
+
+            # Pizza setorial
+            st.markdown("### Exposição Setorial")
+            setor_peso = {}
+            for p in carteira:
+                s = p.get("setor","Outros")
+                setor_peso[s] = setor_peso.get(s,0) + p["peso"]
+            sc1, sc2 = st.columns(2)
+            cores_s = [C["blue_lt"],C["sky"],C["navy"],C["teal"],C["gray"],
+                       C["bg3"],"#5EC8A0","#FFB347","#9B59B6","#E67E22",C["gray2"]]
+            with sc1:
+                fig_pie = go.Figure(go.Pie(
+                    labels=list(setor_peso.keys()), values=list(setor_peso.values()),
+                    hole=0.52, marker_colors=cores_s[:len(setor_peso)],
+                    textfont=dict(color=C["white"],size=11), textinfo="label+percent"))
+                fig_pie.update_layout(paper_bgcolor=C["bg"],
+                    font=dict(family="Helvetica,Arial",color=C["white"]),
+                    legend=dict(bgcolor=C["bg"],bordercolor=C["border"]),
+                    margin=dict(l=10,r=10,t=20,b=10), height=300,
+                    annotations=[dict(text="Setores",font=dict(size=11,color=C["white"]),showarrow=False)])
+                st.plotly_chart(fig_pie, use_container_width=True)
+            with sc2:
+                # Heatmap de correlação
+                if not df_hist.empty and len(tickers_rv) > 1:
+                    corr_tks = [t for t in tickers_rv if t in df_hist.columns]
+                    if len(corr_tks) > 1:
+                        corr_df = df_hist[corr_tks].pct_change().dropna().corr()
+                        labels = [t.replace(".SA","") for t in corr_tks]
+                        fig_corr = go.Figure(go.Heatmap(
+                            z=corr_df.values, x=labels, y=labels,
+                            colorscale=[[0,C["neg"]],[0.5,C["bg2"]],[1,C["pos"]]],
+                            zmin=-1, zmax=1, text=corr_df.round(2).values,
+                            texttemplate="%{text}", textfont=dict(size=9)))
+                        fig_corr.update_layout(**{**PL, "margin": dict(l=40,r=10,t=40,b=40)}, title="Correlação entre Ativos", height=300)
+                        st.plotly_chart(fig_corr, use_container_width=True)
+
+    # ════════════════════════════════════════════════════════════
+    # TAB 2 — GERENCIAR POSIÇÕES
+    # ════════════════════════════════════════════════════════════
+    with tab_edit:
+        st.markdown("### ✏️ Posições Atuais")
+
+        # Editor de tabela
+        df_edit = pd.DataFrame([{
+            "ticker": p["ticker"], "empresa": p.get("empresa",""),
+            "setor": p.get("setor",""), "peso": p["peso"],
+            "preco_entrada": p.get("preco_entrada",0.0),
+            "data_entrada": p.get("data_entrada","")
+        } for p in carteira])
+
+        edited = st.data_editor(
+            df_edit,
+            use_container_width=True,
+            num_rows="dynamic",
+            column_config={
+                "ticker": st.column_config.TextColumn("Ticker", help="Ex: PETR4.SA ou CAIXA"),
+                "empresa": st.column_config.TextColumn("Empresa"),
+                "setor": st.column_config.TextColumn("Setor"),
+                "peso": st.column_config.NumberColumn("Peso (%)", min_value=0, max_value=100, step=0.5),
+                "preco_entrada": st.column_config.NumberColumn("P. Entrada (R$)", min_value=0, step=0.01),
+                "data_entrada": st.column_config.TextColumn("Data Entrada", help="AAAA-MM-DD"),
+            },
+            key="end_editor"
+        )
+
+        total_peso = edited["peso"].sum() if not edited.empty else 0
+        _pcol = C["pos"] if 98 <= total_peso <= 102 else C["neg"]
+        st.markdown(f"<span style='color:{_pcol};font-weight:700'>Total alocado: {total_peso:.1f}%</span>", unsafe_allow_html=True)
+
+        col_save, col_imp = st.columns([1,1])
+        with col_save:
+            if st.button("💾 Salvar Carteira", use_container_width=True, type="primary"):
+                nova = edited.to_dict("records")
+                _save_carteira(nova)
+                st.success("Carteira salva!")
+                st.cache_data.clear()
+                st.rerun()
+
+        with col_imp:
+            st.markdown("**Importar CSV ComDinheiro**")
+            uploaded = st.file_uploader("Upload CSV", type=["csv","txt"], key="end_upload",
+                                        label_visibility="collapsed")
+            if uploaded:
+                try:
+                    df_imp = pd.read_csv(uploaded, sep=None, engine="python",
+                                        encoding="latin1", dtype=str)
+                    df_imp.columns = [c.strip().lower() for c in df_imp.columns]
+                    # Tenta mapear colunas comuns do ComDinheiro
+                    col_map = {}
+                    for c in df_imp.columns:
+                        if any(k in c for k in ["ticker","ativo","papel","cod"]): col_map["ticker"]=c
+                        if any(k in c for k in ["peso","alocacao","%","participacao"]): col_map["peso"]=c
+                        if any(k in c for k in ["preco","entrada","custo","pm"]): col_map["preco_entrada"]=c
+                        if any(k in c for k in ["empresa","nome","emis"]): col_map["empresa"]=c
+                    if "ticker" in col_map:
+                        importados = []
+                        for _, row in df_imp.iterrows():
+                            tk = str(row[col_map["ticker"]]).strip().upper()
+                            if not tk.endswith(".SA") and tk != "CAIXA":
+                                tk += ".SA"
+                            importados.append({
+                                "ticker": tk,
+                                "empresa": str(row.get(col_map.get("empresa",""), tk)).strip(),
+                                "setor": "—",
+                                "peso": float(str(row.get(col_map.get("peso","0"),"0")).replace(",",".").replace("%","") or 0),
+                                "preco_entrada": float(str(row.get(col_map.get("preco_entrada","0"),"0")).replace(",",".") or 0),
+                                "data_entrada": str(_date.today()),
+                            })
+                        _save_carteira(importados)
+                        st.success(f"{len(importados)} posições importadas!")
+                        st.cache_data.clear()
+                        st.rerun()
+                    else:
+                        st.error(f"Não achei coluna 'ticker'. Colunas: {list(df_imp.columns)}")
+                except Exception as e:
+                    st.error(f"Erro ao importar: {e}")
+
+    # ════════════════════════════════════════════════════════════
+    # TAB 3 — RISCO & KPIs
+    # ════════════════════════════════════════════════════════════
+    with tab_risk:
+        if not carteira:
+            st.info("Carteira vazia.")
+        else:
+            tickers_rv = tuple(p["ticker"] for p in carteira if p["ticker"] != "CAIXA")
+            _rp = st.select_slider("Janela de análise",
+                ["6mo","1y","2y","3y","5y"], value="2y", key="end_risk_period")
+            with st.spinner("Calculando métricas de risco..."):
+                df_r = _get_hist(tickers_rv, _rp)
+
+            if df_r.empty:
+                st.warning("Sem dados históricos suficientes.")
+            else:
+                port_ret, ind_rets = _portfolio_returns(df_r, carteira)
+                bench_ret = df_r["IBOV"].pct_change().dropna() if "IBOV" in df_r.columns else None
+                m = _risk_metrics(port_ret, bench_ret)
+
+                if m:
+                    st.markdown("### 📐 Métricas de Risco")
+                    r1,r2,r3,r4 = st.columns(4)
+                    r1.metric("Retorno a.a.", f"{m.get('ret_aa',0)*100:+.1f}%")
+                    r2.metric("Volatilidade a.a.", f"{m.get('vol_aa',0)*100:.1f}%")
+                    r3.metric("Sharpe", f"{m.get('sharpe',0):.2f}")
+                    r4.metric("Sortino", f"{m.get('sortino',0):.2f}")
+
+                    r5,r6,r7,r8 = st.columns(4)
+                    r5.metric("Max Drawdown", f"{m.get('max_dd',0)*100:.1f}%",
+                              delta_color="inverse")
+                    r6.metric("Calmar", f"{m.get('calmar',0):.2f}")
+                    r7.metric("VaR 95% (diário)", f"{m.get('var95',0)*100:.2f}%",
+                              delta_color="inverse")
+                    r8.metric("CVaR 95%", f"{m.get('cvar95',0)*100:.2f}%",
+                              delta_color="inverse")
+
+                    if "beta" in m:
+                        st.markdown("<hr>", unsafe_allow_html=True)
+                        rb1,rb2,rb3,rb4 = st.columns(4)
+                        rb1.metric("Beta vs IBOV", f"{m['beta']:.2f}")
+                        rb2.metric("Alpha (a.a.)", f"{m['alpha']*100:+.2f}%")
+                        rb3.metric("Correlação IBOV", f"{m['corr']:.2f}")
+                        rb4.metric("IBOV a.a.", f"{m.get('bench_aa',0)*100:+.1f}%")
+
+                    # Drawdown chart
+                    if port_ret is not None:
+                        cum_r = (1 + port_ret).cumprod()
+                        roll_max = cum_r.cummax()
+                        dd_series = (cum_r - roll_max) / roll_max * 100
+
+                        fig_dd = go.Figure()
+                        fig_dd.add_trace(go.Scatter(
+                            x=dd_series.index, y=dd_series.values,
+                            mode="lines", fill="tozeroy",
+                            fillcolor=f"rgba({int(C['neg'][1:3],16)},{int(C['neg'][3:5],16)},{int(C['neg'][5:7],16)},.2)",
+                            line=dict(color=C["neg"], width=1.2), name="Drawdown"))
+                        fig_dd.update_layout(**PL, title="Drawdown Histórico (%)",
+                                             yaxis_title="%", height=280)
+                        st.plotly_chart(fig_dd, use_container_width=True)
+
+                    # Distribuição de retornos
+                    if port_ret is not None:
+                        fig_hist = go.Figure()
+                        fig_hist.add_trace(go.Histogram(
+                            x=port_ret.values*100, nbinsx=60,
+                            marker_color=C["blue_lt"], opacity=0.8, name="Retornos diários"))
+                        fig_hist.add_vline(x=m.get("var95",0)*100,
+                                           line_color=C["neg"], line_dash="dash",
+                                           annotation_text=f"VaR 95%: {m.get('var95',0)*100:.2f}%")
+                        fig_hist.update_layout(**PL,
+                                               title="Distribuição de Retornos Diários (%)",
+                                               height=280)
+                        st.plotly_chart(fig_hist, use_container_width=True)
+
+                    # Risk per ativo
+                    if ind_rets is not None and not ind_rets.empty:
+                        st.markdown("### Risco por Ativo")
+                        ativo_metrics = []
+                        for tk in ind_rets.columns:
+                            r_tk = ind_rets[tk].dropna()
+                            if len(r_tk) < 20: continue
+                            ret_aa_tk = float((1+r_tk).prod()**(252/len(r_tk))-1)
+                            vol_tk    = float(r_tk.std()*252**0.5)
+                            sh_tk     = (ret_aa_tk - _CDI_AA)/vol_tk if vol_tk else 0
+                            cum_tk    = (1+r_tk).cumprod()
+                            dd_tk     = float(((cum_tk - cum_tk.cummax())/cum_tk.cummax()).min())
+                            ativo_metrics.append({
+                                "Ativo": tk.replace(".SA",""),
+                                "Ret. a.a.": f"{ret_aa_tk*100:+.1f}%",
+                                "Vol. a.a.": f"{vol_tk*100:.1f}%",
+                                "Sharpe": f"{sh_tk:.2f}",
+                                "Max DD": f"{dd_tk*100:.1f}%",
+                            })
+                        if ativo_metrics:
+                            st.markdown(dark_table(pd.DataFrame(ativo_metrics)), unsafe_allow_html=True)
+
+    # ════════════════════════════════════════════════════════════
+    # TAB 4 — TRACKRECORD
+    # ════════════════════════════════════════════════════════════
+    with tab_tr:
+        st.markdown("### 📈 Trackrecord Diário")
+
+        col_snap, col_info = st.columns([1,3])
+        with col_snap:
+            if st.button("📸 Registrar NAV Hoje", use_container_width=True, type="primary"):
+                tickers_rv_tr = tuple(p["ticker"] for p in carteira if p["ticker"] != "CAIXA")
+                df_snap = _get_hist(tickers_rv_tr, "5d")
+                if not df_snap.empty:
+                    port_ret_snap, _ = _portfolio_returns(df_snap, carteira)
+                    if port_ret_snap is not None:
+                        today_str = str(_date.today())
+                        cum_snap = float((1 + port_ret_snap).prod() - 1)
+                        # Carrega TR e adiciona snapshot
+                        tr_curr = _load_tr()
+                        # Remove entrada de hoje se já existir
+                        tr_curr = [x for x in tr_curr if x.get("date") != today_str]
+                        tr_curr.append({"date": today_str, "nav_acc": round(cum_snap*100, 4)})
+                        tr_curr.sort(key=lambda x: x["date"])
+                        _save_tr(tr_curr)
+                        st.success(f"NAV registrado: {cum_snap*100:+.2f}%")
+                        st.rerun()
+
+        with col_info:
+            st.caption(f"{len(tr_data)} snapshots registrados. Clique para adicionar o NAV de hoje.")
+
+        if tr_data:
+            df_tr = pd.DataFrame(tr_data)
+            df_tr["date"] = pd.to_datetime(df_tr["date"])
+            df_tr = df_tr.sort_values("date")
 
             fig_tr = go.Figure()
             fig_tr.add_trace(go.Scatter(
-                x=port_acc.index, y=port_acc.values * 100,
-                mode="lines", name="Endurance (teórico)",
-                line=dict(color=C["blue_lt"], width=2.5)
-            ))
-            if ibov_acc is not None:
-                fig_tr.add_trace(go.Scatter(
-                    x=ibov_acc.index, y=ibov_acc.values * 100,
-                    mode="lines", name="IBOV",
-                    line=dict(color=C["gray"], width=1.5, dash="dot")
-                ))
+                x=df_tr["date"], y=df_tr["nav_acc"],
+                mode="lines+markers", name="⚓ Endurance (NAV)",
+                line=dict(color=C["blue_lt"], width=2.5),
+                marker=dict(size=6, color=C["blue_lt"])))
             fig_tr.add_hline(y=0, line_color=C["border"], line_width=1)
             fig_tr.update_layout(**PL,
-                title="Retorno acumulado — base 0% no início do período",
-                yaxis_title="Retorno acumulado (%)", height=380)
+                title="Trackrecord — NAV Acumulado (%)",
+                yaxis_title="Retorno acumulado (%)", height=400)
             st.plotly_chart(fig_tr, use_container_width=True)
 
-            # Métricas de performance
-            pm1, pm2, pm3, pm4 = st.columns(4)
-            pm1.metric("Retorno Carteira (período)", f"{float(port_acc.iloc[-1])*100:+.1f}%")
-            if ibov_acc is not None:
-                pm2.metric("Retorno IBOV (período)", f"{float(ibov_acc.iloc[-1])*100:+.1f}%")
-                alpha = float(port_acc.iloc[-1] - ibov_acc.iloc[-1]) * 100
-                pm3.metric("Alpha vs IBOV", f"{alpha:+.1f}%",
-                           delta_color="normal" if alpha > 0 else "inverse")
-            vol_port = float(port_ret.std() * (252**0.5) * 100)
-            pm4.metric("Volatilidade Anual", f"{vol_port:.1f}%")
+            # Tabela de snapshots
+            df_tr_show = df_tr.copy()
+            df_tr_show["Variação Diária"] = df_tr_show["nav_acc"].diff().apply(
+                lambda x: f"{x:+.2f}%" if pd.notna(x) else "—")
+            df_tr_show["date"] = df_tr_show["date"].dt.strftime("%Y-%m-%d")
+            df_tr_show = df_tr_show.rename(columns={"date":"Data","nav_acc":"NAV Acum. (%)"})
+            st.dataframe(df_tr_show[["Data","NAV Acum. (%)","Variação Diária"]].tail(30),
+                         use_container_width=True, hide_index=True)
 
-    # ── #27 — Exposição Setorial da Carteira ─────────────────────
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("## Exposição Setorial da Carteira")
+            export_buttons(df_tr_show, "trackrecord_endurance")
+        else:
+            st.info("Nenhum snapshot registrado. Clique em 📸 Registrar NAV Hoje para iniciar o trackrecord.")
 
-    setor_peso = {}
-    for row in ENDURANCE_CARTEIRA:
-        s = row["Setor"]
-        setor_peso[s] = setor_peso.get(s, 0) + row["Peso (%)"]
 
-    setores  = list(setor_peso.keys())
-    pesos_s  = list(setor_peso.values())
-    cores_s  = [C["blue_lt"], C["sky"], C["navy"], C["teal"], C["gray"],
-                C["bg3"], "#5EC8A0", "#FFB347", "#9B59B6", "#E67E22", C["gray2"]]
-
-    sc1, sc2 = st.columns(2)
-    with sc1:
-        fig_pizza_s = go.Figure(go.Pie(
-            labels=setores, values=pesos_s, hole=0.52,
-            marker_colors=cores_s[:len(setores)],
-            textfont=dict(color=C["white"], size=11),
-            textinfo="label+percent",
-        ))
-        fig_pizza_s.update_layout(
-            paper_bgcolor=C["bg"],
-            font=dict(family="Helvetica,Arial", color=C["white"]),
-            legend=dict(bgcolor=C["bg"], bordercolor=C["border"], font=dict(color=C["white"])),
-            margin=dict(l=10, r=10, t=30, b=10), height=340,
-            annotations=[dict(text="Setores", font=dict(size=12, color=C["white"]), showarrow=False)]
-        )
-        st.plotly_chart(fig_pizza_s, use_container_width=True)
-
-    with sc2:
-        fig_bar_s = go.Figure(go.Bar(
-            x=pesos_s,
-            y=setores,
-            orientation="h",
-            marker_color=cores_s[:len(setores)],
-            text=[f"{p:.1f}%" for p in pesos_s],
-            textposition="outside",
-            textfont=dict(color=C["white"])
-        ))
-        fig_bar_s.update_layout(**PL,
-            title="Concentração por Setor (%)",
-            xaxis_title="Peso (%)", height=340, showlegend=False
-        )
-        st.plotly_chart(fig_bar_s, use_container_width=True)
-
-    # Tabela setores
-    df_set = pd.DataFrame({"Setor": setores, "Peso (%)": [f"{p:.1f}%" for p in pesos_s]})
-    st.markdown(dark_table(df_set), unsafe_allow_html=True)
-    st.info("💡 Para atualizar a carteira, edite o dict ENDURANCE_CARTEIRA no dashboard.py")
-    export_buttons(pd.DataFrame(rows_end), "carteira_endurance")
-
-# ══════════════════════════════════════════════════════════════════
-# PÁG 10 — EXPOSIÇÃO GEOGRÁFICA
-# ══════════════════════════════════════════════════════════════════
-elif pagina == "Exposição Geográfica":
-    st.markdown("## Exposição Geográfica da Cobertura")
-    st.markdown("<div style='color:{};font-size:.8rem;'>Intensidade = presença operacional estimada (0–100). Quanto mais escuro, maior a presença.</div>".format(C["gray2"]), unsafe_allow_html=True)
-
-    # Dados de exposição geográfica por empresa
-    # Formato: ticker -> {iso_alpha3: intensidade 0-100}
-    GEO_EXPOSURE = {
-        "WEGE3.SA": {
-            "BRA":100, "USA":85, "DEU":80, "MEX":75, "IND":70,
-            "CHN":65,  "ARG":60, "COL":55, "PRT":50, "AUT":50,
-            "BEL":45,  "FRA":40, "GBR":40, "ZAF":35, "AUS":35,
-            "CAN":30,  "CHL":30, "PER":25, "URY":20, "BOL":15,
-        },
-        "COGN3.SA": {
-            "BRA":100, "PRT":15, "AGO":10, "MOZ":10,
-        },
-    }
-
-    # Monta dataframe combinado (média ponderada de todas as empresas cobertas)
-    all_countries = {}
-    for emp in empresas:
-        ticker_geo = results[emp].get("ticker", emp)
-        exposure   = GEO_EXPOSURE.get(ticker_geo, {})
-        for iso, val in exposure.items():
-            all_countries[iso] = all_countries.get(iso, 0) + val
-
-    # Normaliza para 0-100
-    if all_countries:
-        max_v = max(all_countries.values())
-        all_countries_norm = {k: v/max_v*100 for k,v in all_countries.items()}
-    else:
-        all_countries_norm = {}
-
-    # Tabs: carteira vs individual
-    tab_cart, *tab_emps = st.tabs(
-        ["Carteira Consolidada"] + [results[e].get("ticker",e) for e in empresas]
-    )
-
-    def _mapa(geo_dict, titulo):
-        if not geo_dict:
-            st.info("Sem dados geográficos para este ativo."); return
-        df_geo = pd.DataFrame([
-            {"iso_alpha": k, "intensidade": v, "pais": k}
-            for k, v in geo_dict.items()
-        ])
-        fig_map = go.Figure(go.Choropleth(
-            locations=df_geo["iso_alpha"],
-            z=df_geo["intensidade"],
-            locationmode="ISO-3",
-            colorscale=[
-                [0.0,  "#0a1218"],
-                [0.05, "#0a1624"],
-                [0.2,  "#0F1E30"],
-                [0.4,  "#0F558B"],
-                [0.7,  "#2351FE"],
-                [1.0,  "#9AC0E6"],
-            ],
-            zmin=0, zmax=100,
-            marker_line_color="#1a3a5c",
-            marker_line_width=0.5,
-            colorbar=dict(
-                title=dict(text="Presença (%)", font=dict(color=C["gray"])),
-                tickfont=dict(color=C["gray"]),
-                bgcolor=C["bg2"],
-                bordercolor=C["border"],
-                thickness=14,
-            ),
-            hovertemplate="<b>%{location}</b><br>Intensidade: %{z:.0f}%<extra></extra>",
-        ))
-        fig_map.update_layout(
-            paper_bgcolor=C["bg"],
-            plot_bgcolor=C["bg"],
-            geo=dict(
-                bgcolor=C["bg"],
-                showframe=False,
-                showcoastlines=True,
-                coastlinecolor=C["border"],
-                showland=True,
-                landcolor="#0a1218",
-                showocean=True,
-                oceancolor=C["bg"],
-                showlakes=False,
-                showcountries=True,
-                countrycolor=C["border"],
-                projection_type="natural earth",
-            ),
-            font=dict(family="Helvetica,Arial", color=C["gray"]),
-            margin=dict(l=0, r=0, t=40, b=0),
-            title=dict(text=titulo, font=dict(color=C["white"], size=14)),
-            height=480,
-        )
-        st.plotly_chart(fig_map, use_container_width=True)
-
-        # Tabela dos países
-        df_table = df_geo.sort_values("intensidade", ascending=False).reset_index(drop=True)
-        df_table.columns = ["País (ISO)", "Presença (%)", "Código"]
-        df_table["Presença (%)"] = df_table["Presença (%)"].round(0).astype(int)
-        df_table = df_table[["País (ISO)", "Presença (%)"]].rename(columns={"País (ISO)":"ISO"})
-        st.markdown(dark_table(df_table), unsafe_allow_html=True)
-
-    with tab_cart:
-        _mapa(all_countries_norm, "Exposição Geográfica Consolidada — Carteira Vela Capital")
-
-    for i, emp in enumerate(empresas):
-        ticker_geo = results[emp].get("ticker", emp)
-        with tab_emps[i]:
-            _mapa(GEO_EXPOSURE.get(ticker_geo, {}), f"Exposição Geográfica — {ticker_geo}")
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("## Concentração por Região")
-    REGIOES = {
-        "América do Sul": ["BRA","ARG","COL","CHL","PER","URY","BOL","PRY","ECU","VEN"],
-        "América do Norte": ["USA","CAN","MEX"],
-        "Europa": ["DEU","FRA","GBR","PRT","ESP","ITA","AUT","BEL","NLD","SWE","CHE","POL","ROU"],
-        "Ásia": ["CHN","IND","JPN","KOR","SGP","IDN","THA","MYS","VNM","PHL"],
-        "África": ["ZAF","NGA","KEN","EGY","GHA","AGO","MOZ","TZA"],
-        "Oceania": ["AUS","NZL"],
-        "Oriente Médio": ["SAU","UAE","ISR","TUR","QAT","KWT","BHR"],
-    }
-    reg_data = []
-    for reg, paises in REGIOES.items():
-        total = sum(all_countries.get(p,0) for p in paises)
-        reg_data.append({"Região": reg, "Score": total})
-    reg_df = pd.DataFrame(reg_data).sort_values("Score", ascending=False)
-    if reg_df["Score"].sum() > 0:
-        fig_reg = go.Figure(go.Bar(
-            x=reg_df["Região"], y=reg_df["Score"],
-            marker_color=C["blue_lt"],
-            text=reg_df["Score"].round(0).astype(int),
-            textposition="outside", textfont=dict(color=C["white"])
-        ))
-        fig_reg.update_layout(**PL, title="Score de Presença por Região",
-                               yaxis_title="Score acumulado", showlegend=False)
-        st.plotly_chart(fig_reg, use_container_width=True)
-
-    st.info("💡 Para atualizar os dados geográficos, edite o dicionário GEO_EXPOSURE no dashboard.py")
-
-# ══════════════════════════════════════════════════════════════════
-# ══════════════════════════════════════════════════════════════════
-# PÁG — GOVERNANÇA (#13)
-# ══════════════════════════════════════════════════════════════════
 elif pagina == "Governança":
     st.markdown("## Governança Corporativa")
     emp_sel = st.selectbox("Empresa", empresas,

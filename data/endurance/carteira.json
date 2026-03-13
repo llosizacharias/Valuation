@@ -1,0 +1,90 @@
+[
+  {
+    "ticker": "WEGE3.SA",
+    "empresa": "WEG",
+    "setor": "Bens Industriais",
+    "peso": 12.0,
+    "preco_entrada": 38.5,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "ITUB4.SA",
+    "empresa": "Itaú Unibanco",
+    "setor": "Financeiro",
+    "peso": 10.5,
+    "preco_entrada": 31.2,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "PETR4.SA",
+    "empresa": "Petrobras",
+    "setor": "Petróleo & Gás",
+    "peso": 9.0,
+    "preco_entrada": 37.8,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "VALE3.SA",
+    "empresa": "Vale",
+    "setor": "Mineração",
+    "peso": 8.5,
+    "preco_entrada": 62.4,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "BBAS3.SA",
+    "empresa": "Banco do Brasil",
+    "setor": "Financeiro",
+    "peso": 7.5,
+    "preco_entrada": 25.1,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "RENT3.SA",
+    "empresa": "Localiza",
+    "setor": "Consumo Discr.",
+    "peso": 7.0,
+    "preco_entrada": 42.9,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "MGLU3.SA",
+    "empresa": "Magazine Luiza",
+    "setor": "Consumo Discr.",
+    "peso": 5.5,
+    "preco_entrada": 8.2,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "RADL3.SA",
+    "empresa": "Raia Drogasil",
+    "setor": "Saúde",
+    "peso": 5.0,
+    "preco_entrada": 28.6,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "COGN3.SA",
+    "empresa": "Cogna",
+    "setor": "Educação",
+    "peso": 4.5,
+    "preco_entrada": 3.5,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "ABEV3.SA",
+    "empresa": "Ambev",
+    "setor": "Consumo Básico",
+    "peso": 4.0,
+    "preco_entrada": 12.4,
+    "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "CAIXA",
+    "empresa": "Caixa / CDI",
+    "setor": "Renda Fixa",
+    "peso": 26.5,
+    "preco_entrada": 0.0,
+    "data_entrada": "2024-01-02"
+  }
+]
