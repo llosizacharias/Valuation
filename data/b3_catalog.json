@@ -1,0 +1,1452 @@
+{
+  "CSMG3": {
+    "ticker": "CSMG3.SA",
+    "cvm_code": "498",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 379181431,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "ELETROBRAS": {
+    "ticker": "ELET6.SA",
+    "cvm_code": "2437",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Emp. Adm. Part. - Energia Elétrica",
+    "shares_out": 2135796555,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "CESP CIA ENERGETICA SAO PAULO": {
+    "ticker": "CESP6.SA",
+    "cvm_code": "2577",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": null,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "GERDAU": {
+    "ticker": "GGBR4.SA",
+    "cvm_code": "3980",
+    "setor": "SIDERURGIA",
+    "setor_raw": "Metalurgia e Siderurgia",
+    "shares_out": 1975207757,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "CSN": {
+    "ticker": "CSNA3.SA",
+    "cvm_code": "4030",
+    "setor": "SIDERURGIA",
+    "setor_raw": "Metalurgia e Siderurgia",
+    "shares_out": 1326093947,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "VALE": {
+    "ticker": "VALE3.SA",
+    "cvm_code": "4170",
+    "setor": "DEFAULT",
+    "setor_raw": "Extração Mineral",
+    "shares_out": 4268780153,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "WETZEL": {
+    "ticker": "ROMI3.SA",
+    "cvm_code": "4200",
+    "setor": "DEFAULT",
+    "setor_raw": "Petroquímicos e Borracha",
+    "shares_out": 93170748,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "CIMENTO TUPI SA": {
+    "ticker": "ABEV3.SA",
+    "cvm_code": "4308",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 15616525321,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": false
+  },
+  "INDUCO": {
+    "ticker": "MRFG3.SA",
+    "cvm_code": "4545",
+    "setor": "MÁQUINAS E EQUIPAMENTOS",
+    "setor_raw": "Máquinas, Equipamentos, Veículos e Peças",
+    "shares_out": 1437644362,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "COMIND SERV TECNICOS": {
+    "ticker": "RAPT4.SA",
+    "cvm_code": "4561",
+    "setor": "DEFAULT",
+    "setor_raw": "Comunicação e Informática",
+    "shares_out": 340389159,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "BRASKEM": {
+    "ticker": "BRKM5.SA",
+    "cvm_code": "4820",
+    "setor": "DEFAULT",
+    "setor_raw": "Petroquímicos e Borracha",
+    "shares_out": 796968412,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "EMBR3": {
+    "ticker": "EMBR3.SA",
+    "cvm_code": "4987",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 758503726,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "DROGASIL SA": {
+    "ticker": "RADL3.SA",
+    "cvm_code": "5258",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 1782421604,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "WEG SA": {
+    "ticker": "WEGE3.SA",
+    "cvm_code": "5410",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Máqs., Equip., Veíc. e Peças",
+    "shares_out": 4195711450,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "FRASLE MOBILITY": {
+    "ticker": "FRAS3B.SA",
+    "cvm_code": "6211",
+    "setor": "MÁQUINAS E EQUIPAMENTOS",
+    "setor_raw": "Máquinas, Equipamentos, Veículos e Peças",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "TUPY": {
+    "ticker": "TUPY3.SA",
+    "cvm_code": "6343",
+    "setor": "SIDERURGIA",
+    "setor_raw": "Metalurgia e Siderurgia",
+    "shares_out": 131077756,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "HERCULES": {
+    "ticker": "UGPA3.SA",
+    "cvm_code": "6629",
+    "setor": "SIDERURGIA",
+    "setor_raw": "Metalurgia e Siderurgia",
+    "shares_out": 1068761436,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.11,
+    "has_cache": false
+  },
+  "QUIMICANORTE": {
+    "ticker": "CCRO3.SA",
+    "cvm_code": "7471",
+    "setor": "DEFAULT",
+    "setor_raw": "Petroquímicos e Borracha",
+    "shares_out": 2010339968,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "MYPK3": {
+    "ticker": "MYPK3.SA",
+    "cvm_code": "7600",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 149769774,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "RENNER": {
+    "ticker": "LREN3.SA",
+    "cvm_code": "8133",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 982199256,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "HASSMANN": {
+    "ticker": "FRAS3.SA",
+    "cvm_code": "8664",
+    "setor": "SIDERURGIA",
+    "setor_raw": "Metalurgia e Siderurgia",
+    "shares_out": 277335091,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.11,
+    "has_cache": false
+  },
+  "SUZANO HOLDING": {
+    "ticker": "SUZB3.SA",
+    "cvm_code": "9067",
+    "setor": "PAPEL E CELULOSE",
+    "setor_raw": "Emp. Adm. Part. - Papel e Celulose",
+    "shares_out": 1236096850,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.1,
+    "has_cache": true
+  },
+  "PANVEL FARMÁCIAS": {
+    "ticker": "PNVL3.SA",
+    "cvm_code": "9342",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 149257015,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "PETROBRAS": {
+    "ticker": "PETR4.SA",
+    "cvm_code": "9512",
+    "setor": "PETRÓLEO E GÁS",
+    "setor_raw": "Petróleo e Gás",
+    "shares_out": 12888732761,
+    "terminal_growth": 0.02,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "BRASIL TELECOM": {
+    "ticker": "OIBR3.SA",
+    "cvm_code": "11312",
+    "setor": "TELECOMUNICAÇÕES",
+    "setor_raw": "Telecomunicações",
+    "shares_out": 323663125,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.1,
+    "has_cache": true
+  },
+  "TERMOLAR": {
+    "ticker": "CBAV3.SA",
+    "cvm_code": "11347",
+    "setor": "DEFAULT",
+    "setor_raw": "Outras Atividades Industriais",
+    "shares_out": 651072697,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "BOMBRIL - EM RECUPERAÇÃO JUDICIAL": {
+    "ticker": "BOBR4.SA",
+    "cvm_code": "12190",
+    "setor": "DEFAULT",
+    "setor_raw": "Farmacêutico e Higiene",
+    "shares_out": 260509679,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "KLABIN": {
+    "ticker": "KLBN11.SA",
+    "cvm_code": "12653",
+    "setor": "PAPEL E CELULOSE",
+    "setor_raw": "Papel e Celulose",
+    "shares_out": 7106061317,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.1,
+    "has_cache": true
+  },
+  "FIBRIA": {
+    "ticker": "LOGG3.SA",
+    "cvm_code": "12793",
+    "setor": "PAPEL E CELULOSE",
+    "setor_raw": "Papel e Celulose",
+    "shares_out": 87414220,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.1,
+    "has_cache": false
+  },
+  "LISTEL": {
+    "ticker": "VIVT3.SA",
+    "cvm_code": "13714",
+    "setor": "DEFAULT",
+    "setor_raw": "Gráficas e Editoras",
+    "shares_out": 3195606352,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "RANDON IMPLEMENTOS E PARTICIPAÇÕES": {
+    "ticker": "RAPT4.SA",
+    "cvm_code": "14109",
+    "setor": "MÁQUINAS E EQUIPAMENTOS",
+    "setor_raw": "Máquinas, Equipamentos, Veículos e Peças",
+    "shares_out": 340389159,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "AES ELETROPAULO": {
+    "ticker": "ELET3.SA",
+    "cvm_code": "14176",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 2265021220,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": false
+  },
+  "COPEL": {
+    "ticker": "CPLE6.SA",
+    "cvm_code": "14311",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 2900127718,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "USIMINAS": {
+    "ticker": "USIM5.SA",
+    "cvm_code": "14320",
+    "setor": "SIDERURGIA",
+    "setor_raw": "Metalurgia e Siderurgia",
+    "shares_out": 1230942660,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "GAZETA MERCANTIL": {
+    "ticker": "GOAU4.SA",
+    "cvm_code": "14400",
+    "setor": "DEFAULT",
+    "setor_raw": "Gráficas e Editoras",
+    "shares_out": 1324799370,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "SABESP": {
+    "ticker": "SBSP3.SA",
+    "cvm_code": "14443",
+    "setor": "SANEAMENTO",
+    "setor_raw": "Saneamento, Serv. Água e Gás",
+    "shares_out": 700219437,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "CYRELA BRAZIL REALTY": {
+    "ticker": "CYRE3.SA",
+    "cvm_code": "14460",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 366346855,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "GGBR4": {
+    "ticker": "GGBR4.SA",
+    "cvm_code": "14703",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 1975207757,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "ENERGISA": {
+    "ticker": "ENGI11.SA",
+    "cvm_code": "15253",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Emp. Adm. Part. - Energia Elétrica",
+    "shares_out": 457130457,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "CECRISA": {
+    "ticker": "DASA3.SA",
+    "cvm_code": "15610",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 1249774542,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": false
+  },
+  "BOMPRECO TRUST": {
+    "ticker": "TAEE11.SA",
+    "cvm_code": "15644",
+    "setor": "DEFAULT",
+    "setor_raw": "Serviços Diversos",
+    "shares_out": 344498907,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "524 PARTICIPACOES SA": {
+    "ticker": "MGLU3.SA",
+    "cvm_code": "16284",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Sem Setor Principal",
+    "shares_out": 813401050,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "BRF": {
+    "ticker": "BRFS3.SA",
+    "cvm_code": "16292",
+    "setor": "ALIMENTOS",
+    "setor_raw": "Emp. Adm. Part. - Alimentos",
+    "shares_out": 1682668019,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "SPLICE": {
+    "ticker": "BRML3.SA",
+    "cvm_code": "16489",
+    "setor": "MÁQUINAS E EQUIPAMENTOS",
+    "setor_raw": "Máquinas, Equipamentos, Veículos e Peças",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "ALTA-TELECOM": {
+    "ticker": "TEND3.SA",
+    "cvm_code": "17310",
+    "setor": "TELECOMUNICAÇÕES",
+    "setor_raw": "Telecomunicações",
+    "shares_out": 121181896,
+    "terminal_growth": 0.025,
+    "cost_of_debt": 0.1,
+    "has_cache": false
+  },
+  "TRACTEBEL ENERGIA": {
+    "ticker": "EGIE3.SA",
+    "cvm_code": "17329",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 1142371319,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "ALL - AMÉRICA LATINA LOGÍSTICA": {
+    "ticker": "RAIL3.SA",
+    "cvm_code": "17450",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 1855797240,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "PIRAJU PARTICIPACOES": {
+    "ticker": "SOMA3.SA",
+    "cvm_code": "17477",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Participações",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "IGTI11": {
+    "ticker": "IGTI11.SA",
+    "cvm_code": "17800",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "SANTOS BRASIL PARTICIPAÇÕES": {
+    "ticker": "STBP3.SA",
+    "cvm_code": "17892",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 864170274,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "KROTON EDUCACIONAL": {
+    "ticker": "COGN3.SA",
+    "cvm_code": "17973",
+    "setor": "EDUCAÇÃO",
+    "setor_raw": "Emp. Adm. Part. - Educação",
+    "shares_out": 1995588174,
+    "terminal_growth": 0.05,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "NTCO3": {
+    "ticker": "NTCO3.SA",
+    "cvm_code": "18170",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 1374140032,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "CTEEP": {
+    "ticker": "ISAE4.SA",
+    "cvm_code": "18376",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 658883304,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "CAGECE": {
+    "ticker": "CYRE3.SA",
+    "cvm_code": "18546",
+    "setor": "SANEAMENTO",
+    "setor_raw": "Saneamento, Serv. Água e Gás",
+    "shares_out": 366346855,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": false
+  },
+  "PAN ARRENDAMENTO MERCANTIL": {
+    "ticker": "MRVE3.SA",
+    "cvm_code": "18554",
+    "setor": "DEFAULT",
+    "setor_raw": "Arrendamento Mercantil",
+    "shares_out": 562825323,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "POSI3": {
+    "ticker": "POSI3.SA",
+    "cvm_code": "18558",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 139210742,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "INVESTHOTEL": {
+    "ticker": "TOTVS3.SA",
+    "cvm_code": "18570",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Participações",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "SANEPAR": {
+    "ticker": "SAPR11.SA",
+    "cvm_code": "18627",
+    "setor": "SANEAMENTO",
+    "setor_raw": "Saneamento, Serv. Água e Gás",
+    "shares_out": 302241103,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": false
+  },
+  "LATINVEST ONLINE": {
+    "ticker": "RENT3.SA",
+    "cvm_code": "18643",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Participações",
+    "shares_out": 1054484395,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "CPFL ENERGIA": {
+    "ticker": "CPFE3.SA",
+    "cvm_code": "18660",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Emp. Adm. Part. - Energia Elétrica",
+    "shares_out": 1152254441,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "VPSC": {
+    "ticker": "BRFS3.SA",
+    "cvm_code": "18694",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 1682668019,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "BRADESPAR": {
+    "ticker": "MULT3.SA",
+    "cvm_code": "18724",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Extração Mineral",
+    "shares_out": 489892024,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "CHEMICAL TRUST SA": {
+    "ticker": "FLRY3.SA",
+    "cvm_code": "18767",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Participações",
+    "shares_out": 545015471,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "CAML3": {
+    "ticker": "CAML3.SA",
+    "cvm_code": "19400",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 341071232,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "COPASA MG": {
+    "ticker": "CSMG3.SA",
+    "cvm_code": "19445",
+    "setor": "SANEAMENTO",
+    "setor_raw": "Saneamento, Serv. Água e Gás",
+    "shares_out": 379181431,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "NATURA COSMETICOS SA": {
+    "ticker": "NTCO3.SA",
+    "cvm_code": "19550",
+    "setor": "DEFAULT",
+    "setor_raw": "Farmacêutico e Higiene",
+    "shares_out": 1374140032,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "GOL LINHAS AEREAS INTELIGENTES SA": {
+    "ticker": "GOLL4.SA",
+    "cvm_code": "19569",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 9162740203520,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "DIAGNOSTICOS DA AMERICA SA": {
+    "ticker": "DASA3.SA",
+    "cvm_code": "19623",
+    "setor": "DEFAULT",
+    "setor_raw": "Serviços Médicos",
+    "shares_out": 1249774542,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "EDP ENERGIAS DO BRASIL": {
+    "ticker": "ENBR3.SA",
+    "cvm_code": "19763",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": null,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "COSAN SA INDUSTRIA E COMERCIO": {
+    "ticker": "CSAN3.SA",
+    "cvm_code": "19836",
+    "setor": "DEFAULT",
+    "setor_raw": "Agricultura (Açúcar, Álcool e Cana)",
+    "shares_out": 3906847275,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "BR PROPERTIES": {
+    "ticker": "BRPR3.SA",
+    "cvm_code": "19925",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Sem Setor Principal",
+    "shares_out": 464432,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "TOTVS SA": {
+    "ticker": "TOTVS3.SA",
+    "cvm_code": "19992",
+    "setor": "DEFAULT",
+    "setor_raw": "Comunicação e Informática",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "EQUATORIAL": {
+    "ticker": "EQTL3.SA",
+    "cvm_code": "20010",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 1258339581,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "EMBRAER": {
+    "ticker": "EMBR3.SA",
+    "cvm_code": "20087",
+    "setor": "MÁQUINAS E EQUIPAMENTOS",
+    "setor_raw": "Máquinas, Equipamentos, Veículos e Peças",
+    "shares_out": 758503726,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "BRASIL & MOVIMENTOS": {
+    "ticker": "AGRO3.SA",
+    "cvm_code": "20109",
+    "setor": "MÁQUINAS E EQUIPAMENTOS",
+    "setor_raw": "Máquinas, Equipamentos, Veículos e Peças",
+    "shares_out": 99615457,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "ODONTOPREV": {
+    "ticker": "ODPV3.SA",
+    "cvm_code": "20125",
+    "setor": "DEFAULT",
+    "setor_raw": "Serviços Médicos",
+    "shares_out": 545093186,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA": {
+    "ticker": "TAEE11.SA",
+    "cvm_code": "20257",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Emp. Adm. Part. - Energia Elétrica",
+    "shares_out": 344498907,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "CEMIG GT": {
+    "ticker": "CMIG4.SA",
+    "cvm_code": "20320",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 3154551345,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "M DIAS BRANCO SA IND E COM DE ALIMENTOS": {
+    "ticker": "MDIA3.SA",
+    "cvm_code": "20338",
+    "setor": "ALIMENTOS",
+    "setor_raw": "Alimentos",
+    "shares_out": 335383253,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "POSITIVO INFORMATICA SA": {
+    "ticker": "POSI3.SA",
+    "cvm_code": "20362",
+    "setor": "DEFAULT",
+    "setor_raw": "Comunicação e Informática",
+    "shares_out": 139210742,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "IGUATEMI EMPRESA DE SHOPPING CENTERS": {
+    "ticker": "IGTI11.SA",
+    "cvm_code": "20494",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": null,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "VAMO3": {
+    "ticker": "VAMO3.SA",
+    "cvm_code": "20513",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 1070442395,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "EVEN": {
+    "ticker": "EVEN3.SA",
+    "cvm_code": "20524",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 195816971,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "CPFL RENOVÁVEIS": {
+    "ticker": "CPFE3.SA",
+    "cvm_code": "20540",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Emp. Adm. Part. - Energia Elétrica",
+    "shares_out": 1152254441,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "JBS SA": {
+    "ticker": "JBSS3.SA",
+    "cvm_code": "20575",
+    "setor": "ALIMENTOS",
+    "setor_raw": "Alimentos",
+    "shares_out": 2218119936,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "JHSF": {
+    "ticker": "JHSF3.SA",
+    "cvm_code": "20605",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Emp. Adm. Part. - Const. Civil, Mat. Const. e Decoração",
+    "shares_out": 668712157,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "VIVT3": {
+    "ticker": "VIVT3.SA",
+    "cvm_code": "20610",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 3195606352,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "CEEE-D": {
+    "ticker": "VIIA3.SA",
+    "cvm_code": "20648",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": null,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": false
+  },
+  "BEMATECH": {
+    "ticker": "PRIO3.SA",
+    "cvm_code": "20656",
+    "setor": "DEFAULT",
+    "setor_raw": "Comunicação e Informática",
+    "shares_out": 810803501,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "LOG-IN LOGISTICA INTERMODAL SA": {
+    "ticker": "LOGN3.SA",
+    "cvm_code": "20710",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Serviços Transporte e Logística",
+    "shares_out": 106087714,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "SLC AGRICOLA SA": {
+    "ticker": "SLCE3.SA",
+    "cvm_code": "20745",
+    "setor": "DEFAULT",
+    "setor_raw": "Agricultura (Açúcar, Álcool e Cana)",
+    "shares_out": 496846420,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "EZ TEC EMPREEND E PARTICIPAÇÕES": {
+    "ticker": "EZTC3.SA",
+    "cvm_code": "20770",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Emp. Adm. Part. - Const. Civil, Mat. Const. e Decoração",
+    "shares_out": 277359027,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "MARFRIG": {
+    "ticker": "MRFG3.SA",
+    "cvm_code": "20788",
+    "setor": "ALIMENTOS",
+    "setor_raw": "Alimentos",
+    "shares_out": 1437644362,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "ALLIS": {
+    "ticker": "CMIN3.SA",
+    "cvm_code": "20850",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Sem Setor Principal",
+    "shares_out": 5432044538,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "MRV ENGENHARIA": {
+    "ticker": "MRVE3.SA",
+    "cvm_code": "20915",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 562825323,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "MULTIPLAN": {
+    "ticker": "MULT3.SA",
+    "cvm_code": "20982",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Emp. Adm. Part. - Const. Civil, Mat. Const. e Decoração",
+    "shares_out": 489892024,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "ESTACIO PARTICIPAÇÕES SA": {
+    "ticker": "YDUQ3.SA",
+    "cvm_code": "21016",
+    "setor": "EDUCAÇÃO",
+    "setor_raw": "Emp. Adm. Part. - Educação",
+    "shares_out": 263554106,
+    "terminal_growth": 0.05,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "DEXCO": {
+    "ticker": "DXCO3.SA",
+    "cvm_code": "21091",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 907653432,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "SUL AMERICA": {
+    "ticker": "SULA11.SA",
+    "cvm_code": "21121",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Seguradoras e Corretoras",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "CONSTRUTORA TENDA": {
+    "ticker": "TEND3.SA",
+    "cvm_code": "21148",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 121181896,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "DIRECIONAL ENGENHARIA SA": {
+    "ticker": "DIRR3.SA",
+    "cvm_code": "21350",
+    "setor": "CONSTRUÇÃO CIVIL",
+    "setor_raw": "Construção Civil, Mat. Constr. e Decoração",
+    "shares_out": 518661672,
+    "terminal_growth": 0.035,
+    "cost_of_debt": 0.13,
+    "has_cache": true
+  },
+  "LIDER AVIAÇÃO HOLDING": {
+    "ticker": "EVEN3.SA",
+    "cvm_code": "21547",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 195816971,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "HUB COSMÉTICOS": {
+    "ticker": "AURE3.SA",
+    "cvm_code": "21725",
+    "setor": "DEFAULT",
+    "setor_raw": "Farmacêutico e Higiene",
+    "shares_out": 1044527974,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "ECORODOVIAS CONCESSÕES E SERVIÇOS": {
+    "ticker": "ECOR3.SA",
+    "cvm_code": "21903",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 695621226,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "ANIM3": {
+    "ticker": "ANIM3.SA",
+    "cvm_code": "21915",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 377859942,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA": {
+    "ticker": "MILS3.SA",
+    "cvm_code": "22012",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Serviços Transporte e Logística",
+    "shares_out": 226708078,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "NEXFUEL BIOENERGIA": {
+    "ticker": "NEOE3.SA",
+    "cvm_code": "22063",
+    "setor": "DEFAULT",
+    "setor_raw": "Agricultura (Açúcar, Álcool e Cana)",
+    "shares_out": 1213797248,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "CONCESSIONÁRIA ROTA DAS BANDEIRAS": {
+    "ticker": "TIMS3.SA",
+    "cvm_code": "22071",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Serviços Transporte e Logística",
+    "shares_out": 2388668322,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "PETRO RIO": {
+    "ticker": "PRIO3.SA",
+    "cvm_code": "22187",
+    "setor": "PETRÓLEO E GÁS",
+    "setor_raw": "Petróleo e Gás",
+    "shares_out": 810803501,
+    "terminal_growth": 0.02,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "MOVI3": {
+    "ticker": "MOVI3.SA",
+    "cvm_code": "22194",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 343778523,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "MAGAZINE LUIZA SA": {
+    "ticker": "MGLU3.SA",
+    "cvm_code": "22470",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 813401050,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "BRASIL PHARMA SA - EM RECUPERAÇÃO JUDICIAL": {
+    "ticker": "TUPY3.SA",
+    "cvm_code": "22500",
+    "setor": "DEFAULT",
+    "setor_raw": "Farmacêutico e Higiene",
+    "shares_out": 131077756,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "VBBR3": {
+    "ticker": "VBBR3.SA",
+    "cvm_code": "22536",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 1192537107,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "OIBR3": {
+    "ticker": "OIBR3.SA",
+    "cvm_code": "22599",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 323663125,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "EMPREENDIMENTOS PAGUE MENOS SA": {
+    "ticker": "PGMN3.SA",
+    "cvm_code": "22608",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 684234638,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "HIDROVIAS DO BRASIL": {
+    "ticker": "HBSA3.SA",
+    "cvm_code": "22675",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Serviços Transporte e Logística",
+    "shares_out": 1360382643,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "INTB3": {
+    "ticker": "INTB3.SA",
+    "cvm_code": "22688",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 327269860,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "VSTA3": {
+    "ticker": "VSTA3.SA",
+    "cvm_code": "22736",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "GAIA FLORESTAL SECURITIZADORA": {
+    "ticker": "LAVV3.SA",
+    "cvm_code": "22764",
+    "setor": "DEFAULT",
+    "setor_raw": "Securitização de Recebíveis",
+    "shares_out": 195434353,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "SINQUIA": {
+    "ticker": "SQIA3.SA",
+    "cvm_code": "22799",
+    "setor": "DEFAULT",
+    "setor_raw": "Comunicação e Informática",
+    "shares_out": null,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "LDC BIOENERGIA SA": {
+    "ticker": "SUZB3.SA",
+    "cvm_code": "22845",
+    "setor": "DEFAULT",
+    "setor_raw": "Agricultura (Açúcar, Álcool e Cana)",
+    "shares_out": 1236096850,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "COMPANHIA AURIFERA BRASILEIRA SA": {
+    "ticker": "SBSP3.SA",
+    "cvm_code": "22870",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Extração Mineral",
+    "shares_out": 700219437,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "EKOPARKING SA": {
+    "ticker": "SMTO3.SA",
+    "cvm_code": "22896",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Sem Setor Principal",
+    "shares_out": 322773291,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "SBFG3": {
+    "ticker": "SBFG3.SA",
+    "cvm_code": "22927",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 229723363,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "AUREA SECURITIES COMPANHIA SECURITIZADORA": {
+    "ticker": "RDOR3.SA",
+    "cvm_code": "22950",
+    "setor": "DEFAULT",
+    "setor_raw": "Securitização de Recebíveis",
+    "shares_out": 2206320735,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "LIGHT ENERGIA SA": {
+    "ticker": "LIGT3.SA",
+    "cvm_code": "23000",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 504323034,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "NAN": {
+    "ticker": "CBAV3.SA",
+    "cvm_code": "25984",
+    "setor": "DEFAULT",
+    "setor_raw": "Extração Mineral",
+    "shares_out": 651072697,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "AMBEV SA": {
+    "ticker": "ABEV3.SA",
+    "cvm_code": "23264",
+    "setor": "BEBIDAS",
+    "setor_raw": "Bebidas e Fumo",
+    "shares_out": 15616525321,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.11,
+    "has_cache": true
+  },
+  "HAPV3": {
+    "ticker": "HAPV3.SA",
+    "cvm_code": "23401",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 474725857,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "RUMO LOGÍSTICA OPERADORA MULTIMODAL": {
+    "ticker": "ECOR3.SA",
+    "cvm_code": "23450",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Serviços Transporte e Logística",
+    "shares_out": 695621226,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "MOVIDA PARTICIPAÇÕES": {
+    "ticker": "MOVI3.SA",
+    "cvm_code": "23825",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Serviços Transporte e Logística",
+    "shares_out": 343778523,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "TGMA3": {
+    "ticker": "TGMA3.SA",
+    "cvm_code": "23912",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 65937772,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "COMPANHIA PARANAENSE DE SECURITIZAÇÃO - PRSEC": {
+    "ticker": "AZUL4.SA",
+    "cvm_code": "23914",
+    "setor": "DEFAULT",
+    "setor_raw": "Securitização de Recebíveis",
+    "shares_out": 924300580,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "MATD3": {
+    "ticker": "MATD3.SA",
+    "cvm_code": "24030",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 331917425,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "TRAVESSIA SECURITIZADORA": {
+    "ticker": "EZTC3.SA",
+    "cvm_code": "24082",
+    "setor": "DEFAULT",
+    "setor_raw": "Securitização de Recebíveis",
+    "shares_out": 277359027,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "INSTITUTO HERMES PARDINI": {
+    "ticker": "FLRY3.SA",
+    "cvm_code": "24090",
+    "setor": "DEFAULT",
+    "setor_raw": "Serviços Médicos",
+    "shares_out": 545015471,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "AZUL": {
+    "ticker": "AZUL4.SA",
+    "cvm_code": "24112",
+    "setor": "TRANSPORTE",
+    "setor_raw": "Emp. Adm. Part. - Serviços Transporte e Logística",
+    "shares_out": 924300580,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "COMPANHIA ENERGÉTICA SINOP": {
+    "ticker": "ONCO3.SA",
+    "cvm_code": "24155",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 1118202391,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": false
+  },
+  "VIBRA ENERGIA": {
+    "ticker": "VBBR3.SA",
+    "cvm_code": "24295",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 1192537107,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "RADL3": {
+    "ticker": "RADL3.SA",
+    "cvm_code": "24553",
+    "setor": "DEFAULT",
+    "setor_raw": "",
+    "shares_out": 1782421604,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": false
+  },
+  "AMBIPAR PARTICIPAÇÕES E EMPREENDIMENTOS": {
+    "ticker": "AMBP3.SA",
+    "cvm_code": "24961",
+    "setor": "SANEAMENTO",
+    "setor_raw": "Saneamento, Serv. Água e Gás",
+    "shares_out": 1669289530,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  },
+  "SENDAS DISTRIBUIDORA": {
+    "ticker": "ASAI3.SA",
+    "cvm_code": "25372",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 1341708018,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "INTELBRAS": {
+    "ticker": "INTB3.SA",
+    "cvm_code": "25453",
+    "setor": "VAREJO",
+    "setor_raw": "Comércio (Atacado e Varejo)",
+    "shares_out": 327269860,
+    "terminal_growth": 0.045,
+    "cost_of_debt": 0.14,
+    "has_cache": true
+  },
+  "ELETROMIDIA": {
+    "ticker": "ROMI3.SA",
+    "cvm_code": "25569",
+    "setor": "DEFAULT",
+    "setor_raw": "Emp. Adm. Part. - Comunicação e Informática",
+    "shares_out": 93170748,
+    "terminal_growth": 0.04,
+    "cost_of_debt": 0.12,
+    "has_cache": true
+  },
+  "AUREN ENERGIA SA": {
+    "ticker": "AURE3.SA",
+    "cvm_code": "26620",
+    "setor": "ENERGIA ELÉTRICA",
+    "setor_raw": "Energia Elétrica",
+    "shares_out": 1044527974,
+    "terminal_growth": 0.03,
+    "cost_of_debt": 0.095,
+    "has_cache": true
+  }
+}

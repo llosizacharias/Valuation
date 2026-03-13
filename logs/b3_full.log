@@ -1,0 +1,888 @@
+nohup: ignoring input
+HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET3.SA"}}}
+HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: VSTA3.SA"}}}
+HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: TOTVS3.SA"}}}
+
+════════════════════════════════════════════════════════════
+  🚀 B3 PIPELINE — 2026-03-12 21:03
+════════════════════════════════════════════════════════════
+
+
+════════════════════════════════════════════════════════════
+  STEP 1/4 — CATALOG
+  Catalogando empresas B3...
+════════════════════════════════════════════════════════════
+[CAT] Baixando cadastro CVM...
+[CAT] 2669 registros CVM
+[CAT] 548 cvm_codes no cache local
+
+[CAT] ── Resultado ──────────────────────────────────
+       ✅ Mapeadas    : 86
+       ❌ Financeiras : 16
+       📦 Com cache   : 24
+
+[CAT] Buscando shares_out (86 empresas)...
+  20/86...
+[CAT] ✅ 86 empresas → data/b3_catalog.json
+  40/86...
+[CAT] ✅ 86 empresas → data/b3_catalog.json
+  60/86...
+[CAT] ✅ 86 empresas → data/b3_catalog.json
+  80/86...
+[CAT] ✅ 86 empresas → data/b3_catalog.json
+[CAT] shares_out: 80/86
+[CAT] ✅ 86 empresas → data/b3_catalog.json
+
+✅ Catálogo: 86 empresas
+
+════════════════════════════════════════════════════════════
+  STEP 2/4 — PREFETCH
+  Baixando ZIPs CVM e pré-extraindo dados...
+════════════════════════════════════════════════════════════
+[DL] 2019: já existe (11MB) ✓
+[DL] 2020: já existe (13MB) ✓
+[DL] 2021: já existe (13MB) ✓
+[DL] 2022: já existe (13MB) ✓
+[DL] 2023: já existe (14MB) ✓
+[DL] 2024: já existe (13MB) ✓
+[EXT] 2019: extraindo empresas do ZIP...
+[EXT] 2019: 377 empresas extraídas
+[EXT] 2020: extraindo empresas do ZIP...
+[EXT] 2020: 432 empresas extraídas
+[EXT] 2021: extraindo empresas do ZIP...
+[EXT] 2021: 453 empresas extraídas
+[EXT] 2022: extraindo empresas do ZIP...
+[EXT] 2022: 463 empresas extraídas
+[EXT] 2023: extraindo empresas do ZIP...
+[EXT] 2023: 464 empresas extraídas
+[EXT] 2024: extraindo empresas do ZIP...
+[EXT] 2024: 456 empresas extraídas
+
+[EXT] Total de empresas com dados: 548
+[EXT] Cache salvo em data/cvm_cache/{cvm_code}/dfp_{year}.csv
+
+✅ Prefetch concluído: 6 anos
+
+════════════════════════════════════════════════════════════
+  STEP 3/4 — VALUATION
+  Rodando DCF para toda a B3 (3 workers)...
+════════════════════════════════════════════════════════════
+2026-03-12 21:05:01,934 INFO ============================================================
+2026-03-12 21:05:01,934 INFO B3 Runner iniciado — 2026-03-12 21:05
+2026-03-12 21:05:01,934 INFO ============================================================
+2026-03-12 21:05:01,935 INFO Catálogo: 24 empresas
+2026-03-12 21:05:01,936 INFO Resume: 0 já processadas, 24 restantes
+2026-03-12 21:05:01,936 INFO Iniciando 24 valuations com 3 workers...
+
+[DRE] Margem EBIT usada na projeção     : 43.8%
+[DRE] Margem D&A  usada na projeção     : 5.0%
+[DRE] Margens por ano:
+       2019: EBIT 30.5%  |  D&A 6.5%
+       2020: EBIT 29.7%  |  D&A 6.4%
+       2021: EBIT 34.7%  |  D&A 5.5%
+       2022: EBIT 22.7%  |  D&A 7.9%
+       2023: EBIT 37.0%  |  D&A 9.7%
+       2024: EBIT 55.4%  |  D&A -48.0%
+[DRE] CAGR Receita — histórico completo : 7.7%
+[DRE] CAGR Receita — últimos 4 anos  : 2.2%
+[DRE] CAGR Receita — usado (blended)    : 4.4%
+[DRE] Margem EBIT usada na projeção     : 23.7%
+[DRE] Margem D&A  usada na projeção     : 7.9%
+[DRE] Margens por ano:
+       2019: EBIT 30.5%  |  D&A 8.9%
+       2020: EBIT 27.3%  |  D&A 8.9%
+       2021: EBIT 23.3%  |  D&A 7.4%
+       2022: EBIT 22.2%  |  D&A 7.5%
+       2023: EBIT 23.4%  |  D&A 8.0%
+       2024: EBIT 24.4%  |  D&A 8.0%
+[DRE] CAGR Receita — histórico completo : 11.2%
+[DRE] CAGR Receita — últimos 4 anos  : 7.1%
+[DRE] CAGR Receita — usado (blended)    : 8.7%
+[FCFF] CAPEX/Revenue histórico: 8.12%
+[FCFF] CAPEX/Revenue histórico: 10.27%
+[FCFF] D&A/Revenue histórico: 5.28%
+[DRE] Margem EBIT usada na projeção     : 77.2%
+[DRE] Margem D&A  usada na projeção     : 0.0%
+[DRE] Margens por ano:
+       2019: EBIT 78.3%  |  D&A -17.1%
+       2020: EBIT 89.7%  |  D&A -23.4%
+       2021: EBIT 98.9%  |  D&A -22.5%
+       2022: EBIT 93.3%  |  D&A -21.6%
+       2023: EBIT 69.5%  |  D&A -12.7%
+       2024: EBIT 77.0%  |  D&A -17.9%
+[DRE] CAGR Receita — histórico completo : 15.7%
+[DRE] CAGR Receita — últimos 4 anos  : 2.3%
+[DRE] CAGR Receita — usado (blended)    : 7.7%
+[FCFF] D&A/Revenue histórico: 7.91%
+[FCFF] ΔWC/Revenue implícito: -14.26% → usado: 0.00%
+[FCFF] ΔWC/Revenue implícito: 3.20% → usado: 3.00%
+[FCFF] Anos atípicos normalizados: [2019, 2020] → mediana R$ 5.16 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[FCFF] CAPEX/Revenue histórico: 4.32%
+[FCFF] D&A/Revenue histórico: 19.73%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[FCFF] ΔWC/Revenue implícito: 27.34% → usado: 3.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:03,208 ERROR $ELET6.SA: possibly delisted; no timezone found
+2026-03-12 21:05:03,209 ERROR 
+1 Failed download:
+2026-03-12 21:05:03,209 ERROR ['ELET6.SA']: possibly delisted; no timezone found
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+[BETA] Raw: 0.954  |  Blume adjusted: 0.969  (window: 3a, 35 obs)
+[WARN] Beta regression falhou: Dados insuficientes para beta de 'ELET6.SA'. Verifique o ticker (ex: 'COGN3.SA').. Usando beta=1.0.
+2026-03-12 21:05:04,129 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+[WACC] Market Cap      : R$ 233.5 bi
+[WACC] Divida Bruta    : R$ 3.5 bi
+[WACC] Caixa           : R$ 50.8 bi
+[WACC] Divida Liquida  : R$ -47.3 bi
+[WACC] Peso Equity     : 98.5%
+[WACC] Peso Divida     : 1.5%
+[MULT] EBIT       : R$ 21.806 bi
+[MULT] D&A        : R$ 7.126 bi
+[MULT] EBITDA     : R$ 28.932 bi
+[MULT] NET_INCOME : R$ 29.694 bi
+[MULT] EV/EBITDA  : 3.6x
+[MULT] EV/EBIT    : 4.8x
+[MULT] P/E        : 7.9x
+[WARN] Estrutura de capital via Yahoo: market_cap nao disponivel
+[INFO] Usando pesos padrao: equity=75%, divida=25%
+[MULT] EBIT       : R$ 22.249 bi
+[MULT] D&A        : R$ 19.293 bi
+[MULT] EBITDA     : R$ 41.541 bi
+[MULT] NET_INCOME : R$ 20.762 bi
+[MULT] EV/EBITDA  : 1.6x
+[MULT] EV/EBIT    : 2.9x
+[MULT] P/E        : 3.2x
+[WACC] Market Cap      : R$ 14.5 bi
+[WACC] Divida Bruta    : R$ 9.8 bi
+[WACC] Caixa           : R$ 14.1 bi
+[WACC] Divida Liquida  : R$ -4.3 bi
+[WACC] Peso Equity     : 59.7%
+[WACC] Peso Divida     : 40.3%
+[MULT] EBIT       : R$ 2.863 bi
+[MULT] D&A        : R$ 0.664 bi
+[MULT] EBITDA     : R$ 3.527 bi
+[MULT] NET_INCOME : R$ 3.388 bi
+[MULT] EV/EBITDA  : 4.7x
+[MULT] EV/EBIT    : 5.8x
+[MULT] P/E        : 4.3x
+2026-03-12 21:05:05,159 ERROR $ELET6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:05:05,185 INFO [  1/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$60.67 | +44.1% | COMPRA FORTE | ETA 1min
+2026-03-12 21:05:05,191 INFO [  2/24] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 1min
+[DRE] Margem EBIT usada na projeção     : 2.3%
+[DRE] Margem EBIT usada na projeção     : 64.0%
+[DRE] Margem D&A  usada na projeção     : 0.5%
+[DRE] Margens por ano:
+       2019: EBIT 70.8%  |  D&A 0.6%
+       2020: EBIT 119.8%  |  D&A 0.5%
+       2021: EBIT 80.2%  |  D&A 0.4%
+       2022: EBIT 64.0%  |  D&A 0.5%
+       2023: EBIT 63.4%  |  D&A 0.4%
+       2024: EBIT 64.4%  |  D&A 0.5%
+[DRE] CAGR Receita — histórico completo : 19.2%
+[DRE] CAGR Receita — últimos 4 anos  : 12.9%
+[DRE] CAGR Receita — usado (blended)    : 15.4%
+[FCFF] CAPEX/Revenue histórico: 47.92%
+[DRE] Margem D&A  usada na projeção     : 0.0%
+[DRE] Margens por ano:
+       2019: EBIT 6.5%  |  D&A 1.5%
+       2020: EBIT 2.8%  |  D&A 0.1%
+       2021: EBIT 1.3%  |  D&A -2.3%
+       2022: EBIT 2.1%  |  D&A -2.1%
+       2023: EBIT -1.0%  |  D&A -3.0%
+       2024: EBIT 4.1%  |  D&A -0.9%
+[DRE] CAGR Receita — histórico completo : 13.8%
+[DRE] CAGR Receita — últimos 4 anos  : 2.5%
+[DRE] CAGR Receita — usado (blended)    : 7.1%
+[FCFF] CAPEX/Revenue histórico: 0.73%
+[FCFF] D&A/Revenue histórico: 0.45%
+[FCFF] ΔWC/Revenue implícito: -9.03% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2021, 2022, 2023, 2024] → mediana R$ -1.82 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[FCFF] D&A/Revenue histórico: 0.04%
+[FCFF] ΔWC/Revenue implícito: -6.39% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2019, 2021] → mediana R$ 2.67 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:05,883 ERROR $ELET6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:05:05,884 INFO [  3/24] ✅ ELETROBRAS                               R$67.66 | +0.0% | NEUTRO | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 34.0%
+[DRE] Margem D&A  usada na projeção     : 2.3%
+[DRE] Margens por ano:
+       2019: EBIT 27.0%  |  D&A 2.7%
+       2020: EBIT 18.2%  |  D&A -1.8%
+       2021: EBIT 46.6%  |  D&A 2.5%
+       2022: EBIT 45.9%  |  D&A 1.0%
+       2023: EBIT 37.0%  |  D&A 1.5%
+       2024: EBIT 28.0%  |  D&A 3.2%
+[DRE] CAGR Receita — histórico completo : 10.2%
+[DRE] CAGR Receita — últimos 4 anos  : 2.7%
+[DRE] CAGR Receita — usado (blended)    : 5.7%
+[FCFF] CAPEX/Revenue histórico: 3.69%
+[FCFF] D&A/Revenue histórico: 2.27%
+[FCFF] ΔWC/Revenue implícito: -20.26% → usado: 0.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+[BETA] Raw: 0.669  |  Blume adjusted: 0.778  (window: 3a, 35 obs)
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+2026-03-12 21:05:07,123 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:07,125 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+[WACC] Market Cap      : R$ 18.3 bi
+[WACC] Divida Bruta    : R$ 13.3 bi
+[WACC] Caixa           : R$ 33.8 bi
+[WACC] Divida Liquida  : R$ -20.5 bi
+[WACC] Peso Equity     : 57.9%
+[WACC] Peso Divida     : 42.1%
+[MULT] EBIT       : R$ 5.131 bi
+[MULT] D&A        : R$ 0.037 bi
+[MULT] EBITDA     : R$ 5.169 bi
+[MULT] NET_INCOME : R$ 7.105 bi
+[MULT] EV/EBITDA  : -1.1x
+[MULT] EV/EBIT    : -1.2x
+[MULT] P/E        : 2.6x
+[WACC] Market Cap      : R$ 580.0 bi
+[WACC] Divida Bruta    : R$ 373.5 bi
+[WACC] Caixa           : R$ 174.3 bi
+[WACC] Divida Liquida  : R$ 199.2 bi
+[WACC] Peso Equity     : 60.8%
+[WACC] Peso Divida     : 39.2%
+[MULT] EBIT       : R$ 137.201 bi
+[MULT] D&A        : R$ 15.788 bi
+[MULT] EBITDA     : R$ 152.989 bi
+[MULT] NET_INCOME : R$ 74.018 bi
+[MULT] EV/EBITDA  : 6.1x
+[MULT] EV/EBIT    : 6.8x
+[MULT] P/E        : 7.8x
+[WACC] Market Cap      : R$ 7.6 bi
+[WACC] Divida Bruta    : R$ 4.6 bi
+[WACC] Caixa           : R$ 9.4 bi
+[WACC] Divida Liquida  : R$ -4.8 bi
+[WACC] Peso Equity     : 62.5%
+[WACC] Peso Divida     : 37.5%
+[MULT] EBIT       : R$ 1.562 bi
+[MULT] D&A        : R$ 0.361 bi
+[MULT] EBITDA     : R$ 1.924 bi
+[MULT] NET_INCOME : R$ 0.897 bi
+[MULT] EV/EBITDA  : 1.4x
+[MULT] EV/EBIT    : 1.8x
+[MULT] P/E        : 8.5x
+2026-03-12 21:05:08,087 INFO [  4/24] ✅ PETROBRAS                                R$74.75 | +66.1% | COMPRA FORTE | ETA 1min
+2026-03-12 21:05:08,091 INFO [  5/24] ✅ CTEEP                                    R$22.17 | -20.1% | VENDA | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 4.5%
+[DRE] Margem D&A  usada na projeção     : 0.1%
+[DRE] Margens por ano:
+       2019: EBIT 1.4%  |  D&A 0.5%
+       2020: EBIT 5.6%  |  D&A -2.1%
+       2021: EBIT 2.0%  |  D&A -0.0%
+       2022: EBIT 2.2%  |  D&A 0.1%
+       2023: EBIT 4.6%  |  D&A 0.1%
+       2024: EBIT 5.1%  |  D&A 0.1%
+[DRE] CAGR Receita — histórico completo : 12.6%
+[DRE] CAGR Receita — últimos 4 anos  : 9.8%
+[DRE] CAGR Receita — usado (blended)    : 10.9%
+[FCFF] CAPEX/Revenue histórico: 0.18%
+[DRE] Margem EBIT usada na projeção     : 25.9%
+[DRE] Margem D&A  usada na projeção     : 5.4%
+[DRE] Margens por ano:
+       2019: EBIT 15.7%  |  D&A 5.6%
+       2020: EBIT 16.5%  |  D&A 5.4%
+       2021: EBIT 18.9%  |  D&A 4.5%
+       2022: EBIT 26.0%  |  D&A 5.2%
+       2023: EBIT 26.6%  |  D&A 5.7%
+       2024: EBIT 25.4%  |  D&A 5.4%
+[DRE] CAGR Receita — histórico completo : 7.3%
+[DRE] CAGR Receita — últimos 4 anos  : 2.8%
+[DRE] CAGR Receita — usado (blended)    : 4.6%
+[FCFF] CAPEX/Revenue histórico: 10.17%
+[FCFF] D&A/Revenue histórico: 5.45%
+[FCFF] D&A/Revenue histórico: 0.08%
+[FCFF] ΔWC/Revenue implícito: -0.18% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2022] → mediana R$ 2.51 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[FCFF] ΔWC/Revenue implícito: -10.62% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2021] → mediana R$ 3.63 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:08,606 INFO [  6/24] ✅ MAGAZINE LUIZA SA                        R$9.30 | -1.1% | NEUTRO | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 30.6%
+[DRE] Margem D&A  usada na projeção     : 1.4%
+[DRE] Margens por ano:
+       2019: EBIT 1.5%  |  D&A 1.8%
+       2020: EBIT 25.0%  |  D&A 2.6%
+       2021: EBIT 48.2%  |  D&A 2.4%
+       2022: EBIT 39.9%  |  D&A -0.7%
+       2023: EBIT 31.4%  |  D&A 2.6%
+       2024: EBIT 26.9%  |  D&A 0.8%
+[DRE] CAGR Receita — histórico completo : 6.7%
+[DRE] CAGR Receita — últimos 4 anos  : -11.1%
+[DRE] CAGR Receita — usado (blended)    : -4.0%
+[FCFF] CAPEX/Revenue histórico: 2.09%
+[FCFF] D&A/Revenue histórico: 1.45%
+[FCFF] ΔWC/Revenue implícito: -12.49% → usado: 0.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[BETA] Raw: 1.090  |  Blume adjusted: 1.060  (window: 3a, 35 obs)
+[BETA] Raw: 0.792  |  Blume adjusted: 0.861  (window: 3a, 35 obs)
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+2026-03-12 21:05:09,930 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:09,939 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+[WACC] Market Cap      : R$ 55.6 bi
+[WACC] Divida Bruta    : R$ 28.8 bi
+[WACC] Caixa           : R$ 46.0 bi
+[WACC] Divida Liquida  : R$ -17.2 bi
+[WACC] Peso Equity     : 65.9%
+[WACC] Peso Divida     : 34.1%
+[MULT] EBIT       : R$ 10.830 bi
+[MULT] D&A        : R$ 2.303 bi
+[MULT] EBITDA     : R$ 13.133 bi
+[MULT] NET_INCOME : R$ 11.523 bi
+[MULT] EV/EBITDA  : 3.7x
+[MULT] EV/EBIT    : 4.5x
+[MULT] P/E        : 4.8x
+[WACC] Market Cap      : R$ 338.3 bi
+[WACC] Divida Bruta    : R$ 96.0 bi
+[WACC] Caixa           : R$ 103.0 bi
+[WACC] Divida Liquida  : R$ -7.0 bi
+[WACC] Peso Equity     : 77.9%
+[WACC] Peso Divida     : 22.1%
+[WACC] Market Cap      : R$ 34.8 bi
+[WACC] Divida Bruta    : R$ 20.8 bi
+[WACC] Caixa           : R$ 21.3 bi
+[WACC] Divida Liquida  : R$ -0.5 bi
+[WACC] Peso Equity     : 62.6%
+[WACC] Peso Divida     : 37.4%
+[MULT] EBIT       : R$ 8.769 bi
+[MULT] D&A        : R$ 0.129 bi
+[MULT] EBITDA     : R$ 8.898 bi
+[MULT] NET_INCOME : R$ 12.734 bi
+[MULT] EV/EBITDA  : 5.7x
+[MULT] EV/EBIT    : 5.8x
+[MULT] P/E        : 2.7x
+[MULT] EBIT       : R$ 55.459 bi
+[MULT] D&A        : R$ 1.570 bi
+[MULT] EBITDA     : R$ 57.029 bi
+[MULT] NET_INCOME : R$ 60.862 bi
+[MULT] EV/EBITDA  : 4.3x
+[MULT] EV/EBIT    : 4.4x
+[MULT] P/E        : 5.6x
+2026-03-12 21:05:10,981 INFO [  7/24] ✅ VALE                                     R$60.47 | -23.7% | VENDA | ETA 0min
+2026-03-12 21:05:10,986 INFO [  8/24] ✅ VIBRA ENERGIA                            R$43.15 | +47.9% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : -66.0%
+[DRE] Margem D&A  usada na projeção     : 130.3%
+[DRE] Margens por ano:
+       2019: EBIT -14.8%  |  D&A 17.9%
+       2020: EBIT -19.5%  |  D&A 113.2%
+       2021: EBIT -19.4%  |  D&A 55.0%
+       2022: EBIT -174.2%  |  D&A 16.3%
+       2023: EBIT -18.6%  |  D&A 34.6%
+       2024: EBIT -61.5%  |  D&A 232.1%
+[DRE] CAGR Receita — histórico completo : -30.0%
+[DRE] CAGR Receita — últimos 4 anos  : -30.0%
+[DRE] CAGR Receita — usado (blended)    : -30.0%
+[FCFF] CAPEX/Revenue histórico: 8.35%
+[DRE] Margem EBIT usada na projeção     : 54.5%
+[DRE] Margem D&A  usada na projeção     : 16.7%
+[DRE] Margens por ano:
+       2019: EBIT 53.4%  |  D&A 31.0%
+       2020: EBIT 49.5%  |  D&A 44.3%
+       2021: EBIT 48.3%  |  D&A 20.0%
+       2022: EBIT 61.5%  |  D&A 13.4%
+       2023: EBIT 60.1%  |  D&A 17.3%
+       2024: EBIT 48.4%  |  D&A 17.4%
+[DRE] CAGR Receita — histórico completo : 50.0%
+[DRE] CAGR Receita — últimos 4 anos  : 48.4%
+[DRE] CAGR Receita — usado (blended)    : 49.0%
+[FCFF] CAPEX/Revenue histórico: 1.28%
+[FCFF] D&A/Revenue histórico: 16.67%
+[FCFF] ΔWC/Revenue implícito: -10.41% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2019] → mediana R$ 3.37 bi
+[FCFF] D&A/Revenue histórico: 130.28%
+[FCFF] ΔWC/Revenue implícito: 19.09% → usado: 3.00%
+[FCFF] Anos atípicos normalizados: [2021, 2022, 2023, 2024] → mediana R$ -1.42 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:11,099 INFO [  9/24] ✅ CPFL ENERGIA                             R$71.63 | +48.5% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 1.9%
+[DRE] Margem D&A  usada na projeção     : 6.5%
+[DRE] Margens por ano:
+       2019: EBIT -0.1%  |  D&A 6.9%
+       2020: EBIT -0.1%  |  D&A 6.9%
+       2021: EBIT 24.7%  |  D&A 4.0%
+       2022: EBIT 4.4%  |  D&A 4.9%
+       2023: EBIT -4.0%  |  D&A 7.4%
+       2024: EBIT -1.4%  |  D&A 6.4%
+[DRE] CAGR Receita — histórico completo : 8.1%
+[DRE] CAGR Receita — últimos 4 anos  : -9.8%
+[DRE] CAGR Receita — usado (blended)    : -2.6%
+[FCFF] CAPEX/Revenue histórico: 0.09%
+[FCFF] D&A/Revenue histórico: 6.47%
+[FCFF] ΔWC/Revenue implícito: 2.42% → usado: 2.42%
+[FCFF] Anos atípicos normalizados: [2023] → mediana R$ 4.36 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+[BETA] Raw: 0.485  |  Blume adjusted: 0.655  (window: 3a, 35 obs)
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+[WACC] Market Cap      : R$ 0.1 bi
+[WACC] Divida Bruta    : R$ 12.0 bi
+[WACC] Caixa           : R$ 7.0 bi
+[WACC] Divida Liquida  : R$ 5.0 bi
+[WACC] Peso Equity     : 0.5%
+[WACC] Peso Divida     : 99.5%
+[MULT] EBIT       : R$ -1.956 bi
+[MULT] D&A        : R$ 7.380 bi
+[MULT] EBITDA     : R$ 5.424 bi
+[MULT] NET_INCOME : R$ 19.852 bi
+[MULT] EV/EBITDA  : 3.3x
+[MULT] EV/EBIT: n/d
+[MULT] P/E        : 0.0x
+[WACC] Market Cap      : R$ 48.2 bi
+[WACC] Divida Bruta    : R$ 22.4 bi
+[WACC] Caixa           : R$ 10.0 bi
+[WACC] Divida Liquida  : R$ 12.4 bi
+[WACC] Peso Equity     : 68.3%
+[WACC] Peso Divida     : 31.7%
+[MULT] EBIT       : R$ 6.945 bi
+[MULT] D&A        : R$ 2.494 bi
+[MULT] EBITDA     : R$ 9.440 bi
+[MULT] NET_INCOME : R$ 20.603 bi
+[MULT] EV/EBITDA  : 23.9x
+[MULT] EV/EBIT    : 32.4x
+[MULT] P/E        : 2.3x
+[WACC] Market Cap      : R$ 9.7 bi
+[WACC] Divida Bruta    : R$ 53.2 bi
+[WACC] Caixa           : R$ 33.3 bi
+[WACC] Divida Liquida  : R$ 19.9 bi
+[WACC] Peso Equity     : 15.4%
+[WACC] Peso Divida     : 84.6%
+[MULT] EBIT       : R$ -1.079 bi
+[MULT] D&A        : R$ 4.950 bi
+[MULT] EBITDA     : R$ 3.871 bi
+[MULT] NET_INCOME : R$ -24.104 bi
+[MULT] EV/EBITDA  : 14.3x
+[MULT] EV/EBIT: n/d
+[MULT] P/E: n/d
+2026-03-12 21:05:14,085 INFO [ 10/24] ✅ BRASIL TELECOM                           R$39.17 | +22940.7% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:14,089 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-12 21:05:14,090 INFO [ 11/24] ✅ PETRO RIO                                R$275.49 | +363.0% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 6.1%
+[DRE] Margem D&A  usada na projeção     : 4.9%
+[DRE] Margens por ano:
+       2019: EBIT 6.4%  |  D&A 5.9%
+       2020: EBIT 4.6%  |  D&A 5.9%
+       2021: EBIT 5.7%  |  D&A 5.5%
+       2022: EBIT 6.3%  |  D&A 5.2%
+       2023: EBIT 6.1%  |  D&A 5.0%
+       2024: EBIT 6.1%  |  D&A 4.8%
+[DRE] CAGR Receita — histórico completo : 17.2%
+[DRE] CAGR Receita — últimos 4 anos  : 17.2%
+[DRE] CAGR Receita — usado (blended)    : 17.2%
+[DRE] Margem EBIT usada na projeção     : 18.0%
+[DRE] Margem D&A  usada na projeção     : 3.8%
+[DRE] Margens por ano:
+       2019: EBIT 12.2%  |  D&A 7.3%
+       2020: EBIT 7.4%  |  D&A 10.1%
+       2021: EBIT 31.3%  |  D&A 7.8%
+       2022: EBIT 25.2%  |  D&A 11.8%
+       2023: EBIT 12.2%  |  D&A 0.0%
+       2024: EBIT 19.4%  |  D&A 0.0%
+[DRE] CAGR Receita — histórico completo : 28.6%
+[DRE] CAGR Receita — últimos 4 anos  : 36.2%
+[DRE] CAGR Receita — usado (blended)    : 33.2%
+[FCFF] CAPEX/Revenue histórico: 2.12%
+[FCFF] D&A/Revenue histórico: 3.84%
+[FCFF] ΔWC/Revenue implícito: 36.12% → usado: 3.00%
+[FCFF] Anos atípicos normalizados: [2019, 2020, 2021, 2022, 2024] → mediana R$ -1.98 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[FCFF] CAPEX/Revenue histórico: 3.43%
+[FCFF] D&A/Revenue histórico: 4.93%
+[FCFF] ΔWC/Revenue implícito: -0.58% → usado: 0.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:14,258 INFO [ 12/24] ✅ BRASKEM                                  R$44.63 | +265.8% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 14.4%
+[DRE] Margem D&A  usada na projeção     : 0.0%
+[DRE] Margens por ano:
+       2019: EBIT 16.4%  |  D&A 0.0%
+       2020: EBIT 17.1%  |  D&A 0.0%
+       2021: EBIT 17.6%  |  D&A 0.0%
+       2022: EBIT 19.4%  |  D&A 0.0%
+       2023: EBIT 14.6%  |  D&A 0.0%
+       2024: EBIT 12.6%  |  D&A 0.0%
+[DRE] CAGR Receita — histórico completo : 21.6%
+[DRE] CAGR Receita — últimos 4 anos  : 26.0%
+[DRE] CAGR Receita — usado (blended)    : 24.2%
+[FCFF] CAPEX/Revenue histórico: 11.66%
+[FCFF] D&A/Revenue histórico: 0.00%
+[FCFF] ΔWC/Revenue implícito: -28.41% → usado: 0.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[BETA] Raw: 3.279  |  Blume adjusted: 2.527  (window: 3a, 35 obs)
+[BETA] Capped 2.527 -> 1.800
+[BETA] Raw: 1.343  |  Blume adjusted: 1.230  (window: 3a, 35 obs)
+[BETA] Raw: 0.844  |  Blume adjusted: 0.895  (window: 3a, 35 obs)
+[WACC] Market Cap      : R$ 3.4 bi
+[WACC] Divida Bruta    : R$ 1.7 bi
+[WACC] Caixa           : R$ 1.3 bi
+[WACC] Divida Liquida  : R$ 0.4 bi
+[WACC] Peso Equity     : 66.8%
+[WACC] Peso Divida     : 33.2%
+[MULT] EBIT       : R$ 0.351 bi
+[MULT] D&A: n/d
+[MULT] EBITDA     : R$ 0.351 bi
+[MULT] NET_INCOME : R$ 0.107 bi
+[MULT] EV/EBITDA  : -2.7x
+[MULT] EV/EBIT    : -2.7x
+[MULT] P/E        : 31.6x
+[WACC] Market Cap      : R$ 42.2 bi
+[WACC] Divida Bruta    : R$ 3.3 bi
+[WACC] Caixa           : R$ 1.4 bi
+[WACC] Divida Liquida  : R$ 1.9 bi
+[WACC] Peso Equity     : 92.8%
+[WACC] Peso Divida     : 7.2%
+[MULT] EBIT       : R$ 2.352 bi
+[MULT] D&A        : R$ 1.852 bi
+[MULT] EBITDA     : R$ 4.204 bi
+[MULT] NET_INCOME : R$ 2.423 bi
+[MULT] EV/EBITDA  : 4.5x
+[MULT] EV/EBIT    : 8.0x
+[MULT] P/E        : 17.4x
+[WACC] Market Cap      : R$ 4.1 bi
+[WACC] Divida Bruta    : R$ 20.5 bi
+[WACC] Caixa           : R$ 5.7 bi
+[WACC] Divida Liquida  : R$ 14.8 bi
+[WACC] Peso Equity     : 16.6%
+[WACC] Peso Divida     : 83.4%
+[MULT] EBIT       : R$ 2.620 bi
+[MULT] D&A: n/d
+[MULT] EBITDA     : R$ 2.620 bi
+[MULT] NET_INCOME : R$ 0.463 bi
+[MULT] EV/EBITDA  : 18.0x
+[MULT] EV/EBIT    : 18.0x
+[MULT] P/E        : 8.8x
+2026-03-12 21:05:16,485 INFO [ 13/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 19.7%
+[DRE] Margem D&A  usada na projeção     : 0.1%
+[DRE] Margens por ano:
+       2019: EBIT 11.8%  |  D&A 0.0%
+       2020: EBIT 13.3%  |  D&A 0.4%
+       2021: EBIT 17.5%  |  D&A 0.2%
+       2022: EBIT 21.6%  |  D&A 0.0%
+       2023: EBIT 21.2%  |  D&A 0.0%
+       2024: EBIT 18.1%  |  D&A 0.0%
+[DRE] CAGR Receita — histórico completo : 11.1%
+[DRE] CAGR Receita — últimos 4 anos  : 8.4%
+[DRE] CAGR Receita — usado (blended)    : 9.5%
+[FCFF] CAPEX/Revenue histórico: 3.24%
+[FCFF] D&A/Revenue histórico: 0.05%
+[FCFF] ΔWC/Revenue implícito: -11.57% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2021] → mediana R$ 3.15 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:16,982 INFO [ 14/24] ✅ DROGASIL SA                              R$9.53 | -59.7% | VENDA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 32.4%
+[DRE] Margem D&A  usada na projeção     : 15.3%
+[DRE] Margens por ano:
+       2019: EBIT -9.8%  |  D&A 36.9%
+       2020: EBIT 2.7%  |  D&A 29.7%
+       2021: EBIT 19.9%  |  D&A 19.6%
+       2022: EBIT 29.5%  |  D&A 15.3%
+       2023: EBIT 34.1%  |  D&A 16.0%
+       2024: EBIT 32.3%  |  D&A 14.8%
+[DRE] CAGR Receita — histórico completo : 29.1%
+[DRE] CAGR Receita — últimos 4 anos  : 28.8%
+[DRE] CAGR Receita — usado (blended)    : 28.9%
+[FCFF] CAPEX/Revenue histórico: 2.95%
+[FCFF] D&A/Revenue histórico: 15.30%
+[FCFF] ΔWC/Revenue implícito: 9.96% → usado: 3.00%
+[FCFF] Anos atípicos normalizados: [2023, 2024] → mediana R$ 0.05 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:17,042 INFO [ 15/24] ✅ MOVIDA PARTICIPAÇÕES                     R$129.61 | +989.1% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 15.4%
+[DRE] Margem D&A  usada na projeção     : 1.8%
+[DRE] Margens por ano:
+       2019: EBIT 5.8%  |  D&A 2.1%
+       2020: EBIT 11.1%  |  D&A 1.7%
+       2021: EBIT 11.6%  |  D&A 2.0%
+       2022: EBIT 10.7%  |  D&A 1.8%
+       2023: EBIT 15.5%  |  D&A 1.9%
+       2024: EBIT 16.9%  |  D&A 1.7%
+[DRE] CAGR Receita — histórico completo : 8.6%
+[DRE] CAGR Receita — últimos 4 anos  : 11.9%
+[DRE] CAGR Receita — usado (blended)    : 10.6%
+[FCFF] CAPEX/Revenue histórico: 1.33%
+[FCFF] D&A/Revenue histórico: 1.79%
+[FCFF] ΔWC/Revenue implícito: -2.37% → usado: 0.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[BETA] Raw: 1.160  |  Blume adjusted: 1.107  (window: 3a, 35 obs)
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+[BETA] Raw: 1.099  |  Blume adjusted: 1.066  (window: 3a, 35 obs)
+2026-03-12 21:05:18,325 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+[WACC] Market Cap      : R$ 24.3 bi
+[WACC] Divida Bruta    : R$ 35.1 bi
+[WACC] Caixa           : R$ 42.5 bi
+[WACC] Divida Liquida  : R$ -7.4 bi
+[WACC] Peso Equity     : 40.9%
+[WACC] Peso Divida     : 59.1%
+[MULT] EBIT       : R$ 6.111 bi
+[MULT] D&A: n/d
+[MULT] EBITDA     : R$ 6.111 bi
+[MULT] NET_INCOME : R$ 9.273 bi
+[MULT] EV/EBITDA  : 7.2x
+[MULT] EV/EBIT    : 7.2x
+[MULT] P/E        : 2.6x
+[WACC] Market Cap      : R$ 0.3 bi
+[WACC] Divida Bruta    : R$ 0.3 bi
+[WACC] Caixa           : R$ 0.2 bi
+[WACC] Divida Liquida  : R$ 0.1 bi
+[WACC] Peso Equity     : 53.1%
+[WACC] Peso Divida     : 46.9%
+[MULT] EBIT       : R$ 0.269 bi
+[MULT] D&A        : R$ 0.027 bi
+[MULT] EBITDA     : R$ 0.297 bi
+[MULT] NET_INCOME : R$ -3.104 bi
+[MULT] EV/EBITDA  : 6.6x
+[MULT] EV/EBIT    : 7.3x
+[MULT] P/E: n/d
+[WACC] Market Cap      : R$ 3.2 bi
+[WACC] Divida Bruta    : R$ 1.9 bi
+[WACC] Caixa           : R$ 1.0 bi
+[WACC] Divida Liquida  : R$ 0.9 bi
+[WACC] Peso Equity     : 62.9%
+[WACC] Peso Divida     : 37.1%
+[MULT] EBIT       : R$ 0.508 bi
+[MULT] D&A        : R$ 0.233 bi
+[MULT] EBITDA     : R$ 0.742 bi
+[MULT] NET_INCOME : R$ 0.570 bi
+[MULT] EV/EBITDA  : 11.4x
+[MULT] EV/EBIT    : 16.7x
+[MULT] P/E        : 5.6x
+2026-03-12 21:05:19,256 INFO [ 16/24] ✅ ENERGISA                                 R$153.72 | +188.7% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 4.7%
+[DRE] Margem D&A  usada na projeção     : 4.3%
+[DRE] Margens por ano:
+       2022: EBIT 6.9%  |  D&A 4.2%
+       2023: EBIT 3.7%  |  D&A 4.7%
+       2024: EBIT 4.5%  |  D&A 4.1%
+[DRE] CAGR Receita — histórico completo : 17.3%
+[DRE] CAGR Receita — últimos 4 anos  : 17.3%
+[DRE] CAGR Receita — usado (blended)    : 17.3%
+[FCFF] CAPEX/Revenue histórico: 0.22%
+[FCFF] D&A/Revenue histórico: 4.32%
+[FCFF] ΔWC/Revenue implícito: 3.84% → usado: 3.00%
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:19,403 INFO [ 17/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.20 | +466.7% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 15.8%
+[DRE] Margem D&A  usada na projeção     : 7.7%
+[DRE] Margens por ano:
+       2019: EBIT 14.5%  |  D&A 7.8%
+       2020: EBIT -61.4%  |  D&A 10.3%
+       2021: EBIT 1.6%  |  D&A 10.2%
+       2022: EBIT 6.0%  |  D&A 9.0%
+       2023: EBIT 12.6%  |  D&A 7.8%
+       2024: EBIT 21.2%  |  D&A 7.2%
+[DRE] CAGR Receita — histórico completo : -1.9%
+[DRE] CAGR Receita — últimos 4 anos  : 10.2%
+[DRE] CAGR Receita — usado (blended)    : 5.4%
+[FCFF] CAPEX/Revenue histórico: 8.21%
+[FCFF] D&A/Revenue histórico: 7.69%
+[FCFF] ΔWC/Revenue implícito: -1.13% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2019, 2020, 2022] → mediana R$ -0.03 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:19,726 INFO [ 18/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$33.63 | +137.0% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 52.3%
+[DRE] Margem D&A  usada na projeção     : 18.9%
+[DRE] Margens por ano:
+       2019: EBIT 28.9%  |  D&A 33.5%
+       2020: EBIT 39.3%  |  D&A 27.2%
+       2021: EBIT 51.4%  |  D&A 19.6%
+       2022: EBIT 54.6%  |  D&A 19.3%
+       2023: EBIT 56.9%  |  D&A 18.4%
+       2024: EBIT 48.5%  |  D&A 19.0%
+[DRE] CAGR Receita — histórico completo : 13.5%
+[DRE] CAGR Receita — últimos 4 anos  : 2.0%
+[DRE] CAGR Receita — usado (blended)    : 6.6%
+[FCFF] CAPEX/Revenue histórico: 0.35%
+[FCFF] D&A/Revenue histórico: 18.85%
+[FCFF] ΔWC/Revenue implícito: -11.90% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2019] → mediana R$ 2.22 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[BETA] Raw: 1.596  |  Blume adjusted: 1.399  (window: 3a, 35 obs)
+[BETA] Raw: 2.659  |  Blume adjusted: 2.112  (window: 3a, 35 obs)
+[BETA] Capped 2.112 -> 1.800
+[WARN] Beta regression falhou: Length mismatch: Expected axis has 3 elements, new values have 2 elements. Usando beta=1.0.
+2026-03-12 21:05:21,041 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+[WACC] Market Cap      : R$ 4.2 bi
+[WACC] Divida Bruta    : R$ 1.4 bi
+[WACC] Caixa           : R$ 1.6 bi
+[WACC] Divida Liquida  : R$ -0.1 bi
+[WACC] Peso Equity     : 74.7%
+[WACC] Peso Divida     : 25.3%
+[MULT] EBIT       : R$ 0.574 bi
+[MULT] D&A        : R$ 0.518 bi
+[MULT] EBITDA     : R$ 1.092 bi
+[MULT] NET_INCOME : R$ 0.206 bi
+[MULT] EV/EBITDA  : 4.6x
+[MULT] EV/EBIT    : 8.8x
+[MULT] P/E        : 20.3x
+[WACC] Market Cap      : R$ 55.6 bi
+[WACC] Divida Bruta    : R$ 1.0 bi
+[WACC] Caixa           : R$ 1.1 bi
+[WACC] Divida Liquida  : R$ -0.0 bi
+[WACC] Peso Equity     : 98.2%
+[WACC] Peso Divida     : 1.8%
+[MULT] EBIT       : R$ 1.762 bi
+[MULT] D&A        : R$ 0.690 bi
+[MULT] EBITDA     : R$ 2.452 bi
+[MULT] NET_INCOME : R$ 2.409 bi
+[MULT] EV/EBITDA  : 5.3x
+[MULT] EV/EBIT    : 7.4x
+[MULT] P/E        : 23.1x
+[WACC] Market Cap      : R$ 5.9 bi
+[WACC] Divida Bruta    : R$ 6.9 bi
+[WACC] Caixa           : R$ 2.4 bi
+[WACC] Divida Liquida  : R$ 4.4 bi
+[WACC] Peso Equity     : 46.2%
+[WACC] Peso Divida     : 53.8%
+[MULT] EBIT       : R$ 1.352 bi
+[MULT] D&A        : R$ 0.458 bi
+[MULT] EBITDA     : R$ 1.810 bi
+[MULT] NET_INCOME : R$ 1.987 bi
+[MULT] EV/EBITDA  : 2.9x
+[MULT] EV/EBIT    : 3.9x
+[MULT] P/E        : 3.0x
+2026-03-12 21:05:21,844 INFO [ 19/24] ✅ CPFL RENOVÁVEIS                          R$11.68 | -75.8% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:21,853 WARNING [ 20/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-12 21:05:21,856 INFO   💾 Checkpoint: 19 resultados salvos
+[DRE] Margem EBIT usada na projeção     : 19.6%
+[DRE] Margem D&A  usada na projeção     : 2.0%
+[DRE] Margens por ano:
+       2019: EBIT 13.8%  |  D&A 3.0%
+       2020: EBIT 16.1%  |  D&A 2.6%
+       2021: EBIT 17.6%  |  D&A 2.2%
+       2022: EBIT 16.9%  |  D&A 1.9%
+       2023: EBIT 19.9%  |  D&A 1.9%
+       2024: EBIT 20.2%  |  D&A 2.1%
+[DRE] CAGR Receita — histórico completo : 23.3%
+[DRE] CAGR Receita — últimos 4 anos  : 17.3%
+[DRE] CAGR Receita — usado (blended)    : 19.7%
+[FCFF] CAPEX/Revenue histórico: 3.93%
+[FCFF] D&A/Revenue histórico: 2.03%
+[FCFF] ΔWC/Revenue implícito: -7.29% → usado: 0.00%
+[FCFF] Anos atípicos normalizados: [2021] → mediana R$ 2.59 bi
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+2026-03-12 21:05:21,982 INFO [ 21/24] ✅ KROTON EDUCACIONAL                       R$0.44 | -85.1% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:21,987 INFO [ 22/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$9.24 | +51.2% | COMPRA FORTE | ETA 0min
+[DRE] Margem EBIT usada na projeção     : 15.6%
+[DRE] Margem D&A  usada na projeção     : 3.1%
+[DRE] Margens por ano:
+       2019: EBIT 17.4%  |  D&A 3.3%
+       2020: EBIT 13.4%  |  D&A 2.4%
+       2021: EBIT 18.1%  |  D&A 4.2%
+       2022: EBIT 14.7%  |  D&A 2.6%
+[DRE] CAGR Receita — histórico completo : 15.7%
+[DRE] CAGR Receita — últimos 4 anos  : 15.7%
+[DRE] CAGR Receita — usado (blended)    : 15.7%
+[FCFF] CAPEX/Revenue histórico: 3.00%
+[FCFF] D&A/Revenue histórico: 3.07%
+[FCFF] ΔWC/Revenue implícito: -4.60% → usado: 0.00%
+[WARN] build_fcff: 6 ano(s) com FCFF nulo → 0.
+[INFO] Sem token ANBIMA. Usando fallback NTNB real.
+[BETA] Raw: 0.828  |  Blume adjusted: 0.885  (window: 3a, 35 obs)
+[BETA] Raw: 1.199  |  Blume adjusted: 1.133  (window: 3a, 35 obs)
+2026-03-12 21:05:23,353 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+[WACC] Market Cap      : R$ 8.5 bi
+[WACC] Divida Bruta    : R$ 0.5 bi
+[WACC] Caixa           : R$ 0.4 bi
+[WACC] Divida Liquida  : R$ 0.1 bi
+[WACC] Peso Equity     : 94.2%
+[WACC] Peso Divida     : 5.8%
+[MULT] EBIT       : R$ 0.415 bi
+[MULT] D&A        : R$ 0.082 bi
+[MULT] EBITDA     : R$ 0.497 bi
+[MULT] NET_INCOME: n/d
+[MULT] EV/EBITDA: n/d
+[MULT] EV/EBIT: n/d
+[MULT] P/E: n/d
+[WACC] Market Cap      : R$ 192.2 bi
+[WACC] Divida Bruta    : R$ 3.6 bi
+[WACC] Caixa           : R$ 9.4 bi
+[WACC] Divida Liquida  : R$ -5.8 bi
+[WACC] Peso Equity     : 98.2%
+[WACC] Peso Divida     : 1.8%
+[MULT] EBIT       : R$ 7.691 bi
+[MULT] D&A        : R$ 0.812 bi
+[MULT] EBITDA     : R$ 8.503 bi
+[MULT] NET_INCOME : R$ 12.638 bi
+[MULT] EV/EBITDA  : 5.2x
+[MULT] EV/EBIT    : 5.7x
+[MULT] P/E        : 15.2x
+2026-03-12 21:05:24,307 INFO [ 23/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:05:24,695 INFO [ 24/24] ✅ WEG SA                                   R$11.88 | -74.1% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:24,696 INFO 
+============================================================
+2026-03-12 21:05:24,696 INFO ✅ Concluído em 0.4 minutos
+2026-03-12 21:05:24,697 INFO    Sucesso   : 23/24
+2026-03-12 21:05:24,697 INFO    Falhas    : 1/24
+2026-03-12 21:05:24,697 INFO    Taxa sucesso: 96%
+2026-03-12 21:05:24,697 INFO ============================================================
+2026-03-12 21:05:24,701 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 21:05:24,701 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 21:05:24,701 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 21:05:24,702 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 21:05:24,702 INFO BEBIDAS                                1        -35.2%        0
+2026-03-12 21:05:24,702 INFO DEFAULT                                5       +158.7%        2
+2026-03-12 21:05:24,702 INFO EDUCAÇÃO                               1        -85.1%        0
+2026-03-12 21:05:24,703 INFO ENERGIA ELÉTRICA                       6        +37.1%        3
+2026-03-12 21:05:24,703 INFO PETRÓLEO E GÁS                         2       +214.6%        2
+2026-03-12 21:05:24,703 INFO TELECOMUNICAÇÕES                       1     +22940.7%        1
+2026-03-12 21:05:24,703 INFO TRANSPORTE                             3       +563.0%        2
+2026-03-12 21:05:24,703 INFO VAREJO                                 4         +9.6%        2
+2026-03-12 21:05:24,704 INFO ─────────────────────────────────────────────────────────────────
+
+✅ Valuation: 23 empresas processadas
+
+════════════════════════════════════════════════════════════
+  STEP 4/4 — SCREENER
+  Gerando rankings e exportando Excel...
+════════════════════════════════════════════════════════════
+[SCR] 25 empresas (23 B3 + 2 manual)
+[SCR] 21 empresas após filtros
+
+═════════════════════════════════════════════════════════════════
+  B3 SCREENER — 21 empresas valuadas
+═════════════════════════════════════════════════════════════════
+
+  Upside médio  : +58.4%
+  Upside mediana: +0.0%
+
+  Distribuição de recomendações:
+    COMPRA FORTE   :   10 (48%) ███████████████
+    VENDA FORTE    :    6 (29%) █████████
+    NEUTRO         :    3 (14%) ████
+    VENDA          :    2 (10%) ███
+
+  Top 10 por Score:
+                                      Empresa  Ticker    Upside %  Recomendação     ROIC %  Score
+1                                   PETRO RIO   PRIO3  363.003376  COMPRA FORTE  12.107691   65.1
+2                             CPFL RENOVÁVEIS   CPFE3  -75.786439   VENDA FORTE  20.246990   55.8
+3    TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA  TAEE11   44.072546  COMPRA FORTE  11.289670   54.9
+4                                       CTEEP   ISAE4  -20.126028         VENDA  10.156350   50.5
+5                                      WEG SA   WEGE3  -74.072419   VENDA FORTE  18.995742   49.0
+6                                         WEG   WEGE3  -74.247722   VENDA FORTE  18.995742   49.0
+7                                CPFL ENERGIA   CPFE3   48.477809  COMPRA FORTE  20.978328   46.6
+8   MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA   MILS3  136.963840  COMPRA FORTE  10.029881   44.6
+9                                   PETROBRAS   PETR4   66.103387  COMPRA FORTE  17.722758   44.5
+10                                 ELETROBRAS   ELET6    0.000000        NEUTRO   9.310573   41.2
+═════════════════════════════════════════════════════════════════
+
+[SCR] ✅ Excel exportado: b3_screener.xlsx
+[SCR] Combined JSON: 25 empresas → valuation_results_combined.json
+
+✅ Screener: 21 empresas ranqueadas
+
+════════════════════════════════════════════════════════════
+  ✅ Pipeline concluído em 1.5 minutos
+════════════════════════════════════════════════════════════
+
+Próximos passos:
+  1. Copiar valuation_results_b3.json para o VPS:
+     scp valuation_results_b3.json root@187.77.52.223:/opt/shipyard/
+  2. Reiniciar o dashboard:
+     systemctl restart shipyard-dashboard
+  3. Acessar a aba 'Screener B3' no dashboard

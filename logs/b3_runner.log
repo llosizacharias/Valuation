@@ -1,0 +1,896 @@
+2026-03-12 19:13:01,786 INFO ============================================================
+2026-03-12 19:13:01,786 INFO B3 Runner iniciado — 2026-03-12 19:13
+2026-03-12 19:13:01,786 INFO ============================================================
+2026-03-12 19:13:01,786 INFO Catálogo: 0 empresas
+2026-03-12 19:13:01,787 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:13:01,787 INFO Resume: 0 já processadas, 0 restantes
+2026-03-12 19:13:01,787 INFO Iniciando 0 valuations com 3 workers...
+
+2026-03-12 19:13:01,787 INFO 
+============================================================
+2026-03-12 19:13:01,787 INFO ✅ Concluído em 0.0 minutos
+2026-03-12 19:13:01,788 INFO    Sucesso   : 0/0
+2026-03-12 19:13:01,788 INFO    Falhas    : 0/0
+2026-03-12 19:15:33,001 INFO ============================================================
+2026-03-12 19:15:33,001 INFO B3 Runner iniciado — 2026-03-12 19:15
+2026-03-12 19:15:33,001 INFO ============================================================
+2026-03-12 19:15:33,002 INFO Catálogo: 0 empresas
+2026-03-12 19:15:33,002 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:15:33,002 INFO Resume: 0 já processadas, 0 restantes
+2026-03-12 19:15:33,002 INFO Iniciando 0 valuations com 3 workers...
+
+2026-03-12 19:15:33,002 INFO 
+============================================================
+2026-03-12 19:15:33,002 INFO ✅ Concluído em 0.0 minutos
+2026-03-12 19:15:33,002 INFO    Sucesso   : 0/0
+2026-03-12 19:15:33,002 INFO    Falhas    : 0/0
+2026-03-12 19:15:33,003 INFO    Taxa sucesso: n/a
+2026-03-12 19:15:33,003 INFO ============================================================
+2026-03-12 19:15:33,003 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 19:22:26,826 INFO ============================================================
+2026-03-12 19:22:26,826 INFO B3 Runner iniciado — 2026-03-12 19:22
+2026-03-12 19:22:26,826 INFO ============================================================
+2026-03-12 19:22:26,826 INFO Catálogo: 0 empresas
+2026-03-12 19:22:26,827 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:22:26,827 INFO Resume: 0 já processadas, 0 restantes
+2026-03-12 19:22:26,827 INFO Iniciando 0 valuations com 3 workers...
+
+2026-03-12 19:22:26,827 INFO 
+============================================================
+2026-03-12 19:22:26,827 INFO ✅ Concluído em 0.0 minutos
+2026-03-12 19:22:26,827 INFO    Sucesso   : 0/0
+2026-03-12 19:22:26,827 INFO    Falhas    : 0/0
+2026-03-12 19:22:26,828 INFO    Taxa sucesso: n/a
+2026-03-12 19:22:26,828 INFO ============================================================
+2026-03-12 19:22:26,828 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 19:36:07,202 INFO ============================================================
+2026-03-12 19:36:07,203 INFO B3 Runner iniciado — 2026-03-12 19:36
+2026-03-12 19:36:07,203 INFO ============================================================
+2026-03-12 19:36:07,204 INFO Catálogo: 5 empresas
+2026-03-12 19:36:07,204 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:36:07,204 INFO Resume: 0 já processadas, 5 restantes
+2026-03-12 19:36:07,204 INFO Iniciando 5 valuations com 3 workers...
+
+2026-03-12 19:36:07,212 WARNING [  1/5] ❌ AGROGALAXY PARTICIPAÇÕES  - EM RECUPERAÇÃO JUDICIAL: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:36:07,215 WARNING [  2/5] ❌ AUREN ENERGIA: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:36:07,217 WARNING [  3/5] ❌ AUREN OPERAÇÕES: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:36:07,217 WARNING [  4/5] ❌ ALPARGATAS: ImportError: cannot import name 'CVM_TO_PIPELINE' from 'app.deterministic_runner' (/opt/shipyard/app/deterministic_runner.py)
+2026-03-12 19:36:07,217 WARNING [  5/5] ❌ AMERICANAS  - EM RECUPERAÇÃO JUDICIAL: ImportError: cannot import name 'CVM_TO_PIPELINE' from 'app.deterministic_runner' (/opt/shipyard/app/deterministic_runner.py)
+2026-03-12 19:36:07,218 INFO 
+============================================================
+2026-03-12 19:36:07,218 INFO ✅ Concluído em 0.0 minutos
+2026-03-12 19:36:07,218 INFO    Sucesso   : 0/5
+2026-03-12 19:36:07,218 INFO    Falhas    : 5/5
+2026-03-12 19:36:07,218 INFO    Taxa sucesso: 0%
+2026-03-12 19:36:07,219 INFO ============================================================
+2026-03-12 19:36:07,219 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 19:46:46,789 INFO ============================================================
+2026-03-12 19:46:46,789 INFO B3 Runner iniciado — 2026-03-12 19:46
+2026-03-12 19:46:46,789 INFO ============================================================
+2026-03-12 19:46:46,790 INFO Catálogo: 14 empresas
+2026-03-12 19:46:46,790 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:46:46,790 INFO Resume: 0 já processadas, 14 restantes
+2026-03-12 19:46:46,790 INFO Iniciando 14 valuations com 3 workers...
+
+2026-03-12 19:46:46,795 WARNING [  1/14] ❌ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,797 WARNING [  2/14] ❌ AES ELETROPAULO: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,797 WARNING [  3/14] ❌ ELETROBRAS: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,797 WARNING [  4/14] ❌ AMBEV SA: ImportError: cannot import name 'CVM_TO_PIPELINE' from 'app.deterministic_runner' (/opt/shipyard/app/deterministic_runner.py)
+2026-03-12 19:46:46,798 WARNING [  5/14] ❌ BOMPRECO TRUST: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,799 WARNING [  6/14] ❌ CTEEP: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,800 WARNING [  7/14] ❌ MAGAZINE LUIZA SA: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,801 WARNING [  8/14] ❌ NEXFUEL BIOENERGIA: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,802 WARNING [  9/14] ❌ COMPANHIA AURIFERA BRASILEIRA SA: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,802 WARNING [ 10/14] ❌ PETROBRAS: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,803 INFO   💾 Checkpoint: 0 resultados salvos
+2026-03-12 19:46:46,804 WARNING [ 11/14] ❌ BEMATECH: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,805 WARNING [ 12/14] ❌ VIBRA ENERGIA: ModuleNotFoundError: No module named 'rapidfuzz'
+2026-03-12 19:46:46,805 WARNING [ 13/14] ❌ HUB COSMÉTICOS: ImportError: cannot import name 'CVM_TO_PIPELINE' from 'app.deterministic_runner' (/opt/shipyard/app/deterministic_runner.py)
+2026-03-12 19:46:46,806 WARNING [ 14/14] ❌ CSMG3: ImportError: cannot import name 'CVM_TO_PIPELINE' from 'app.deterministic_runner' (/opt/shipyard/app/deterministic_runner.py)
+2026-03-12 19:46:46,806 INFO 
+============================================================
+2026-03-12 19:46:46,806 INFO ✅ Concluído em 0.0 minutos
+2026-03-12 19:46:46,807 INFO    Sucesso   : 0/14
+2026-03-12 19:46:46,807 INFO    Falhas    : 14/14
+2026-03-12 19:46:46,807 INFO    Taxa sucesso: 0%
+2026-03-12 19:46:46,807 INFO ============================================================
+2026-03-12 19:46:46,808 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 19:50:27,081 INFO ============================================================
+2026-03-12 19:50:27,082 INFO B3 Runner iniciado — 2026-03-12 19:50
+2026-03-12 19:50:27,082 INFO ============================================================
+2026-03-12 19:50:27,082 INFO Catálogo: 14 empresas
+2026-03-12 19:50:27,082 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:50:27,082 INFO Resume: 0 já processadas, 14 restantes
+2026-03-12 19:50:27,082 INFO Iniciando 14 valuations com 3 workers...
+
+2026-03-12 19:50:27,236 WARNING [  1/14] ❌ AES ELETROPAULO: ValueError: Sem dados no cache para CVM 14176
+2026-03-12 19:50:31,368 INFO [  2/14] ✅ AMBEV SA                                 R$2539.61 | +9379.7% | COMPRA FORTE | ETA 0min
+2026-03-12 19:50:31,370 WARNING [  3/14] ❌ BOMPRECO TRUST: ValueError: Sem dados no cache para CVM 15644
+2026-03-12 19:50:31,371 WARNING [  4/14] ❌ HUB COSMÉTICOS: ValueError: Sem dados no cache para CVM 21725
+2026-03-12 19:50:31,445 INFO [  5/14] ✅ ELETROBRAS                               R$452.14 | +747.8% | COMPRA FORTE | ETA 0min
+2026-03-12 19:50:31,451 INFO [  6/14] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$13.52 | -66.5% | VENDA FORTE | ETA 0min
+2026-03-12 19:50:31,451 WARNING [  7/14] ❌ NEXFUEL BIOENERGIA: ValueError: Sem dados no cache para CVM 22063
+2026-03-12 19:50:31,451 WARNING [  8/14] ❌ COMPANHIA AURIFERA BRASILEIRA SA: ValueError: Sem dados no cache para CVM 22870
+2026-03-12 19:50:31,452 WARNING [  9/14] ❌ CSMG3: ValueError: Sem dados no cache para CVM 498
+2026-03-12 19:50:33,308 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 19:50:34,349 ERROR $ENBR3.SA: possibly delisted; no timezone found
+2026-03-12 19:50:34,351 ERROR 
+1 Failed download:
+2026-03-12 19:50:34,352 ERROR ['ENBR3.SA']: possibly delisted; no timezone found
+2026-03-12 19:50:34,378 INFO [ 10/14] ✅ CTEEP                                    R$14.20 | -70.7% | VENDA FORTE | ETA 0min
+2026-03-12 19:50:34,380 INFO   💾 Checkpoint: 4 resultados salvos
+2026-03-12 19:50:34,380 WARNING [ 11/14] ❌ BEMATECH: ValueError: Sem dados no cache para CVM 20656
+2026-03-12 19:50:34,432 INFO [ 12/14] ✅ PETROBRAS                                R$84.07 | +85.1% | COMPRA FORTE | ETA 0min
+2026-03-12 19:50:37,067 INFO [ 13/14] ✅ VIBRA ENERGIA                            R$352.73 | +2636.5% | COMPRA FORTE | ETA 0min
+2026-03-12 19:50:37,210 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 19:50:37,860 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 19:50:37,862 INFO [ 14/14] ✅ MAGAZINE LUIZA SA                        R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 19:50:37,866 INFO 
+============================================================
+2026-03-12 19:50:37,867 INFO ✅ Concluído em 0.2 minutos
+2026-03-12 19:50:37,867 INFO    Sucesso   : 7/14
+2026-03-12 19:50:37,867 INFO    Falhas    : 7/14
+2026-03-12 19:50:37,867 INFO    Taxa sucesso: 50%
+2026-03-12 19:50:37,867 INFO ============================================================
+2026-03-12 19:50:37,869 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 19:50:37,870 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 19:50:37,870 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 19:50:37,870 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 19:50:37,870 INFO BEBIDAS                                1      +9379.7%        1
+2026-03-12 19:50:37,871 INFO ENERGIA ELÉTRICA                       3       +203.5%        1
+2026-03-12 19:50:37,871 INFO PETRÓLEO E GÁS                         1        +85.1%        1
+2026-03-12 19:50:37,871 INFO VAREJO                                 2      +2636.5%        1
+2026-03-12 19:50:37,871 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 19:54:48,462 INFO ============================================================
+2026-03-12 19:54:48,462 INFO B3 Runner iniciado — 2026-03-12 19:54
+2026-03-12 19:54:48,462 INFO ============================================================
+2026-03-12 19:54:48,462 INFO Catálogo: 7 empresas
+2026-03-12 19:54:48,462 INFO Modo teste: limitado a 20 empresas
+2026-03-12 19:54:48,462 INFO Resume: 0 já processadas, 7 restantes
+2026-03-12 19:54:48,463 INFO Iniciando 7 valuations com 3 workers...
+
+2026-03-12 19:54:51,218 INFO [  1/7] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$13.52 | -66.5% | VENDA FORTE | ETA 0min
+2026-03-12 19:54:51,724 INFO [  2/7] ✅ ELETROBRAS                               R$460.69 | +763.5% | COMPRA FORTE | ETA 0min
+2026-03-12 19:54:51,743 ERROR $ENBR3.SA: possibly delisted; no timezone found
+2026-03-12 19:54:51,744 ERROR 
+1 Failed download:
+2026-03-12 19:54:51,744 ERROR ['ENBR3.SA']: possibly delisted; no timezone found
+2026-03-12 19:54:51,787 INFO [  3/7] ✅ AMBEV SA                                 R$78.40 | +283.2% | COMPRA FORTE | ETA 0min
+2026-03-12 19:54:53,266 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 19:54:53,270 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 19:54:54,438 INFO [  4/7] ✅ PETROBRAS                                R$74.65 | +65.1% | COMPRA FORTE | ETA 0min
+2026-03-12 19:54:54,543 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 19:54:54,569 INFO [  5/7] ✅ CTEEP                                    R$13.95 | -71.3% | VENDA FORTE | ETA 0min
+2026-03-12 19:54:54,917 ERROR 
+1 Failed download:
+2026-03-12 19:54:54,918 ERROR ['ENBR3.SA']: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 19:54:55,614 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 19:54:55,616 INFO [  6/7] ✅ MAGAZINE LUIZA SA                        R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 19:54:56,785 INFO [  7/7] ✅ VIBRA ENERGIA                            R$313.98 | +2337.7% | COMPRA FORTE | ETA 0min
+2026-03-12 19:54:56,787 INFO 
+============================================================
+2026-03-12 19:54:56,788 INFO ✅ Concluído em 0.1 minutos
+2026-03-12 19:54:56,788 INFO    Sucesso   : 7/7
+2026-03-12 19:54:56,789 INFO    Falhas    : 0/7
+2026-03-12 19:54:56,789 INFO    Taxa sucesso: 100%
+2026-03-12 19:54:56,789 INFO ============================================================
+2026-03-12 19:54:56,791 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 19:54:56,791 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 19:54:56,791 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 19:54:56,791 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 19:54:56,792 INFO BEBIDAS                                1       +283.2%        1
+2026-03-12 19:54:56,792 INFO ENERGIA ELÉTRICA                       3       +208.6%        1
+2026-03-12 19:54:56,792 INFO PETRÓLEO E GÁS                         1        +65.1%        1
+2026-03-12 19:54:56,792 INFO VAREJO                                 2      +2337.7%        1
+2026-03-12 19:54:56,792 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 20:00:09,961 INFO ============================================================
+2026-03-12 20:00:09,962 INFO B3 Runner iniciado — 2026-03-12 20:00
+2026-03-12 20:00:09,962 INFO ============================================================
+2026-03-12 20:00:09,963 INFO Catálogo: 24 empresas
+2026-03-12 20:00:09,963 INFO Resume: 0 já processadas, 24 restantes
+2026-03-12 20:00:09,963 INFO Iniciando 24 valuations com 3 workers...
+
+2026-03-12 20:00:13,067 INFO [  1/24] ✅ ELETROBRAS                               R$460.79 | +764.8% | COMPRA FORTE | ETA 1min
+2026-03-12 20:00:13,313 INFO [  2/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$13.52 | -66.4% | VENDA FORTE | ETA 1min
+2026-03-12 20:00:13,620 INFO [  3/24] ✅ AMBEV SA                                 R$78.37 | +285.3% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:14,423 ERROR $ENBR3.SA: possibly delisted; no timezone found
+2026-03-12 20:00:14,424 ERROR 
+1 Failed download:
+2026-03-12 20:00:14,425 ERROR ['ENBR3.SA']: possibly delisted; no timezone found
+2026-03-12 20:00:16,825 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 20:00:16,849 INFO [  4/24] ✅ CTEEP                                    R$13.95 | -71.1% | VENDA FORTE | ETA 1min
+2026-03-12 20:00:17,070 INFO [  5/24] ✅ PETROBRAS                                R$74.68 | +65.3% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:17,734 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 20:00:17,735 INFO [  6/24] ✅ MAGAZINE LUIZA SA                        R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 20:00:19,107 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 20:00:19,151 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 20:00:20,242 INFO [  7/24] ✅ VIBRA ENERGIA                            R$352.79 | +2645.5% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:20,244 INFO [  8/24] ✅ VALE                                     R$60.44 | -24.0% | VENDA | ETA 0min
+2026-03-12 20:00:20,893 INFO [  9/24] ✅ CPFL ENERGIA                             R$886.66 | +572.7% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:22,406 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 20:00:22,470 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 20:00:23,480 INFO [ 10/24] ✅ BRASKEM                                  R$1.01 | -94.7% | VENDA FORTE | ETA 0min
+2026-03-12 20:00:23,483 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-12 20:00:23,551 INFO [ 11/24] ✅ BRASIL TELECOM                           R$3.67 | -42.7% | VENDA FORTE | ETA 0min
+2026-03-12 20:00:24,067 INFO [ 12/24] ✅ PETRO RIO                                R$232.26 | +3640.2% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:24,635 ERROR $PETZ3.SA: possibly delisted; no timezone found
+2026-03-12 20:00:24,636 ERROR 
+1 Failed download:
+2026-03-12 20:00:24,636 ERROR ['PETZ3.SA']: possibly delisted; no timezone found
+2026-03-12 20:00:25,584 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 20:00:26,226 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 20:00:26,229 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: PETZ3.SA"}}}
+2026-03-12 20:00:26,919 INFO [ 13/24] ✅ DROGASIL SA                              R$16.71 | +10.6% | COMPRA | ETA 0min
+2026-03-12 20:00:27,883 ERROR $PETZ3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 20:00:27,920 INFO [ 14/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 20:00:29,052 ERROR $PETZ3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 20:00:29,054 INFO [ 15/24] ✅ MOVIDA PARTICIPAÇÕES                     R$48.63 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 20:00:30,260 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 20:00:31,133 INFO [ 16/24] ✅ ENERGISA                                 R$366.02 | +12879.5% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:32,274 INFO [ 17/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$9.80 | +10.7% | COMPRA | ETA 0min
+2026-03-12 20:00:32,936 INFO [ 18/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$2.94 | -73.8% | VENDA FORTE | ETA 0min
+2026-03-12 20:00:34,124 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 20:00:35,066 INFO [ 19/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$31.37 | +212.7% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:35,077 WARNING [ 20/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-12 20:00:35,081 INFO   💾 Checkpoint: 19 resultados salvos
+2026-03-12 20:00:36,376 INFO [ 21/24] ✅ KROTON EDUCACIONAL                       R$1.25 | -57.8% | VENDA FORTE | ETA 0min
+2026-03-12 20:00:36,744 INFO [ 22/24] ✅ CPFL RENOVÁVEIS                          R$47.96 | +365.7% | COMPRA FORTE | ETA 0min
+2026-03-12 20:00:37,840 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 20:00:38,514 INFO [ 23/24] ✅ WEG SA                                   R$14.15 | -69.0% | VENDA FORTE | ETA 0min
+2026-03-12 20:00:38,939 INFO [ 24/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 20:00:38,943 INFO 
+============================================================
+2026-03-12 20:00:38,944 INFO ✅ Concluído em 0.5 minutos
+2026-03-12 20:00:38,944 INFO    Sucesso   : 23/24
+2026-03-12 20:00:38,944 INFO    Falhas    : 1/24
+2026-03-12 20:00:38,945 INFO    Taxa sucesso: 96%
+2026-03-12 20:00:38,945 INFO ============================================================
+2026-03-12 20:00:38,949 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 20:00:38,950 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 20:00:38,950 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 20:00:38,951 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 20:00:38,951 INFO BEBIDAS                                1       +285.3%        1
+2026-03-12 20:00:38,951 INFO DEFAULT                                5        -65.4%        0
+2026-03-12 20:00:38,952 INFO EDUCAÇÃO                               1        -57.8%        0
+2026-03-12 20:00:38,952 INFO ENERGIA ELÉTRICA                       6      +2407.5%        4
+2026-03-12 20:00:38,952 INFO PETRÓLEO E GÁS                         2      +1852.7%        2
+2026-03-12 20:00:38,953 INFO TELECOMUNICAÇÕES                       1        -42.7%        0
+2026-03-12 20:00:38,953 INFO TRANSPORTE                             3        +10.7%        1
+2026-03-12 20:00:38,953 INFO VAREJO                                 4       +956.3%        3
+2026-03-12 20:00:38,953 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 21:01:37,132 INFO ============================================================
+2026-03-12 21:01:37,133 INFO B3 Runner iniciado — 2026-03-12 21:01
+2026-03-12 21:01:37,133 INFO ============================================================
+2026-03-12 21:01:37,134 INFO Catálogo: 24 empresas
+2026-03-12 21:01:37,134 INFO Resume: 0 já processadas, 24 restantes
+2026-03-12 21:01:37,135 INFO Iniciando 24 valuations com 3 workers...
+
+2026-03-12 21:01:38,446 ERROR $ELET3.SA: possibly delisted; no timezone found
+2026-03-12 21:01:38,447 ERROR 
+1 Failed download:
+2026-03-12 21:01:38,448 ERROR ['ELET3.SA']: possibly delisted; no timezone found
+2026-03-12 21:01:39,388 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET3.SA"}}}
+2026-03-12 21:01:40,438 ERROR $ELET3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:40,457 INFO [  1/24] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 1min
+2026-03-12 21:01:40,484 INFO [  2/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$60.67 | +44.1% | COMPRA FORTE | ETA 1min
+2026-03-12 21:01:41,133 ERROR $ELET3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:41,134 INFO [  3/24] ✅ ELETROBRAS                               R$63.80 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:01:41,170 ERROR $TRPL4.SA: possibly delisted; no timezone found
+2026-03-12 21:01:41,171 ERROR 
+1 Failed download:
+2026-03-12 21:01:41,171 ERROR ['TRPL4.SA']: possibly delisted; no timezone found
+2026-03-12 21:01:42,306 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:01:42,313 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:01:43,382 ERROR $TRPL4.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:43,426 INFO [  4/24] ✅ PETROBRAS                                R$74.75 | +66.1% | COMPRA FORTE | ETA 1min
+2026-03-12 21:01:43,515 INFO [  5/24] ✅ MAGAZINE LUIZA SA                        R$8.45 | -10.1% | NEUTRO | ETA 0min
+2026-03-12 21:01:44,078 ERROR $TRPL4.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:44,080 INFO [  6/24] ✅ CTEEP                                    R$22.11 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:01:45,371 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:01:46,405 INFO [  7/24] ✅ VIBRA ENERGIA                            R$43.15 | +47.9% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:46,429 INFO [  8/24] ✅ VALE                                     R$60.47 | -23.7% | VENDA | ETA 0min
+2026-03-12 21:01:46,541 INFO [  9/24] ✅ CPFL ENERGIA                             R$71.63 | +48.5% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:48,852 INFO [ 10/24] ✅ BRASKEM                                  R$38.97 | +219.4% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:48,855 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-12 21:01:49,043 INFO [ 11/24] ✅ BRASIL TELECOM                           R$38.98 | +22832.0% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:49,051 INFO [ 12/24] ✅ PETRO RIO                                R$275.49 | +363.0% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:51,363 INFO [ 13/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:01:51,367 INFO [ 14/24] ✅ MOVIDA PARTICIPAÇÕES                     R$154.87 | +1201.4% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:51,468 INFO [ 15/24] ✅ DROGASIL SA                              R$9.53 | -59.7% | VENDA FORTE | ETA 0min
+2026-03-12 21:01:53,795 INFO [ 16/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.20 | +466.7% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:54,247 INFO [ 17/24] ✅ ENERGISA                                 R$157.48 | +195.7% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:54,335 INFO [ 18/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$32.30 | +127.6% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:54,356 ERROR $CPRE3.SA: possibly delisted; no timezone found
+2026-03-12 21:01:54,357 ERROR 
+1 Failed download:
+2026-03-12 21:01:54,358 ERROR ['CPRE3.SA']: possibly delisted; no timezone found
+2026-03-12 21:01:55,637 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:01:56,546 ERROR $CPRE3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:56,747 INFO [ 19/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$9.24 | +51.2% | COMPRA FORTE | ETA 0min
+2026-03-12 21:01:56,758 WARNING [ 20/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-12 21:01:56,761 INFO   💾 Checkpoint: 19 resultados salvos
+2026-03-12 21:01:56,792 INFO [ 21/24] ✅ KROTON EDUCACIONAL                       R$1.25 | -57.6% | VENDA FORTE | ETA 0min
+2026-03-12 21:01:56,870 ERROR $PARD3.SA: possibly delisted; no timezone found
+2026-03-12 21:01:56,871 ERROR 
+1 Failed download:
+2026-03-12 21:01:56,872 ERROR ['PARD3.SA']: possibly delisted; no timezone found
+2026-03-12 21:01:57,015 ERROR $CPRE3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:57,017 INFO [ 22/24] ✅ CPFL RENOVÁVEIS                          R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:01:57,281 ERROR 
+1 Failed download:
+2026-03-12 21:01:57,288 ERROR ['CPRE3.SA']: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:57,301 ERROR 
+1 Failed download:
+2026-03-12 21:01:57,301 ERROR ['CPRE3.SA']: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:58,006 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:01:58,866 ERROR $PARD3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:59,076 INFO [ 23/24] ✅ WEG SA                                   R$11.25 | -75.4% | VENDA FORTE | ETA 0min
+2026-03-12 21:01:59,325 ERROR $PARD3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:01:59,326 INFO [ 24/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:01:59,329 INFO 
+============================================================
+2026-03-12 21:01:59,330 INFO ✅ Concluído em 0.4 minutos
+2026-03-12 21:01:59,330 INFO    Sucesso   : 23/24
+2026-03-12 21:01:59,331 INFO    Falhas    : 1/24
+2026-03-12 21:01:59,331 INFO    Taxa sucesso: 96%
+2026-03-12 21:01:59,332 INFO ============================================================
+2026-03-12 21:01:59,336 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 21:01:59,337 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 21:01:59,337 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 21:01:59,338 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 21:01:59,338 INFO BEBIDAS                                1        -35.2%        0
+2026-03-12 21:01:59,338 INFO DEFAULT                                5       +146.8%        2
+2026-03-12 21:01:59,339 INFO EDUCAÇÃO                               1        -57.6%        0
+2026-03-12 21:01:59,339 INFO ENERGIA ELÉTRICA                       6        +96.1%        3
+2026-03-12 21:01:59,339 INFO PETRÓLEO E GÁS                         2       +214.6%        2
+2026-03-12 21:01:59,340 INFO TELECOMUNICAÇÕES                       1     +22832.0%        1
+2026-03-12 21:01:59,340 INFO TRANSPORTE                             3       +664.5%        2
+2026-03-12 21:01:59,340 INFO VAREJO                                 4         +7.3%        2
+2026-03-12 21:01:59,341 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 21:05:01,934 INFO ============================================================
+2026-03-12 21:05:01,934 INFO B3 Runner iniciado — 2026-03-12 21:05
+2026-03-12 21:05:01,934 INFO ============================================================
+2026-03-12 21:05:01,935 INFO Catálogo: 24 empresas
+2026-03-12 21:05:01,936 INFO Resume: 0 já processadas, 24 restantes
+2026-03-12 21:05:01,936 INFO Iniciando 24 valuations com 3 workers...
+
+2026-03-12 21:05:03,208 ERROR $ELET6.SA: possibly delisted; no timezone found
+2026-03-12 21:05:03,209 ERROR 
+1 Failed download:
+2026-03-12 21:05:03,209 ERROR ['ELET6.SA']: possibly delisted; no timezone found
+2026-03-12 21:05:04,129 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-12 21:05:05,159 ERROR $ELET6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:05:05,185 INFO [  1/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$60.67 | +44.1% | COMPRA FORTE | ETA 1min
+2026-03-12 21:05:05,191 INFO [  2/24] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 1min
+2026-03-12 21:05:05,883 ERROR $ELET6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 21:05:05,884 INFO [  3/24] ✅ ELETROBRAS                               R$67.66 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:05:07,123 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:07,125 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:08,087 INFO [  4/24] ✅ PETROBRAS                                R$74.75 | +66.1% | COMPRA FORTE | ETA 1min
+2026-03-12 21:05:08,091 INFO [  5/24] ✅ CTEEP                                    R$22.17 | -20.1% | VENDA | ETA 0min
+2026-03-12 21:05:08,606 INFO [  6/24] ✅ MAGAZINE LUIZA SA                        R$9.30 | -1.1% | NEUTRO | ETA 0min
+2026-03-12 21:05:09,930 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:09,939 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:10,981 INFO [  7/24] ✅ VALE                                     R$60.47 | -23.7% | VENDA | ETA 0min
+2026-03-12 21:05:10,986 INFO [  8/24] ✅ VIBRA ENERGIA                            R$43.15 | +47.9% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:11,099 INFO [  9/24] ✅ CPFL ENERGIA                             R$71.63 | +48.5% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:14,085 INFO [ 10/24] ✅ BRASIL TELECOM                           R$39.17 | +22940.7% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:14,089 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-12 21:05:14,090 INFO [ 11/24] ✅ PETRO RIO                                R$275.49 | +363.0% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:14,258 INFO [ 12/24] ✅ BRASKEM                                  R$44.63 | +265.8% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:16,485 INFO [ 13/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:05:16,982 INFO [ 14/24] ✅ DROGASIL SA                              R$9.53 | -59.7% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:17,042 INFO [ 15/24] ✅ MOVIDA PARTICIPAÇÕES                     R$129.61 | +989.1% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:18,325 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:19,256 INFO [ 16/24] ✅ ENERGISA                                 R$153.72 | +188.7% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:19,403 INFO [ 17/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.20 | +466.7% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:19,726 INFO [ 18/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$33.63 | +137.0% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:21,041 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:21,844 INFO [ 19/24] ✅ CPFL RENOVÁVEIS                          R$11.68 | -75.8% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:21,853 WARNING [ 20/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-12 21:05:21,856 INFO   💾 Checkpoint: 19 resultados salvos
+2026-03-12 21:05:21,982 INFO [ 21/24] ✅ KROTON EDUCACIONAL                       R$0.44 | -85.1% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:21,987 INFO [ 22/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$9.24 | +51.2% | COMPRA FORTE | ETA 0min
+2026-03-12 21:05:23,353 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 21:05:24,307 INFO [ 23/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 21:05:24,695 INFO [ 24/24] ✅ WEG SA                                   R$11.88 | -74.1% | VENDA FORTE | ETA 0min
+2026-03-12 21:05:24,696 INFO 
+============================================================
+2026-03-12 21:05:24,696 INFO ✅ Concluído em 0.4 minutos
+2026-03-12 21:05:24,697 INFO    Sucesso   : 23/24
+2026-03-12 21:05:24,697 INFO    Falhas    : 1/24
+2026-03-12 21:05:24,697 INFO    Taxa sucesso: 96%
+2026-03-12 21:05:24,697 INFO ============================================================
+2026-03-12 21:05:24,701 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 21:05:24,701 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 21:05:24,701 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 21:05:24,702 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 21:05:24,702 INFO BEBIDAS                                1        -35.2%        0
+2026-03-12 21:05:24,702 INFO DEFAULT                                5       +158.7%        2
+2026-03-12 21:05:24,702 INFO EDUCAÇÃO                               1        -85.1%        0
+2026-03-12 21:05:24,703 INFO ENERGIA ELÉTRICA                       6        +37.1%        3
+2026-03-12 21:05:24,703 INFO PETRÓLEO E GÁS                         2       +214.6%        2
+2026-03-12 21:05:24,703 INFO TELECOMUNICAÇÕES                       1     +22940.7%        1
+2026-03-12 21:05:24,703 INFO TRANSPORTE                             3       +563.0%        2
+2026-03-12 21:05:24,703 INFO VAREJO                                 4         +9.6%        2
+2026-03-12 21:05:24,704 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 23:54:26,091 INFO ============================================================
+2026-03-12 23:54:26,092 INFO B3 Runner iniciado — 2026-03-12 23:54
+2026-03-12 23:54:26,092 INFO ============================================================
+2026-03-12 23:54:26,092 INFO Catálogo: 24 empresas
+2026-03-12 23:54:26,092 INFO Resume: 0 já processadas, 24 restantes
+2026-03-12 23:54:26,092 INFO Iniciando 24 valuations com 3 workers...
+
+2026-03-12 23:54:29,615 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-12 23:54:30,283 ERROR $ELET6.SA: possibly delisted; no timezone found
+2026-03-12 23:54:30,284 ERROR 
+1 Failed download:
+2026-03-12 23:54:30,285 ERROR ['ELET6.SA']: possibly delisted; no timezone found
+2026-03-12 23:54:30,371 INFO [  1/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$60.67 | +44.1% | COMPRA FORTE | ETA 2min
+2026-03-12 23:54:30,835 INFO [  2/24] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 1min
+2026-03-12 23:54:31,838 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:54:32,652 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 23:54:33,429 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-12 23:54:33,442 INFO [  3/24] ✅ CTEEP                                    R$24.45 | -11.9% | NEUTRO | ETA 1min
+2026-03-12 23:54:34,039 INFO [  4/24] ✅ MAGAZINE LUIZA SA                        R$9.30 | -1.1% | NEUTRO | ETA 1min
+2026-03-12 23:54:34,496 ERROR $ELET6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 23:54:34,746 ERROR 
+1 Failed download:
+2026-03-12 23:54:34,747 ERROR ['ELET6.SA']: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 23:54:35,074 ERROR $ELET6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 23:54:35,075 INFO [  5/24] ✅ ELETROBRAS                               R$67.66 | +0.0% | NEUTRO | ETA 1min
+2026-03-12 23:54:36,068 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 23:54:36,839 INFO [  6/24] ✅ PETROBRAS                                R$74.02 | +64.5% | COMPRA FORTE | ETA 1min
+2026-03-12 23:54:37,969 INFO [  7/24] ✅ VIBRA ENERGIA                            R$44.24 | +51.6% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:38,471 INFO [  8/24] ✅ CPFL ENERGIA                             R$69.18 | +43.4% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:39,644 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 23:54:40,319 INFO [  9/24] ✅ VALE                                     R$65.77 | -17.0% | VENDA | ETA 0min
+2026-03-12 23:54:41,476 INFO [ 10/24] ✅ PETRO RIO                                R$231.99 | +289.9% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:41,479 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-12 23:54:42,016 INFO [ 11/24] ✅ BRASIL TELECOM                           R$38.98 | +22832.0% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:42,769 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 23:54:43,626 INFO [ 12/24] ✅ BRASKEM                                  R$2.79 | -77.1% | VENDA FORTE | ETA 0min
+2026-03-12 23:54:44,750 INFO [ 13/24] ✅ DROGASIL SA                              R$9.53 | -59.7% | VENDA FORTE | ETA 0min
+2026-03-12 23:54:45,216 INFO [ 14/24] ✅ MOVIDA PARTICIPAÇÕES                     R$154.87 | +1201.4% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:46,203 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 23:54:47,085 INFO [ 15/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 23:54:48,548 INFO [ 16/24] ✅ ENERGISA                                 R$157.48 | +195.7% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:48,552 INFO [ 17/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$32.30 | +127.6% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:50,189 INFO [ 18/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.20 | +466.7% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:51,278 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-12 23:54:51,647 INFO [ 19/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$9.22 | +50.9% | COMPRA FORTE | ETA 0min
+2026-03-12 23:54:51,656 WARNING [ 20/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-12 23:54:51,659 INFO   💾 Checkpoint: 19 resultados salvos
+2026-03-12 23:54:51,713 INFO [ 21/24] ✅ KROTON EDUCACIONAL                       R$0.44 | -85.1% | VENDA FORTE | ETA 0min
+2026-03-12 23:54:52,524 INFO [ 22/24] ✅ CPFL RENOVÁVEIS                          R$12.46 | -74.2% | VENDA FORTE | ETA 0min
+2026-03-12 23:54:54,141 INFO [ 23/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 23:54:54,363 INFO [ 24/24] ✅ WEG SA                                   R$11.88 | -74.1% | VENDA FORTE | ETA 0min
+2026-03-12 23:54:54,365 INFO 
+============================================================
+2026-03-12 23:54:54,365 INFO ✅ Concluído em 0.5 minutos
+2026-03-12 23:54:54,366 INFO    Sucesso   : 23/24
+2026-03-12 23:54:54,366 INFO    Falhas    : 1/24
+2026-03-12 23:54:54,366 INFO    Taxa sucesso: 96%
+2026-03-12 23:54:54,366 INFO ============================================================
+2026-03-12 23:54:54,370 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 23:54:54,371 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 23:54:54,371 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 23:54:54,371 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 23:54:54,371 INFO BEBIDAS                                1        -35.2%        0
+2026-03-12 23:54:54,371 INFO DEFAULT                                5        +74.6%        1
+2026-03-12 23:54:54,372 INFO EDUCAÇÃO                               1        -85.1%        0
+2026-03-12 23:54:54,372 INFO ENERGIA ELÉTRICA                       6        +39.4%        3
+2026-03-12 23:54:54,372 INFO PETRÓLEO E GÁS                         2       +177.2%        2
+2026-03-12 23:54:54,372 INFO TELECOMUNICAÇÕES                       1     +22832.0%        1
+2026-03-12 23:54:54,372 INFO TRANSPORTE                             3       +664.5%        2
+2026-03-12 23:54:54,372 INFO VAREJO                                 4        +10.4%        2
+2026-03-12 23:54:54,372 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 23:56:12,635 INFO ============================================================
+2026-03-12 23:56:12,635 INFO B3 Runner iniciado — 2026-03-12 23:56
+2026-03-12 23:56:12,636 INFO ============================================================
+2026-03-12 23:56:12,636 INFO Catálogo: 24 empresas
+2026-03-12 23:56:12,636 INFO Resume: 0 já processadas, 24 restantes
+2026-03-12 23:56:12,636 INFO Iniciando 24 valuations com 3 workers...
+
+2026-03-12 23:56:15,190 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-12 23:56:15,509 ERROR $ELET6.SA: possibly delisted; no timezone found
+2026-03-12 23:56:15,510 ERROR 
+1 Failed download:
+2026-03-12 23:56:15,511 ERROR ['ELET6.SA']: possibly delisted; no timezone found
+2026-03-12 23:56:16,426 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-12 23:56:16,570 INFO [  1/24] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 2min
+2026-03-12 23:56:16,581 INFO [  2/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$60.67 | +44.1% | COMPRA FORTE | ETA 1min
+2026-03-12 23:56:17,780 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:18,635 ERROR $ELET6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 23:56:18,842 INFO [  3/24] ✅ CTEEP                                    R$22.17 | -20.1% | VENDA | ETA 1min
+2026-03-12 23:56:19,092 ERROR $ELET6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-12 23:56:19,094 INFO [  4/24] ✅ ELETROBRAS                               R$67.66 | +0.0% | NEUTRO | ETA 1min
+2026-03-12 23:56:19,121 INFO [  5/24] ✅ MAGAZINE LUIZA SA                        R$8.45 | -10.1% | NEUTRO | ETA 0min
+2026-03-12 23:56:20,537 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:21,580 INFO [  6/24] ✅ VIBRA ENERGIA                            R$43.15 | +47.9% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:21,754 INFO [  7/24] ✅ PETROBRAS                                R$84.16 | +87.0% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:21,781 INFO [  8/24] ✅ CPFL ENERGIA                             R$71.63 | +48.5% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:23,172 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:24,074 INFO [  9/24] ✅ BRASIL TELECOM                           R$38.98 | +22832.0% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:24,079 INFO [ 10/24] ✅ VALE                                     R$64.31 | -18.8% | VENDA | ETA 0min
+2026-03-12 23:56:24,081 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-12 23:56:24,638 INFO [ 11/24] ✅ PETRO RIO                                R$275.49 | +363.0% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:25,923 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:25,927 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:26,846 INFO [ 12/24] ✅ MOVIDA PARTICIPAÇÕES                     R$154.87 | +1201.4% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:26,878 INFO [ 13/24] ✅ BRASKEM                                  R$38.97 | +219.4% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:27,428 INFO [ 14/24] ✅ DROGASIL SA                              R$10.80 | -54.3% | VENDA FORTE | ETA 0min
+2026-03-12 23:56:28,651 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:28,654 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:29,563 INFO [ 15/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 23:56:29,656 INFO [ 16/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$33.63 | +137.0% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:30,062 INFO [ 17/24] ✅ ENERGISA                                 R$153.72 | +188.7% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:31,359 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-12 23:56:32,241 INFO [ 18/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.20 | +466.7% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:32,319 INFO [ 19/24] ✅ KROTON EDUCACIONAL                       R$1.25 | -57.6% | VENDA FORTE | ETA 0min
+2026-03-12 23:56:32,323 INFO [ 20/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$10.65 | +74.3% | COMPRA FORTE | ETA 0min
+2026-03-12 23:56:32,328 INFO   💾 Checkpoint: 20 resultados salvos
+2026-03-12 23:56:32,334 WARNING [ 21/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-12 23:56:34,608 INFO [ 22/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-12 23:56:34,688 INFO [ 23/24] ✅ CPFL RENOVÁVEIS                          R$12.46 | -74.2% | VENDA FORTE | ETA 0min
+2026-03-12 23:56:34,859 INFO [ 24/24] ✅ WEG SA                                   R$11.88 | -74.1% | VENDA FORTE | ETA 0min
+2026-03-12 23:56:34,862 INFO 
+============================================================
+2026-03-12 23:56:34,862 INFO ✅ Concluído em 0.4 minutos
+2026-03-12 23:56:34,862 INFO    Sucesso   : 23/24
+2026-03-12 23:56:34,863 INFO    Falhas    : 1/24
+2026-03-12 23:56:34,863 INFO    Taxa sucesso: 96%
+2026-03-12 23:56:34,863 INFO ============================================================
+2026-03-12 23:56:34,867 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-12 23:56:34,867 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-12 23:56:34,868 INFO Setor                                  N  Upside médio  Compras
+2026-03-12 23:56:34,868 INFO ─────────────────────────────────────────────────────────────────
+2026-03-12 23:56:34,868 INFO BEBIDAS                                1        -35.2%        0
+2026-03-12 23:56:34,868 INFO DEFAULT                                5       +148.3%        2
+2026-03-12 23:56:34,868 INFO EDUCAÇÃO                               1        -57.6%        0
+2026-03-12 23:56:34,869 INFO ENERGIA ELÉTRICA                       6        +37.4%        3
+2026-03-12 23:56:34,869 INFO PETRÓLEO E GÁS                         2       +225.0%        2
+2026-03-12 23:56:34,869 INFO TELECOMUNICAÇÕES                       1     +22832.0%        1
+2026-03-12 23:56:34,869 INFO TRANSPORTE                             3       +669.2%        2
+2026-03-12 23:56:34,869 INFO VAREJO                                 4        +14.4%        2
+2026-03-12 23:56:34,869 INFO ─────────────────────────────────────────────────────────────────
+2026-03-13 00:04:51,599 INFO ============================================================
+2026-03-13 00:04:51,599 INFO B3 Runner iniciado — 2026-03-13 00:04
+2026-03-13 00:04:51,599 INFO ============================================================
+2026-03-13 00:04:51,600 INFO Catálogo: 24 empresas
+2026-03-13 00:04:51,600 INFO Resume: 0 já processadas, 24 restantes
+2026-03-13 00:04:51,600 INFO Iniciando 24 valuations com 3 workers...
+
+2026-03-13 00:04:54,438 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-13 00:04:54,995 ERROR $ELET6.SA: possibly delisted; no timezone found
+2026-03-13 00:04:54,996 ERROR 
+1 Failed download:
+2026-03-13 00:04:54,996 ERROR ['ELET6.SA']: possibly delisted; no timezone found
+2026-03-13 00:04:55,116 INFO [  1/24] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 1min
+2026-03-13 00:04:55,831 INFO [  2/24] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$60.67 | +44.1% | COMPRA FORTE | ETA 1min
+2026-03-13 00:04:56,350 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:04:57,877 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-13 00:04:58,781 ERROR $ELET6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:04:58,813 INFO [  3/24] ✅ CTEEP                                    R$23.01 | -17.1% | VENDA | ETA 1min
+2026-03-13 00:04:58,986 INFO [  4/24] ✅ MAGAZINE LUIZA SA                        R$8.45 | -10.1% | NEUTRO | ETA 1min
+2026-03-13 00:04:59,475 ERROR $ELET6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:04:59,478 INFO [  5/24] ✅ ELETROBRAS                               R$67.66 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:05:00,737 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:05:01,787 INFO [  6/24] ✅ PETROBRAS                                R$84.16 | +87.0% | COMPRA FORTE | ETA 1min
+2026-03-13 00:05:01,811 INFO [  7/24] ✅ CPFL ENERGIA                             R$71.63 | +48.5% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:02,123 INFO [  8/24] ✅ VIBRA ENERGIA                            R$44.24 | +51.6% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:04,445 INFO [  9/24] ✅ BRASIL TELECOM                           R$38.98 | +22832.0% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:04,448 INFO [ 10/24] ✅ PETRO RIO                                R$231.99 | +289.9% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:04,452 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-13 00:05:04,531 INFO [ 11/24] ✅ VALE                                     R$64.31 | -18.8% | VENDA | ETA 0min
+2026-03-13 00:05:06,823 INFO [ 12/24] ✅ MOVIDA PARTICIPAÇÕES                     R$129.61 | +989.1% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:07,339 INFO [ 13/24] ✅ BRASKEM                                  R$38.97 | +219.4% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:07,603 INFO [ 14/24] ✅ DROGASIL SA                              R$9.53 | -59.7% | VENDA FORTE | ETA 0min
+2026-03-13 00:05:08,712 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:05:09,602 INFO [ 15/24] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:05:09,694 INFO [ 16/24] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$32.30 | +127.6% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:10,143 INFO [ 17/24] ✅ ENERGISA                                 R$157.48 | +195.7% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:11,414 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:05:11,418 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:05:12,304 INFO [ 18/24] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.20 | +466.7% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:12,394 INFO [ 19/24] ✅ KROTON EDUCACIONAL                       R$1.25 | -57.6% | VENDA FORTE | ETA 0min
+2026-03-13 00:05:12,404 WARNING [ 20/24] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-13 00:05:12,407 INFO   💾 Checkpoint: 19 resultados salvos
+2026-03-13 00:05:12,818 INFO [ 21/24] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$9.24 | +51.2% | COMPRA FORTE | ETA 0min
+2026-03-13 00:05:13,977 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:05:14,046 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:05:14,917 INFO [ 22/24] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:05:14,950 INFO [ 23/24] ✅ WEG SA                                   R$11.88 | -74.1% | VENDA FORTE | ETA 0min
+2026-03-13 00:05:14,983 INFO [ 24/24] ✅ CPFL RENOVÁVEIS                          R$12.46 | -74.2% | VENDA FORTE | ETA 0min
+2026-03-13 00:05:14,986 INFO 
+============================================================
+2026-03-13 00:05:14,986 INFO ✅ Concluído em 0.4 minutos
+2026-03-13 00:05:14,986 INFO    Sucesso   : 23/24
+2026-03-13 00:05:14,987 INFO    Falhas    : 1/24
+2026-03-13 00:05:14,987 INFO    Taxa sucesso: 96%
+2026-03-13 00:05:14,987 INFO ============================================================
+2026-03-13 00:05:14,991 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-13 00:05:14,992 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-13 00:05:14,992 INFO Setor                                  N  Upside médio  Compras
+2026-03-13 00:05:14,992 INFO ─────────────────────────────────────────────────────────────────
+2026-03-13 00:05:14,992 INFO BEBIDAS                                1        -35.2%        0
+2026-03-13 00:05:14,993 INFO DEFAULT                                5       +148.3%        2
+2026-03-13 00:05:14,993 INFO EDUCAÇÃO                               1        -57.6%        0
+2026-03-13 00:05:14,993 INFO ENERGIA ELÉTRICA                       6        +39.4%        3
+2026-03-13 00:05:14,993 INFO PETRÓLEO E GÁS                         2       +188.5%        2
+2026-03-13 00:05:14,993 INFO TELECOMUNICAÇÕES                       1     +22832.0%        1
+2026-03-13 00:05:14,994 INFO TRANSPORTE                             3       +558.4%        2
+2026-03-13 00:05:14,994 INFO VAREJO                                 4         +8.3%        2
+2026-03-13 00:05:14,994 INFO ─────────────────────────────────────────────────────────────────
+2026-03-13 00:12:04,483 INFO ============================================================
+2026-03-13 00:12:04,483 INFO B3 Runner iniciado — 2026-03-13 00:12
+2026-03-13 00:12:04,484 INFO ============================================================
+2026-03-13 00:12:04,484 INFO Catálogo: 81 empresas
+2026-03-13 00:12:04,484 INFO Resume: 0 já processadas, 81 restantes
+2026-03-13 00:12:04,484 INFO Iniciando 81 valuations com 3 workers...
+
+2026-03-13 00:12:07,005 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ELET6.SA"}}}
+2026-03-13 00:12:07,328 ERROR $ELET6.SA: possibly delisted; no timezone found
+2026-03-13 00:12:07,329 ERROR 
+1 Failed download:
+2026-03-13 00:12:07,329 ERROR ['ELET6.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:07,806 ERROR $CESP6.SA: possibly delisted; no timezone found
+2026-03-13 00:12:07,807 ERROR 
+1 Failed download:
+2026-03-13 00:12:07,807 ERROR ['CESP6.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:08,448 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:08,464 INFO [  1/81] ✅ GERDAU                                   R$35.12 | +94.8% | COMPRA FORTE | ETA 5min
+2026-03-13 00:12:09,786 ERROR $CESP6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:09,815 ERROR $ELET6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:10,517 ERROR $CESP6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:10,519 INFO [  2/81] ✅ CESP CIA ENERGETICA SAO PAULO            R$0.00 | +0.0% | NEUTRO | ETA 4min
+2026-03-13 00:12:11,091 INFO [  3/81] ✅ CSN                                      R$0.00 | +0.0% | NEUTRO | ETA 3min
+2026-03-13 00:12:11,193 ERROR $ELET6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:11,195 INFO [  4/81] ✅ ELETROBRAS                               R$67.66 | +0.0% | NEUTRO | ETA 2min
+2026-03-13 00:12:12,335 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:13,251 INFO [  5/81] ✅ DROGASIL SA                              R$9.53 | -59.7% | VENDA FORTE | ETA 2min
+2026-03-13 00:12:13,312 INFO [  6/81] ✅ VALE                                     R$64.31 | -18.8% | VENDA | ETA 2min
+2026-03-13 00:12:13,735 INFO [  7/81] ✅ BRASKEM                                  R$44.63 | +265.8% | COMPRA FORTE | ETA 2min
+2026-03-13 00:12:14,572 ERROR $FRAS3B.SA: possibly delisted; no timezone found
+2026-03-13 00:12:14,573 ERROR 
+1 Failed download:
+2026-03-13 00:12:14,573 ERROR ['FRAS3B.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:15,811 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: FRAS3B.SA"}}}
+2026-03-13 00:12:16,584 ERROR $FRAS3B.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:16,618 INFO [  8/81] ✅ WEG SA                                   R$11.88 | -74.1% | VENDA FORTE | ETA 2min
+2026-03-13 00:12:16,795 INFO [  9/81] ✅ TUPY                                     R$47.35 | +271.1% | COMPRA FORTE | ETA 2min
+2026-03-13 00:12:17,289 ERROR $FRAS3B.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:17,290 INFO [ 10/81] ✅ FRASLE MOBILITY                          R$0.00 | +0.0% | NEUTRO | ETA 2min
+2026-03-13 00:12:17,293 INFO   💾 Checkpoint: 10 resultados salvos
+2026-03-13 00:12:18,518 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:19,439 INFO [ 11/81] ✅ RENNER                                   R$13.60 | -9.5% | NEUTRO | ETA 2min
+2026-03-13 00:12:19,440 INFO [ 12/81] ✅ PANVEL FARMÁCIAS                         R$18.55 | +26.5% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:20,001 INFO [ 13/81] ✅ SUZANO HOLDING                           R$126.23 | +136.1% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:21,310 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:21,314 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:22,312 INFO [ 14/81] ✅ PETROBRAS                                R$84.16 | +87.0% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:22,348 INFO [ 15/81] ✅ BOMBRIL - EM RECUPERAÇÃO JUDICIAL        R$7.40 | +482.6% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:22,469 INFO [ 16/81] ✅ BRASIL TELECOM                           R$38.98 | +22832.0% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:23,438 ERROR $CPLE6.SA: possibly delisted; no timezone found
+2026-03-13 00:12:23,439 ERROR 
+1 Failed download:
+2026-03-13 00:12:23,439 ERROR ['CPLE6.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:24,253 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-13 00:12:24,268 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CPLE6.SA"}}}
+2026-03-13 00:12:24,835 INFO [ 17/81] ✅ KLABIN                                   R$2.37 | -87.7% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:24,994 INFO [ 18/81] ✅ RANDON IMPLEMENTOS E PARTICIPAÇÕES       R$59.91 | +983.4% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:25,001 WARNING [ 19/81] ❌ SABESP: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 2 anos.
+2026-03-13 00:12:25,568 ERROR $CPLE6.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:25,790 ERROR 
+1 Failed download:
+2026-03-13 00:12:25,791 ERROR ['CPLE6.SA']: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:25,980 ERROR 
+1 Failed download:
+2026-03-13 00:12:25,980 ERROR ['CPLE6.SA']: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:26,496 ERROR $CPLE6.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:26,498 INFO [ 20/81] ✅ COPEL                                    R$5.23 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:26,503 INFO   💾 Checkpoint: 19 resultados salvos
+2026-03-13 00:12:27,483 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-13 00:12:28,442 INFO [ 21/81] ✅ USIMINAS                                 R$5.70 | -11.6% | NEUTRO | ETA 1min
+2026-03-13 00:12:29,151 ERROR $BRFS3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:29,152 ERROR 
+1 Failed download:
+2026-03-13 00:12:29,153 ERROR ['BRFS3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:29,226 INFO [ 22/81] ✅ CYRELA BRAZIL REALTY                     R$39.72 | +44.3% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:29,830 INFO [ 23/81] ✅ ENERGISA                                 R$157.48 | +195.7% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:30,511 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:31,952 ERROR $BRFS3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:32,164 INFO [ 24/81] ✅ TRACTEBEL ENERGIA                        R$18.24 | -42.3% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:32,274 INFO [ 25/81] ✅ ALL - AMÉRICA LATINA LOGÍSTICA           R$35.90 | +117.8% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:32,409 ERROR $BRFS3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:32,415 INFO [ 26/81] ✅ BRF                                      R$17.73 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:33,192 ERROR $STBP3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:33,193 ERROR 
+1 Failed download:
+2026-03-13 00:12:33,193 ERROR ['STBP3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:34,081 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: STBP3.SA"}}}
+2026-03-13 00:12:35,097 ERROR $STBP3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:35,122 INFO [ 27/81] ✅ KROTON EDUCACIONAL                       R$0.44 | -85.1% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:35,157 INFO [ 28/81] ✅ CTEEP                                    R$23.01 | -17.1% | VENDA | ETA 1min
+2026-03-13 00:12:35,166 WARNING [ 29/81] ❌ BRADESPAR: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 0 anos.
+2026-03-13 00:12:35,815 ERROR $STBP3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:35,816 INFO [ 30/81] ✅ SANTOS BRASIL PARTICIPAÇÕES              R$9.80 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:35,823 INFO   💾 Checkpoint: 28 resultados salvos
+2026-03-13 00:12:36,767 ERROR $NTCO3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:36,768 ERROR 
+1 Failed download:
+2026-03-13 00:12:36,768 ERROR ['NTCO3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:38,290 INFO [ 31/81] ✅ CPFL ENERGIA                             R$71.63 | +48.5% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:38,730 INFO [ 32/81] ✅ COPASA MG                                R$10.45 | -79.9% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:39,235 ERROR $NTCO3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:39,237 ERROR $GOLL4.SA: possibly delisted; no timezone found
+2026-03-13 00:12:39,237 ERROR 
+2 Failed downloads:
+2026-03-13 00:12:39,238 ERROR ['NTCO3.SA']: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:39,238 ERROR ['GOLL4.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:40,215 ERROR $NTCO3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:40,216 INFO [ 33/81] ✅ NATURA COSMETICOS SA                     R$11.06 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:41,165 ERROR $ENBR3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:41,166 ERROR 
+1 Failed download:
+2026-03-13 00:12:41,166 ERROR ['ENBR3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:42,101 INFO [ 34/81] ✅ DIAGNOSTICOS DA AMERICA SA               R$5.11 | +45.6% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:42,106 ERROR $GOLL4.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:42,822 ERROR $GOLL4.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:42,824 INFO [ 35/81] ✅ GOL LINHAS AEREAS INTELIGENTES SA        R$0.00 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:44,021 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:44,040 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:44,726 ERROR $ENBR3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:44,727 INFO [ 36/81] ✅ EDP ENERGIAS DO BRASIL                   R$0.00 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:44,911 ERROR $BRPR3.SA: possibly delisted; no price data found  (period=1y)
+2026-03-13 00:12:45,311 ERROR $BRPR3.SA: possibly delisted; no price data found  (period=5d)
+2026-03-13 00:12:45,313 INFO [ 37/81] ✅ BR PROPERTIES                            R$0.00 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:45,436 ERROR $TOTVS3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:45,437 ERROR 
+1 Failed download:
+2026-03-13 00:12:45,437 ERROR ['TOTVS3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:45,464 INFO [ 38/81] ✅ COSAN SA INDUSTRIA E COMERCIO            R$41.58 | +637.2% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:46,413 ERROR $EMBR3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:46,414 ERROR 
+1 Failed download:
+2026-03-13 00:12:46,414 ERROR ['EMBR3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:46,427 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: TOTVS3.SA"}}}
+2026-03-13 00:12:47,980 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: EMBR3.SA"}}}
+2026-03-13 00:12:48,433 ERROR $TOTVS3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:48,637 INFO [ 39/81] ✅ EQUATORIAL                               R$71.28 | +77.5% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:48,915 ERROR $EMBR3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:48,917 ERROR $TOTVS3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:48,919 INFO [ 40/81] ✅ TOTVS SA                                 R$0.00 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:48,928 INFO   💾 Checkpoint: 38 resultados salvos
+2026-03-13 00:12:49,854 ERROR $EMBR3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:49,856 INFO [ 41/81] ✅ EMBRAER                                  R$22.10 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:50,658 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:51,506 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-13 00:12:52,092 INFO [ 42/81] ✅ TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA R$58.25 | +38.3% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:52,155 INFO [ 43/81] ✅ ODONTOPREV                               R$6.44 | -51.9% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:52,591 INFO [ 44/81] ✅ CEMIG GT                                 R$6.96 | -40.4% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:53,930 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:53,998 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:54,843 INFO [ 45/81] ✅ M DIAS BRANCO SA IND E COM DE ALIMENTOS  R$23.08 | +3.7% | NEUTRO | ETA 1min
+2026-03-13 00:12:54,880 INFO [ 46/81] ✅ IGUATEMI EMPRESA DE SHOPPING CENTERS     R$0.00 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:55,411 INFO [ 47/81] ✅ POSITIVO INFORMATICA SA                  R$17.74 | +297.7% | COMPRA FORTE | ETA 1min
+2026-03-13 00:12:56,126 ERROR $JBSS3.SA: possibly delisted; no timezone found
+2026-03-13 00:12:56,127 ERROR 
+1 Failed download:
+2026-03-13 00:12:56,128 ERROR ['JBSS3.SA']: possibly delisted; no timezone found
+2026-03-13 00:12:56,265 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:56,304 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:12:57,575 INFO [ 48/81] ✅ CPFL RENOVÁVEIS                          R$12.46 | -74.2% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:57,741 INFO [ 49/81] ✅ EVEN                                     R$4.09 | -42.0% | VENDA FORTE | ETA 1min
+2026-03-13 00:12:58,267 ERROR $JBSS3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:58,556 ERROR 
+1 Failed download:
+2026-03-13 00:12:58,556 ERROR ['JBSS3.SA']: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:59,195 ERROR $JBSS3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:12:59,197 INFO [ 50/81] ✅ JBS SA                                   R$56.76 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:12:59,210 INFO   💾 Checkpoint: 48 resultados salvos
+2026-03-13 00:13:00,667 INFO [ 51/81] ✅ JHSF                                     R$0.13 | -98.5% | VENDA FORTE | ETA 1min
+2026-03-13 00:13:00,692 INFO [ 52/81] ✅ LOG-IN LOGISTICA INTERMODAL SA           R$0.00 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:13:01,712 ERROR $MRFG3.SA: possibly delisted; no timezone found
+2026-03-13 00:13:01,713 ERROR 
+1 Failed download:
+2026-03-13 00:13:01,713 ERROR ['MRFG3.SA']: possibly delisted; no timezone found
+2026-03-13 00:13:02,596 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: MRFG3.SA"}}}
+2026-03-13 00:13:02,626 INFO [ 53/81] ✅ SLC AGRICOLA SA                          R$29.59 | +68.5% | COMPRA FORTE | ETA 1min
+2026-03-13 00:13:02,662 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:04,081 ERROR $MRFG3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:04,872 ERROR $MRFG3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:04,874 INFO [ 54/81] ✅ MARFRIG                                  R$54.24 | +0.0% | NEUTRO | ETA 1min
+2026-03-13 00:13:04,924 INFO [ 55/81] ✅ EZ TEC EMPREEND E PARTICIPAÇÕES          R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:06,072 INFO [ 56/81] ✅ MRV ENGENHARIA                           R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:06,713 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:06,716 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:08,260 INFO [ 57/81] ✅ ESTACIO PARTICIPAÇÕES SA                 R$45.03 | +338.1% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:08,305 INFO [ 58/81] ✅ MULTIPLAN                                R$2.20 | -92.9% | VENDA FORTE | ETA 0min
+2026-03-13 00:13:08,758 INFO [ 59/81] ✅ DEXCO                                    R$19.47 | +310.7% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:09,234 ERROR $SULA11.SA: possibly delisted; no timezone found
+2026-03-13 00:13:09,235 ERROR 
+1 Failed download:
+2026-03-13 00:13:09,235 ERROR ['SULA11.SA']: possibly delisted; no timezone found
+2026-03-13 00:13:11,405 INFO [ 60/81] ✅ CONSTRUTORA TENDA                        R$9.92 | -65.9% | VENDA FORTE | ETA 0min
+2026-03-13 00:13:11,418 INFO   💾 Checkpoint: 58 resultados salvos
+2026-03-13 00:13:11,739 ERROR $SULA11.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:11,756 INFO [ 61/81] ✅ DIRECIONAL ENGENHARIA SA                 R$17.57 | +25.8% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:12,695 ERROR $SULA11.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:12,696 INFO [ 62/81] ✅ SUL AMERICA                              R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:13,516 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:14,406 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"User is unable to access this feature - https://bit.ly/yahoo-finance-api-feedback"}}}
+2026-03-13 00:13:15,059 INFO [ 63/81] ✅ MILLS ESTRUTURAS E SERVIÇOS DE ENGENHARIA R$27.92 | +96.8% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:15,165 INFO [ 64/81] ✅ ECORODOVIAS CONCESSÕES E SERVIÇOS        R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:15,226 INFO [ 65/81] ✅ PETRO RIO                                R$231.99 | +289.9% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:16,659 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:17,631 INFO [ 66/81] ✅ MAGAZINE LUIZA SA                        R$8.45 | -10.1% | NEUTRO | ETA 0min
+2026-03-13 00:13:17,799 INFO [ 67/81] ✅ HIDROVIAS DO BRASIL                      R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:18,210 INFO [ 68/81] ✅ EMPREENDIMENTOS PAGUE MENOS SA           R$9.24 | +51.2% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:18,598 ERROR $SQIA3.SA: possibly delisted; no timezone found
+2026-03-13 00:13:18,599 ERROR 
+1 Failed download:
+2026-03-13 00:13:18,599 ERROR ['SQIA3.SA']: possibly delisted; no timezone found
+2026-03-13 00:13:19,997 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:21,018 ERROR $SQIA3.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:21,038 INFO [ 69/81] ✅ NAN                                      R$7.55 | -27.4% | VENDA | ETA 0min
+2026-03-13 00:13:21,136 INFO [ 70/81] ✅ LIGHT ENERGIA SA                         R$3.16 | -31.0% | VENDA FORTE | ETA 0min
+2026-03-13 00:13:21,156 INFO   💾 Checkpoint: 68 resultados salvos
+2026-03-13 00:13:21,746 ERROR $SQIA3.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:21,749 INFO [ 71/81] ✅ SINQUIA                                  R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:22,979 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:23,112 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:23,980 INFO [ 72/81] ✅ AMBEV SA                                 R$9.68 | -35.2% | VENDA FORTE | ETA 0min
+2026-03-13 00:13:24,019 INFO [ 73/81] ✅ INSTITUTO HERMES PARDINI                 R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:24,526 INFO [ 74/81] ✅ MOVIDA PARTICIPAÇÕES                     R$129.61 | +989.1% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:24,971 ERROR $AZUL4.SA: possibly delisted; no timezone found
+2026-03-13 00:13:24,973 ERROR 
+1 Failed download:
+2026-03-13 00:13:24,973 ERROR ['AZUL4.SA']: possibly delisted; no timezone found
+2026-03-13 00:13:26,022 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: AZUL4.SA"}}}
+2026-03-13 00:13:26,978 INFO [ 75/81] ✅ AMBIPAR PARTICIPAÇÕES E EMPREENDIMENTOS  R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:26,985 WARNING [ 76/81] ❌ SENDAS DISTRIBUIDORA: ValueError: Histórico insuficiente após limpeza. Mínimo exigido: 3 anos. Disponível: 2 anos.
+2026-03-13 00:13:27,201 ERROR $AZUL4.SA: possibly delisted; no price data found  (period=1y) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:27,225 INFO [ 77/81] ✅ VIBRA ENERGIA                            R$43.15 | +47.9% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:28,229 ERROR $AZUL4.SA: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+2026-03-13 00:13:28,231 INFO [ 78/81] ✅ AZUL                                     R$23.51 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:29,078 ERROR HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","description":"Invalid Crumb"}}}
+2026-03-13 00:13:30,633 INFO [ 79/81] ✅ ELETROMIDIA                              R$81.45 | +915.6% | COMPRA FORTE | ETA 0min
+2026-03-13 00:13:30,634 INFO [ 80/81] ✅ INTELBRAS                                R$13.51 | -3.2% | NEUTRO | ETA 0min
+2026-03-13 00:13:30,644 INFO   💾 Checkpoint: 77 resultados salvos
+2026-03-13 00:13:30,687 INFO [ 81/81] ✅ AUREN ENERGIA SA                         R$0.00 | +0.0% | NEUTRO | ETA 0min
+2026-03-13 00:13:30,689 INFO 
+============================================================
+2026-03-13 00:13:30,689 INFO ✅ Concluído em 1.4 minutos
+2026-03-13 00:13:30,690 INFO    Sucesso   : 78/81
+2026-03-13 00:13:30,690 INFO    Falhas    : 3/81
+2026-03-13 00:13:30,690 INFO    Taxa sucesso: 96%
+2026-03-13 00:13:30,690 INFO ============================================================
+2026-03-13 00:13:30,702 INFO 📁 Resultado salvo em valuation_results_b3.json
+2026-03-13 00:13:30,703 INFO 
+─── Resumo por Setor ─────────────────────────────────
+2026-03-13 00:13:30,703 INFO Setor                                  N  Upside médio  Compras
+2026-03-13 00:13:30,703 INFO ─────────────────────────────────────────────────────────────────
+2026-03-13 00:13:30,703 INFO ALIMENTOS                              4         +3.7%        0
+2026-03-13 00:13:30,703 INFO BEBIDAS                                1        -35.2%        0
+2026-03-13 00:13:30,704 INFO CONSTRUÇÃO CIVIL                       9        +11.6%        3
+2026-03-13 00:13:30,704 INFO DEFAULT                               17       +231.0%        7
+2026-03-13 00:13:30,704 INFO EDUCAÇÃO                               2       +126.5%        1
+2026-03-13 00:13:30,705 INFO ENERGIA ELÉTRICA                      14        +17.2%        4
+2026-03-13 00:13:30,705 INFO MÁQUINAS E EQUIPAMENTOS                3       +983.4%        1
+2026-03-13 00:13:30,705 INFO PAPEL E CELULOSE                       2        +24.2%        1
+2026-03-13 00:13:30,705 INFO PETRÓLEO E GÁS                         2       +188.5%        2
+2026-03-13 00:13:30,705 INFO SANEAMENTO                             2        -79.9%        0
+2026-03-13 00:13:30,705 INFO SIDERURGIA                             4       +118.1%        2
+2026-03-13 00:13:30,706 INFO TELECOMUNICAÇÕES                       1     +22832.0%        1
+2026-03-13 00:13:30,706 INFO TRANSPORTE                             9       +401.2%        3
+2026-03-13 00:13:30,706 INFO VAREJO                                 8         +6.2%        3
+2026-03-13 00:13:30,706 INFO ─────────────────────────────────────────────────────────────────
