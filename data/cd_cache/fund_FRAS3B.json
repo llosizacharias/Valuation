@@ -1,0 +1,23 @@
+{
+  "ticker": "FRAS3B",
+  "raw": {},
+  "mkt_cap": null,
+  "ev": null,
+  "ev_ebitda": null,
+  "ev_ebit": null,
+  "psr": null,
+  "ebitda": null,
+  "ebit": null,
+  "beta": null,
+  "kd": null,
+  "lpa": null,
+  "dpa": null,
+  "payout": null,
+  "margem_liq": null,
+  "roe": null,
+  "div_bruta": null,
+  "div_liq": null,
+  "fcf_op": null,
+  "cvm_code": "",
+  "cnpj": ""
+}

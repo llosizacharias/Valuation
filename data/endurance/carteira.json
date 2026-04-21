@@ -86,5 +86,29 @@
     "peso": 26.5,
     "preco_entrada": 0.0,
     "data_entrada": "2024-01-02"
+  },
+  {
+    "ticker": "EQTL3.SA",
+    "empresa": "",
+    "setor": "",
+    "peso": 10.0,
+    "preco_entrada": 0.0,
+    "data_entrada": "2026-03-13"
+  },
+  {
+    "ticker": "KLBN11.SA",
+    "empresa": "",
+    "setor": "",
+    "peso": 3.5,
+    "preco_entrada": 0.0,
+    "data_entrada": "2026-03-13"
+  },
+  {
+    "ticker": "PRIO3.SA",
+    "empresa": "",
+    "setor": "",
+    "peso": 0.0,
+    "preco_entrada": 0.0,
+    "data_entrada": "2026-03-13"
   }
 ]

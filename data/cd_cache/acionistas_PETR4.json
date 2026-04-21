@@ -1,0 +1,1670 @@
+{
+  "ticker": "PETR4",
+  "acionistas": [
+    {
+      "rank": "1",
+      "nome": "UNIAO FEDERAL",
+      "pessoa": "Juridica",
+      "pais": "Brasil",
+      "controle": "S",
+      "quant_on": "3.740.470.811",
+      "pct_on": "50,260%",
+      "quant_pn": "0",
+      "pct_pn": "0,000%",
+      "pct_total": "29,021%"
+    },
+    {
+      "rank": "2",
+      "nome": "OUTROS",
+      "pessoa": "Nenhum",
+      "pais": "",
+      "controle": "N",
+      "quant_on": "3.111.300.252",
+      "pct_on": "41,806%",
+      "quant_pn": "3.735.415.821",
+      "pct_pn": "68,584%",
+      "pct_total": "53,122%"
+    },
+    {
+      "rank": "3",
+      "nome": "GQG PARTNERS LLC",
+      "pessoa": "Juridica",
+      "pais": "Estados Unidos",
+      "controle": "N",
+      "quant_on": "366.498.014",
+      "pct_on": "4,925%",
+      "quant_pn": "361.587.954",
+      "pct_pn": "6,639%",
+      "pct_total": "5,649%"
+    },
+    {
+      "rank": "4",
+      "nome": "BLACKROCK INC",
+      "pessoa": "Juridica",
+      "pais": "Estados Unidos",
+      "controle": "N",
+      "quant_on": "223.962.305",
+      "pct_on": "3,009%",
+      "quant_pn": "314.038.850",
+      "pct_pn": "5,766%",
+      "pct_total": "4,174%"
+    },
+    {
+      "rank": "5",
+      "nome": "BANCO NACIONAL DE DESENVOLVIME",
+      "pessoa": "Juridica",
+      "pais": "Brasil",
+      "controle": "N",
+      "quant_on": "0",
+      "pct_on": "0,000%",
+      "quant_pn": "135.248.258",
+      "pct_pn": "2,483%",
+      "pct_total": "1,049%"
+    },
+    {
+      "rank": "6",
+      "nome": "BNDES PARTICIPACOES BNDESPAR",
+      "pessoa": "Juridica",
+      "pais": "Brasil",
+      "controle": "N",
+      "quant_on": "0",
+      "pct_on": "0,000%",
+      "quant_pn": "900.210.496",
+      "pct_pn": "16,528%",
+      "pct_total": "6,984%"
+    }
+  ],
+  "data_posicao": "Posição acionária em 10/04/2026 fornecida por PETRÓLEO BRASILEIRO S.A. - PETROBRAS\nArquivo numero: 00951220251231FRE25",
+  "raw_tables": [
+    [
+      [
+        "",
+        "Nome do Acionista",
+        "Opções",
+        "Pessoa",
+        "Nacional",
+        "Control",
+        "Quant ON",
+        "% ON",
+        "Quant PN",
+        "% PN",
+        "% Total",
+        "ID Acionista Relacionado"
+      ],
+      [
+        "1",
+        "UNIAO FEDERAL",
+        "",
+        "Juridica",
+        "Brasil",
+        "S",
+        "3.740.470.811",
+        "50,260%",
+        "0",
+        "0,000%",
+        "29,021%",
+        "0"
+      ],
+      [
+        "2",
+        "OUTROS",
+        "",
+        "Nenhum",
+        "",
+        "N",
+        "3.111.300.252",
+        "41,806%",
+        "3.735.415.821",
+        "68,584%",
+        "53,122%",
+        "0"
+      ],
+      [
+        "3",
+        "GQG PARTNERS LLC",
+        "",
+        "Juridica",
+        "Estados Unidos",
+        "N",
+        "366.498.014",
+        "4,925%",
+        "361.587.954",
+        "6,639%",
+        "5,649%",
+        "0"
+      ],
+      [
+        "4",
+        "BLACKROCK INC",
+        "",
+        "Juridica",
+        "Estados Unidos",
+        "N",
+        "223.962.305",
+        "3,009%",
+        "314.038.850",
+        "5,766%",
+        "4,174%",
+        "0"
+      ],
+      [
+        "5",
+        "BANCO NACIONAL DE DESENVOLVIME",
+        "",
+        "Juridica",
+        "Brasil",
+        "N",
+        "0",
+        "0,000%",
+        "135.248.258",
+        "2,483%",
+        "1,049%",
+        "0"
+      ],
+      [
+        "6",
+        "BNDES PARTICIPACOES BNDESPAR",
+        "",
+        "Juridica",
+        "Brasil",
+        "N",
+        "0",
+        "0,000%",
+        "900.210.496",
+        "16,528%",
+        "6,984%",
+        "0"
+      ],
+      [
+        "Posição acionária em 10/04/2026 fornecida por PETRÓLEO BRASILEIRO S.A. - PETROBRAS\nArquivo numero: 00951220251231FRE25"
+      ]
+    ],
+    [
+      [
+        "Data",
+        "Selecione a data e a fonte da posição acionária:"
+      ],
+      [
+        "10/04/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "02/04/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/03/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/03/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/02/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/02/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/01/2026",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/12/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/12/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/11/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/11/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/10/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/10/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/10/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/09/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/09/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/08/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/08/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/07/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/07/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/06/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/06/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/05/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/05/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/05/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/05/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/04/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/04/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/04/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/04/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/03/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/02/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/02/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/02/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/01/2025",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/12/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/11/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/10/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/10/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/09/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/08/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/08/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/08/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/08/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/07/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/07/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/07/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "24/06/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/06/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/05/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/05/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/03/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/01/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/01/2024",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/12/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "13/12/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/12/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/11/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/10/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/09/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/09/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/08/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "14/08/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/08/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "24/07/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "18/07/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/07/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/07/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "28/06/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "14/06/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/06/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/05/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/05/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/05/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/05/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/05/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "02/05/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/04/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/04/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/03/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "14/02/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/02/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/01/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/01/2023",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/12/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/12/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "13/12/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/12/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/11/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/10/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "28/09/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/09/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/09/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/08/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/07/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/07/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/06/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/05/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/04/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/04/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/04/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/03/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/03/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/02/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/02/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/01/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/01/2022",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/12/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/12/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/12/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/12/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/11/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/11/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/11/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/11/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "05/11/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/09/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/09/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/09/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/08/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/08/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/07/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/07/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/07/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/06/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/05/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/05/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/05/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/05/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/04/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/04/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/04/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/04/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/03/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/02/2021",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/12/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/12/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/11/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/11/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/10/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/09/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/09/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "18/08/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/08/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/07/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "13/07/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/07/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "24/06/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/06/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/05/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/04/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/04/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/04/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/03/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/03/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/02/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/02/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/01/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/01/2020",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/12/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/12/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/12/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/11/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/10/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/10/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/10/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/10/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/09/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/08/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/08/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/08/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/08/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "02/08/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/07/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/07/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "05/07/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/06/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/06/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/06/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/06/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "31/05/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/05/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/05/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/05/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/04/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/03/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "13/03/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/03/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/02/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "14/02/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/02/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "23/01/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/01/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/01/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/01/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/01/2019",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/12/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/12/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "05/12/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/11/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/11/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/10/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/10/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/09/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/09/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/08/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/07/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/07/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "05/07/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/06/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/06/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/05/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/05/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "13/04/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "13/04/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/03/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/02/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/02/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/02/2018",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/12/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/11/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "18/10/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/10/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/09/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/09/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/09/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/08/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/07/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "28/06/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/05/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/05/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/05/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "18/04/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/03/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/03/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/02/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/01/2017",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/12/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "28/09/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/09/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/08/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/06/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "28/05/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/05/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/04/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/04/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/01/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "21/01/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/01/2016",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/12/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/12/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/11/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "11/11/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "30/10/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "15/10/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "17/09/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "14/09/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/09/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/08/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/07/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/07/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/05/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/05/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/04/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/03/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/02/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "06/02/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/01/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "19/01/2015",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "12/12/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/07/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "29/05/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/04/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/03/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/01/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "03/01/2014",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "18/12/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/12/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/10/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/08/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "09/05/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "25/03/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "18/01/2013",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "20/12/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "24/07/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/07/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/06/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "22/05/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/05/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/03/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "07/03/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/02/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "02/01/2012",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "27/12/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "26/12/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "16/12/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "04/11/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "10/10/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "08/08/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ],
+      [
+        "01/08/2011",
+        "PETRÓLEO BRASILEIRO S.A. - PETROBRAS"
+      ]
+    ],
+    [
+      [
+        "Data",
+        "Selecione a data e a fonte da posição acionária:"
+      ],
+      [
+        "03/05/2023",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "23/02/2023",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "06/09/2022",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "27/07/2022",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "30/05/2022",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "06/10/2021",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "04/06/2021",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "28/05/2021",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "30/04/2021",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "06/01/2021",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "09/11/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "16/09/2020",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "06/08/2020",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "30/07/2020",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "27/05/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "29/04/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "03/04/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "10/03/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "13/02/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "16/01/2020",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "08/10/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "23/07/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "16/07/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "03/07/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "02/07/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "26/06/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "25/06/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "20/06/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "07/06/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "05/06/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "31/05/2019",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "31/05/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "31/05/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "30/05/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "06/05/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "06/05/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "23/04/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "15/04/2019",
+        "NOVA TRANSPORTADORA DO SUDESTE S.A. - NTS"
+      ],
+      [
+        "26/02/2019",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "10/12/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "14/11/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "16/10/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "25/09/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "17/08/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "04/07/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "31/05/2018",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "30/05/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "08/05/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "07/05/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "23/03/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "22/03/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "06/02/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "09/01/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "04/01/2018",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "14/12/2017",
+        "VIBRA ENERGIA S/A"
+      ],
+      [
+        "31/05/2017",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "09/06/2016",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "31/05/2016",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "15/06/2015",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "29/05/2015",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "30/05/2014",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "29/11/2013",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "06/11/2013",
+        "METANOR SA METANOL DO NE"
+      ],
+      [
+        "31/05/2012",
+        "CIA DE RECUPERAÇÃO SECUNDÁRIA"
+      ],
+      [
+        "10/05/2012",
+        "CIA DE RECUPERAÇÃO SECUNDÁRIA"
+      ],
+      [
+        "28/12/2011",
+        "CIA DE RECUPERAÇÃO SECUNDÁRIA"
+      ],
+      [
+        "21/12/2011",
+        "CIA DE RECUPERAÇÃO SECUNDÁRIA"
+      ],
+      [
+        "20/12/2011",
+        "CIA DE RECUPERAÇÃO SECUNDÁRIA"
+      ],
+      [
+        "comdinheiro"
+      ]
+    ]
+  ]
+}
