@@ -7,8 +7,9 @@ from playwright.async_api import async_playwright
 
 sys.path.insert(0, "/opt/shipyard")
 
-CD_USER = "vela.capital"
-CD_PASS = "Vela.capital1!"
+from config import required_env
+CD_USER = required_env("COMDINHEIRO_USER")
+CD_PASS = required_env("COMDINHEIRO_PASS")
 RF=0.065; ERP=0.055; TAX=0.34; ANOS=10
 
 SETOR_PARAMS = {

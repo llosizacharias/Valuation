@@ -9,8 +9,9 @@ from urllib.parse import quote
 sys.path.insert(0, "/opt/shipyard")
 import brapi_client as brapi
 
-CD_USER = "vela.capital"
-CD_PASS = "Vela.capital1!"
+from config import required_env
+CD_USER = required_env("COMDINHEIRO_USER")
+CD_PASS = required_env("COMDINHEIRO_PASS")
 API_URL = "https://api.comdinheiro.com.br/v1/ep1/import-data"
 
 # ── Tier 1 faltando — base B3 + sufixo correto ────────────────────

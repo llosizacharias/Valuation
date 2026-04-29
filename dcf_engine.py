@@ -13,12 +13,14 @@ import numpy as np
 from pathlib import Path
 
 # ── PARÂMETROS MACROECONÔMICOS BRASIL 2026 ────────────────────────
-DI_AA     = 0.1466   # DI Over aa — RF período explícito
+DI_AA     = 0.1466   # DI Over aa — RF stress (cenário atual)
+RF_BASE   = 0.085    # RF base = equilíbrio longo prazo (NTN-B convergência)
 NTNB_NOM  = 0.1402   # NTN-B 2035 nominal
 IPCA_LP   = 0.050    # IPCA longo prazo
 NTNB_REAL = (1 + NTNB_NOM) / (1 + IPCA_LP) - 1
-RF_EXPL   = DI_AA
+RF_EXPL   = RF_BASE   # base = equilíbrio; use DI_AA para stress
 RF_IMPL   = NTNB_REAL + IPCA_LP
+RF_STRESS = DI_AA    # cenário stress = DI atual
 ERP       = 0.0747   # Damodaran 2026
 TAX       = 0.34
 ANOS      = 7

@@ -7,8 +7,9 @@ import asyncio, json, os
 from pathlib import Path
 from playwright.async_api import async_playwright
 
-CD_USER = os.getenv("COMDINHEIRO_USER", "vela.capital")
-CD_PASS = os.getenv("COMDINHEIRO_PASS", "Vela.capital1!")
+from config import required_env
+CD_USER = required_env("COMDINHEIRO_USER")
+CD_PASS = required_env("COMDINHEIRO_PASS")
 CACHE_DIR = Path("/opt/shipyard/data/cd_cache")
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 

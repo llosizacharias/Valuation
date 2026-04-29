@@ -1,9 +1,35 @@
-﻿# Dados brutos e outputs
+# Dados brutos e outputs
 data/raw/
 valuation_output*.xlsx
 dashboard_auth.yaml
 valuation_results.json
+
+# Cache Python
 __pycache__/
 *.pyc
+*.pyo
+
+# Ambiente
 .env
 venv/
+.venv/
+
+# Logs (NUNCA commitar)
+logs/
+*.log
+
+# Backups
+*backup*.py
+*.bak
+*.old
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Backups com sufixo timestamp (criados em scripts de patch)
+*.bak_*
+*.prepatch_*
+*.bak_corrompido

@@ -1,4 +1,19 @@
 import streamlit as st
+from config import required_env, env
+
+# ─────────────────────────────────────────────────────────────────
+# HELPERS DE COERÇÃO (tratam None, NaN, strings vazias)
+# ─────────────────────────────────────────────────────────────────
+def _f(v, default=0.0):
+    """float seguro: trata None, '', NaN sem quebrar."""
+    try:
+        if v is None or v == "":
+            return float(default)
+        x = float(v)
+        return float(default) if x != x else x  # NaN -> default
+    except (TypeError, ValueError):
+        return float(default)
+
 # brapi.dev — cotações B3 em tempo real
 try:
     import sys as _sys
@@ -1169,8 +1184,8 @@ if pagina == "Cobertura":
             fig = go.Figure()
             for emp in empresas_vg:
                 r = results[emp]; ticker = r.get("ticker",emp)
-                ev = float(r.get("enterprise_value",0))/1e9
-                eq = float(r.get("equity_value",0))/1e9
+                ev = _f(r.get("enterprise_value"))/1e9
+                eq = _f(r.get("equity_value"))/1e9
                 wd = r.get("wacc_data") or {}
                 mc = float(wd.get("market_cap") or r.get("equity_value") or 0)/1e9
                 fig.add_trace(go.Bar(name=f"{ticker} EV",    x=[ticker],y=[ev],marker_color=C["bg3"],    width=.22))
@@ -1392,9 +1407,9 @@ if pagina == "Cobertura":
 
             st.markdown("<hr>", unsafe_allow_html=True)
             cl2,cr2=st.columns(2)
-            ev=float(r.get("enterprise_value",0))/1e9
-            nd=float(r.get("net_debt",0))/1e9
-            eq=float(r.get("equity_value",0))/1e9
+            ev=_f(r.get("enterprise_value"))/1e9
+            nd=_f(r.get("net_debt"))/1e9
+            eq=_f(r.get("equity_value"))/1e9
 
             with cl2:
                 st.markdown("## Waterfall EV → Equity")
@@ -2066,8 +2081,8 @@ if pagina == "Cobertura":
 # ANALISE — Valuation + Comparativo + Sensibilidade + Markowitz
 # ══════════════════════════════════════════════════════════════════
 elif pagina == "Analise":
-    _atab1, _atab2, _atab3, _atab4 = st.tabs([
-        "Valuation & DCF", "Comparativo", "Sensibilidade", "Markowitz"
+    _atab1, _atab2, _atab3 = st.tabs([
+        "Valuation & DCF", "Comparativo", "Sensibilidade"
     ])
     with _atab1:
             st.markdown("##  Valuation Interativo")
@@ -2509,315 +2524,6 @@ elif pagina == "Analise":
 
         # ══════════════════════════════════════════════════════════════════
         # PÁG 7 — MARKOWITZ (com benchmark IBOV)
-    with _atab4:
-            st.markdown("## Otimização de Carteira — Fronteira Eficiente de Markowitz")
-
-            all_tickers = [results[e].get("ticker",e) for e in empresas]
-            st.markdown("### Configuração")
-            col_a, col_b = st.columns(2)
-            with col_a:
-                # Import da Carteira Endurance
-                import json as _jmk, pathlib as _pmk
-                _efile = _pmk.Path("/opt/shipyard/data/endurance/carteira.json")
-                _end_tks = []
-                if _efile.exists():
-                    try:
-                        _end_cart = _jmk.loads(_efile.read_text())
-                        _end_tks = [p["ticker"] for p in _end_cart if p.get("ticker") and p["ticker"] != "CAIXA"]
-                    except: pass
-                col_imp1, col_imp2 = st.columns([2,1])
-                with col_imp1:
-                    extra = st.text_input("Tickers extras (separados por vírgula)",
-                                          value="PETR4.SA, VALE3.SA, BBAS3.SA, ITUB4.SA")
-                with col_imp2:
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    if st.button(" Importar Endurance", use_container_width=True, key="mk_imp_end"):
-                        st.session_state["mk_end_imported"] = True
-                extra_list = [t.strip() for t in extra.split(",") if t.strip()]
-                base_tks = _end_tks if st.session_state.get("mk_end_imported") else []
-                portfolio_tickers = list(dict.fromkeys(base_tks + all_tickers + extra_list))
-                default_sel = _end_tks[:min(8,len(_end_tks))] if st.session_state.get("mk_end_imported") and _end_tks else portfolio_tickers[:min(5,len(portfolio_tickers))]
-                if st.session_state.get("mk_end_imported") and _end_tks:
-                    st.success(f" {len(_end_tks)} ativos da Endurance importados")
-                selected = st.multiselect("Ativos na carteira", portfolio_tickers, default=default_sel)
-            with col_b:
-                period    = st.selectbox("Período histórico", ["1y","2y","3y","5y"], index=1)
-                n_sim     = st.slider("Portfólios simulados (Monte Carlo)", 1000, 10000, 3000, 500)
-                risk_free = st.slider("Taxa livre de risco anual (%)", 5.0, 15.0, 11.7, 0.1) / 100
-                perfil    = st.radio("Perfil de risco preferido",
-                                     ["Mínima Variância","Máximo Sharpe","Personalizado"],
-                                     horizontal=True)
-                show_ibov = st.checkbox("Mostrar benchmark IBOV", value=True)
-
-            if len(selected) < 2:
-                st.warning("Selecione pelo menos 2 ativos."); st.stop()
-
-            if st.button("  Calcular Fronteira Eficiente", type="primary"):
-                with st.spinner("Baixando dados e calculando..."):
-                    try:
-                        import yfinance as yf
-                        from scipy.optimize import minimize
-
-                        @st.cache_data(ttl=3600)
-                        def get_prices(tickers, period):
-                            data = yf.download(tickers, period=period, auto_adjust=True, progress=False)
-                            if isinstance(data.columns, pd.MultiIndex):
-                                prices = data["Close"]
-                            else:
-                                prices = data[["Close"]] if "Close" in data.columns else data
-                            return prices.dropna(how="all")
-
-                        prices = get_prices(selected, period)
-                        prices = prices.dropna(axis=1, thresh=int(len(prices)*0.8))
-                        valid_tickers = list(prices.columns)
-                        if len(valid_tickers) < 2:
-                            st.error("Dados insuficientes para os tickers selecionados."); st.stop()
-
-                        returns = prices.pct_change().dropna()
-                        mu      = returns.mean() * 252
-                        cov     = returns.cov() * 252
-                        n       = len(valid_tickers)
-
-                        # Benchmark IBOV
-                        ibov_ret = None
-                        ibov_vol = None
-                        if show_ibov:
-                            try:
-                                ibov_data = yf.download("^BVSP", period=period, auto_adjust=True, progress=False)
-                                ibov_close = ibov_data["Close"].squeeze()
-                                ibov_rets = ibov_close.pct_change().dropna()
-                                ibov_ret = float(ibov_rets.mean() * 252)
-                                ibov_vol = float(ibov_rets.std() * np.sqrt(252))
-                            except Exception:
-                                ibov_ret = None
-
-                        # Monte Carlo
-                        np.random.seed(42)
-                        sim_ret, sim_vol, sim_sharpe, sim_w = [], [], [], []
-                        for _ in range(n_sim):
-                            w = np.random.dirichlet(np.ones(n))
-                            r_p = float(w @ mu)
-                            v_p = float(np.sqrt(w @ cov.values @ w))
-                            s_p = (r_p - risk_free) / v_p if v_p > 0 else 0
-                            sim_ret.append(r_p); sim_vol.append(v_p)
-                            sim_sharpe.append(s_p); sim_w.append(w)
-
-                        sim_ret    = np.array(sim_ret)
-                        sim_vol    = np.array(sim_vol)
-                        sim_sharpe = np.array(sim_sharpe)
-
-                        def neg_sharpe(w):
-                            rp = w @ mu; vp = np.sqrt(w @ cov.values @ w)
-                            return -(rp - risk_free) / vp if vp>0 else 0
-                        def port_vol(w):
-                            return np.sqrt(w @ cov.values @ w)
-
-                        bounds    = tuple((0,1) for _ in range(n))
-                        constraint = {"type":"eq","fun":lambda w: np.sum(w)-1}
-
-                        opt_sharpe = minimize(neg_sharpe, np.ones(n)/n, method="SLSQP",
-                                              bounds=bounds, constraints=constraint)
-                        opt_minvar = minimize(port_vol, np.ones(n)/n, method="SLSQP",
-                                              bounds=bounds, constraints=constraint)
-
-                        w_sharpe = opt_sharpe.x
-                        w_minvar = opt_minvar.x
-                        r_sharpe = float(w_sharpe @ mu); v_sharpe = float(np.sqrt(w_sharpe @ cov.values @ w_sharpe))
-                        r_minvar = float(w_minvar @ mu); v_minvar = float(np.sqrt(w_minvar @ cov.values @ w_minvar))
-
-                        target_rets = np.linspace(sim_ret.min(), sim_ret.max(), 60)
-                        ef_vols = []
-                        for tr in target_rets:
-                            cons = [{"type":"eq","fun":lambda w: np.sum(w)-1},
-                                    {"type":"eq","fun":lambda w,t=tr: w@mu - t}]
-                            try:
-                                res = minimize(port_vol, np.ones(n)/n, method="SLSQP",
-                                               bounds=bounds, constraints=cons)
-                                ef_vols.append(float(res.fun) if res.success else None)
-                            except Exception:
-                                ef_vols.append(None)
-
-                        ef_pairs = [(v,r) for v,r in zip(ef_vols, target_rets) if v is not None]
-                        ef_vols_clean = [p[0] for p in ef_pairs]
-                        ef_rets_clean = [p[1] for p in ef_pairs]
-
-                        fig_mz = go.Figure()
-
-                        fig_mz.add_trace(go.Scatter(
-                            x=sim_vol*100, y=sim_ret*100, mode="markers",
-                            marker=dict(size=4, color=sim_sharpe,
-                                colorscale=[[0,C["bg4"]],[0.5,C["bg3"]],[1,C["blue_lt"]]],
-                                colorbar=dict(title=dict(text="Sharpe",font=dict(color=C["gray"])),
-                                              tickfont=dict(color=C["gray"]),thickness=12,x=1.02),
-                                opacity=0.5),
-                            name="Portfólios MC",
-                            hovertemplate="Vol: %{x:.1f}%<br>Ret: %{y:.1f}%<extra></extra>",
-                        ))
-
-                        fig_mz.add_trace(go.Scatter(
-                            x=[v*100 for v in ef_vols_clean], y=[r*100 for r in ef_rets_clean],
-                            mode="lines", line=dict(color=C["white"],width=2.5),
-                            name="Fronteira Eficiente",
-                        ))
-
-                        vol_range = np.linspace(0, max(sim_vol)*100, 100)
-                        sharpe_opt = (r_sharpe - risk_free) / v_sharpe
-                        cml_ret = risk_free*100 + sharpe_opt * vol_range
-                        fig_mz.add_trace(go.Scatter(
-                            x=vol_range, y=cml_ret, mode="lines",
-                            line=dict(color=C["blue_lt"], width=1.5, dash="dot"),
-                            name=f"Capital Market Line (Sharpe={sharpe_opt:.2f})",
-                        ))
-
-                        fig_mz.add_trace(go.Scatter(
-                            x=[v_sharpe*100], y=[r_sharpe*100], mode="markers+text",
-                            marker=dict(size=14, color=C["pos"], symbol="star",
-                                        line=dict(color=C["white"],width=1.5)),
-                            text=[" Máx Sharpe"], textposition="top right",
-                            textfont=dict(color=C["pos"], size=11),
-                            name=f"Máx Sharpe ({sharpe_opt:.2f})",
-                        ))
-
-                        fig_mz.add_trace(go.Scatter(
-                            x=[v_minvar*100], y=[r_minvar*100], mode="markers+text",
-                            marker=dict(size=14, color=C["blue_lt"], symbol="diamond",
-                                        line=dict(color=C["white"],width=1.5)),
-                            text=["◆ Mín Var"], textposition="top right",
-                            textfont=dict(color=C["blue_lt"], size=11),
-                            name="Mínima Variância",
-                        ))
-
-                        # Benchmark IBOV
-                        if show_ibov and ibov_ret is not None:
-                            ibov_sharpe = (ibov_ret - risk_free) / ibov_vol
-                            fig_mz.add_trace(go.Scatter(
-                                x=[ibov_vol*100], y=[ibov_ret*100], mode="markers+text",
-                                marker=dict(size=14, color="#FFD700", symbol="square",
-                                            line=dict(color=C["white"],width=1.5)),
-                                text=[" IBOV"], textposition="top left",
-                                textfont=dict(color="#FFD700", size=11),
-                                name=f"IBOV (Sharpe={ibov_sharpe:.2f})",
-                            ))
-
-                        for i,t in enumerate(valid_tickers):
-                            fig_mz.add_trace(go.Scatter(
-                                x=[float(np.sqrt(cov.values[i,i]))*100],
-                                y=[float(mu.iloc[i])*100], mode="markers+text",
-                                marker=dict(size=10, color=C["gray"], symbol="circle-open",
-                                            line=dict(color=C["gray"],width=2)),
-                                text=[t], textposition="top center",
-                                textfont=dict(color=C["gray2"],size=10),
-                                name=t, showlegend=False,
-                            ))
-
-                        fig_mz.update_layout(**PL,
-                            title="Fronteira Eficiente | Nuvem = Monte Carlo |  Máx Sharpe |  IBOV",
-                            xaxis_title="Volatilidade Anual (%)",
-                            yaxis_title="Retorno Anual Esperado (%)",
-                            height=580,
-                        )
-                        st.plotly_chart(fig_mz, use_container_width=True)
-
-                        if show_ibov and ibov_ret is not None:
-                            st.info(f" IBOV — Retorno: {ibov_ret*100:.1f}% a.a. | Vol: {ibov_vol*100:.1f}% | Sharpe: {(ibov_ret-risk_free)/ibov_vol:.2f}")
-
-                        st.markdown("<hr>", unsafe_allow_html=True)
-                        st.markdown("### Alocações Ótimas")
-
-                        if perfil == "Máximo Sharpe":
-                            w_sel = w_sharpe; label_sel = "Máximo Sharpe"
-                            r_sel = r_sharpe; v_sel = v_sharpe
-                        elif perfil == "Mínima Variância":
-                            w_sel = w_minvar; label_sel = "Mínima Variância"
-                            r_sel = r_minvar; v_sel = v_minvar
-                        else:
-                            w_sel = w_sharpe; label_sel = "Máximo Sharpe (base)"
-                            r_sel = r_sharpe; v_sel = v_sharpe
-
-                        col_p1, col_p2 = st.columns(2)
-                        with col_p1:
-                            st.markdown(f"#### Portfólio — {label_sel}")
-                            df_w = pd.DataFrame({
-                                "Ativo": valid_tickers,
-                                "Peso (%)": [f"{w*100:.1f}%" for w in w_sel],
-                                "Retorno Esp.": [f"{float(mu.iloc[i])*100:.1f}%" for i in range(n)],
-                                "Volatilidade": [f"{float(np.sqrt(cov.values[i,i]))*100:.1f}%" for i in range(n)],
-                            })
-                            st.markdown(dark_table(df_w), unsafe_allow_html=True)
-                            c1,c2,c3 = st.columns(3)
-                            c1.metric("Retorno Esperado", f"{r_sel*100:.1f}%")
-                            c2.metric("Volatilidade",     f"{v_sel*100:.1f}%")
-                            c3.metric("Índice de Sharpe", f"{(r_sel-risk_free)/v_sel:.2f}")
-                            if show_ibov and ibov_ret is not None:
-                                st.markdown(f"<div style='color:{C['gray2']};font-size:.8rem;'>vs IBOV: Ret {ibov_ret*100:.1f}% | Vol {ibov_vol*100:.1f}% | Sharpe {(ibov_ret-risk_free)/ibov_vol:.2f}</div>", unsafe_allow_html=True)
-
-                        with col_p2:
-                            fig_pizza = go.Figure(go.Pie(
-                                labels=valid_tickers, values=w_sel*100, hole=.5,
-                                marker_colors=[C["bg3"],C["blue_lt"],C["gray"],
-                                               C["bg4"],C["gray2"],C["pos"],C["neg"]][:n],
-                                textfont=dict(color=C["white"],size=11),
-                            ))
-                            fig_pizza.update_layout(
-                                paper_bgcolor=C["bg"],
-                                font=dict(family="Helvetica,Arial",color=C["gray"]),
-                                legend=dict(bgcolor=C["bg"],bordercolor=C["border"]),
-                                margin=dict(l=10,r=10,t=30,b=10),
-                                title=f"Alocação — {label_sel}",
-                                annotations=[dict(text=f"Sharpe<br><b>{(r_sel-risk_free)/v_sel:.2f}</b>",
-                                    font=dict(size=12,color=C["white"]),showarrow=False)],
-                            )
-                            st.plotly_chart(fig_pizza, use_container_width=True)
-
-                        st.markdown("#### Comparação: Mín Variância vs Máx Sharpe")
-                        compare_df = pd.DataFrame({
-                            "Ativo": valid_tickers,
-                            "Mín Variância (%)": [f"{w*100:.1f}%" for w in w_minvar],
-                            "Máx Sharpe (%)":    [f"{w*100:.1f}%" for w in w_sharpe],
-                        })
-                        st.markdown(dark_table(compare_df), unsafe_allow_html=True)
-
-                        mc1, mc2, mc3, mc4 = st.columns(4)
-                        mc1.metric("Ret. Mín Var",   f"{r_minvar*100:.1f}%")
-                        mc2.metric("Vol. Mín Var",   f"{v_minvar*100:.1f}%")
-                        mc3.metric("Ret. Máx Sharpe", f"{r_sharpe*100:.1f}%")
-                        mc4.metric("Vol. Máx Sharpe", f"{v_sharpe*100:.1f}%")
-
-                        # Correlação entre ativos
-                        st.markdown("#### Matriz de Correlação")
-                        corr = returns.corr()
-                        fig_corr = go.Figure(go.Heatmap(
-                            z=corr.values, x=list(corr.columns), y=list(corr.index),
-                            colorscale=[
-                                [0.0,"#E8F4FD"],[0.25,"#BEDAF2"],
-                                [0.5,"#6EB5E8"],[0.75,"#2B7EC2"],
-                                [1.0,"#071d36"]
-                            ],
-                            zmin=-1, zmax=1,
-                            text=[[f"{v:.2f}" for v in row] for row in corr.values],
-                            texttemplate="%{text}", textfont=dict(size=10,color="#0a1624"),
-                            colorbar=dict(tickfont=dict(color=C["gray"]),bgcolor=C["bg2"],bordercolor=C["border"])
-                        ))
-                        fig_corr.update_layout(
-                            paper_bgcolor=C["bg"],
-                            font=dict(family="Helvetica,Arial",color=C["white"]),
-                            margin=dict(l=80,r=30,t=30,b=80), height=380)
-                        st.plotly_chart(fig_corr, use_container_width=True)
-
-                    except ImportError as e:
-                        st.error(f"Biblioteca necessária não instalada: {e}")
-                        st.code("pip install yfinance scipy")
-                    except Exception as e:
-                        import traceback
-                        st.error(f"Erro ao calcular: {e}")
-                        st.code(traceback.format_exc())
-
-        # ══════════════════════════════════════════════════════════════════
-        # PÁG 8 — NOTÍCIAS
-
-# ══════════════════════════════════════════════════════════════════
-# PORTFOLIO — Carteira Endurance + Markowitz já na Analise
-# ══════════════════════════════════════════════════════════════════
 elif pagina == "Portfolio":
         import json as _json
         from pathlib import Path as _Path
@@ -2926,8 +2632,8 @@ elif pagina == "Portfolio":
         </div>""", unsafe_allow_html=True)
 
         # ── tabs ─────────────────────────────────────────────────────
-        tab_port, tab_edit, tab_risk, tab_tr, tab_cota, tab_bt = st.tabs([
-            " Visão da Carteira", " Gerenciar Posições", " Risco & KPIs", " Trackrecord", " Custos & Cota", " Backtest & Cenários"
+        tab_port, tab_edit, tab_risk, tab_tr, tab_cota, tab_bt, tab_mk = st.tabs([
+            " Visão da Carteira", " Gerenciar Posições", " Risco & KPIs", " Trackrecord", " Custos & Cota", " Backtest & Cenários", " Markowitz"
         ])
 
         # ════════════════════════════════════════════════════════════
@@ -3079,162 +2785,175 @@ elif pagina == "Portfolio":
         # TAB 2 — GERENCIAR POSIÇÕES
         # ════════════════════════════════════════════════════════════
         with tab_edit:
-            st.markdown("###  Posições Atuais")
+            _ce = _load_carteira()
+            total_p = sum(float(p.get("peso",0)) for p in _ce)
+            _pc = C["pos"] if 98<=total_p<=102 else C["neg"]
 
-            # Editor de tabela
-            df_edit = pd.DataFrame([{
-                "ticker": p["ticker"], "empresa": p.get("empresa",""),
-                "setor": p.get("setor",""), "peso": p["peso"],
-                "preco_entrada": p.get("preco_entrada",0.0),
-                "data_entrada": p.get("data_entrada","")
-            } for p in carteira])
+            # ── Cabeçalho ─────────────────────────────────────────
+            _h1,_h2 = st.columns([3,1])
+            with _h1:
+                st.markdown(f"### Carteira Endurance — {len(_ce)} ativos")
+                st.markdown(f"<span style='color:{_pc};font-weight:700;font-size:1.1rem'>Total alocado: {total_p:.1f}%</span>", unsafe_allow_html=True)
+            with _h2:
+                if st.button("Exportar PDF", key="btn_pdf_cart", use_container_width=True):
+                    st.info("PDF: use Ctrl+P no navegador e salve como PDF.")
 
-            edited = st.data_editor(
-                df_edit,
-                use_container_width=True,
-                num_rows="dynamic",
-                column_config={
-                    "ticker": st.column_config.TextColumn("Ticker", help="Ex: PETR4.SA ou CAIXA"),
-                    "empresa": st.column_config.TextColumn("Empresa"),
-                    "setor": st.column_config.TextColumn("Setor"),
-                    "peso": st.column_config.NumberColumn("Peso (%)", min_value=0, max_value=100, step=0.5),
-                    "preco_entrada": st.column_config.NumberColumn("P. Entrada (R$)", min_value=0, step=0.01),
-                    "data_entrada": st.column_config.TextColumn("Data Entrada", help="AAAA-MM-DD"),
-                },
-                key="end_editor"
-            )
+            st.divider()
 
-            total_peso = edited["peso"].sum() if not edited.empty else 0
-            _pcol = C["pos"] if 98 <= total_peso <= 102 else C["neg"]
-            st.markdown(f"<span style='color:{_pcol};font-weight:700'>Total alocado: {total_peso:.1f}%</span>", unsafe_allow_html=True)
+            # ── Tabela de posições ─────────────────────────────────
+            if _ce:
+                # Tabela HTML estilizada
+                _rows_html = "".join(
+                    f'<tr><td style="color:#e8f0f8;padding:5px 10px;border-bottom:1px solid #1a2a3a;">'
+                    f'{p.get("ticker","").replace(".SA","")}</td>'
+                    f'<td style="color:#a8bece;padding:5px 10px;border-bottom:1px solid #1a2a3a;">{p.get("empresa","")}</td>'
+                    f'<td style="color:#a8bece;padding:5px 10px;border-bottom:1px solid #1a2a3a;">{p.get("setor","")}</td>'
+                    f'<td style="color:#5ab8e8;font-weight:700;padding:5px 10px;border-bottom:1px solid #1a2a3a;text-align:right;">{float(p.get("peso",0)):.1f}%</td>'
+                    f'<td style="color:#a8bece;padding:5px 10px;border-bottom:1px solid #1a2a3a;text-align:right;">R$ {float(p.get("preco_entrada",0)):.2f}</td>'
+                    f'<td style="color:#6a8898;padding:5px 10px;border-bottom:1px solid #1a2a3a;">{p.get("data_entrada","")}</td></tr>'
+                    for p in _ce
+                )
+                _header = '<tr style="background:#0e1828;">'
+                _header += '<th style="color:#3a6080;padding:6px 10px;text-align:left;font-size:10px;letter-spacing:1px;text-transform:uppercase;">Ticker</th>'
+                _header += '<th style="color:#3a6080;padding:6px 10px;text-align:left;font-size:10px;letter-spacing:1px;text-transform:uppercase;">Empresa</th>'
+                _header += '<th style="color:#3a6080;padding:6px 10px;text-align:left;font-size:10px;letter-spacing:1px;text-transform:uppercase;">Setor</th>'
+                _header += '<th style="color:#3a6080;padding:6px 10px;text-align:right;font-size:10px;letter-spacing:1px;text-transform:uppercase;">Peso %</th>'
+                _header += '<th style="color:#3a6080;padding:6px 10px;text-align:right;font-size:10px;letter-spacing:1px;text-transform:uppercase;">P. Entrada</th>'
+                _header += '<th style="color:#3a6080;padding:6px 10px;text-align:left;font-size:10px;letter-spacing:1px;text-transform:uppercase;">Data</th></tr>'
+                st.markdown(
+                    f'<div style="background:#07090f;border:1px solid #1a2a3a;border-radius:4px;overflow:hidden;margin-bottom:12px;">'
+                    f'<table style="width:100%;border-collapse:collapse;">{_header}{_rows_html}</table></div>',
+                    unsafe_allow_html=True)
 
-            st.markdown("---")
-            st.markdown("**+ Adicionar posição manualmente**")
-            if True:
-                # Lista de tickers disponíveis no sistema para autocomplete
-                _tickers_disponiveis = sorted([
-                    r.get("ticker","").replace(".SA","")
-                    for r in results.values()
-                    if r.get("ticker","")
-                ])
-                _setores_disponiveis = sorted(set([
-                    r.get("sector","") or r.get("setor","")
-                    for r in results.values()
-                    if r.get("sector","") or r.get("setor","")
-                ]))
-                _empresas_map = {
-                    r.get("ticker","").replace(".SA",""): r.get("name","") or r.get("empresa","")
-                    for r in results.values()
-                    if r.get("ticker","")
-                }
-                na1,na2,na3 = st.columns(3)
-                with na1:
-                    new_ticker_sel = st.selectbox(
-                        "Ticker (autocomplete)", 
-                        [""] + _tickers_disponiveis + ["CAIXA","OUTRO"],
-                        key="new_tk_sel",
-                        help="Selecione um ticker da cobertura ou escolha OUTRO para digitar manualmente"
+                st.divider()
+
+                # ── Ajustar posição existente ──────────────────────
+                st.markdown("**Ajustar posição existente**")
+                _aj1,_aj2,_aj3,_aj4 = st.columns([2,1,1,1])
+                with _aj1:
+                    _tk_aj = st.selectbox(
+                        "Ativo",
+                        [p["ticker"] for p in _ce],
+                        format_func=lambda x: x.replace(".SA",""),
+                        key="tk_aj"
                     )
-                    if new_ticker_sel == "OUTRO" or new_ticker_sel == "":
-                        new_ticker = st.text_input("Ticker manual", placeholder="Ex: TOTS3", key="new_tk_manual")
-                    else:
-                        new_ticker = new_ticker_sel
-                    # Preenche empresa automaticamente
-                    _emp_auto = _empresas_map.get(new_ticker.upper(), "")
-                    new_emp = st.text_input("Empresa", value=_emp_auto, key="new_emp")
-                with na2:
-                    # Autocomplete de setor
-                    _setor_auto = ""
-                    if new_ticker.upper() in _empresas_map:
-                        _r = results.get(next((k for k in results if results[k].get("ticker","").replace(".SA","").upper()==new_ticker.upper()), ""), {})
-                        _setor_auto = _r.get("sector","") or _r.get("setor","")
-                    new_setor_sel = st.selectbox(
-                        "Setor (autocomplete)",
-                        [""] + _setores_disponiveis + ["Outro"],
-                        index=(_setores_disponiveis.index(_setor_auto)+1) if _setor_auto in _setores_disponiveis else 0,
-                        key="new_set_sel"
+                _p_sel = next((p for p in _ce if p["ticker"]==_tk_aj), {})
+                with _aj2:
+                    _np_aj = st.number_input(
+                        "Peso %", 0.0, 100.0,
+                        float(_p_sel.get("peso",0)), 0.5,
+                        key="np_aj"
                     )
-                    if new_setor_sel == "Outro" or new_setor_sel == "":
-                        new_setor = st.text_input("Setor manual", key="new_set_manual")
-                    else:
-                        new_setor = new_setor_sel
-                    new_peso = st.number_input("Peso (%)", min_value=0.0, max_value=100.0, step=0.5, key="new_peso")
-                with na3:
-                    new_entrada = st.number_input("Preco de entrada (R$)", min_value=0.0, step=0.01, key="new_preco")
-                    new_data    = st.text_input("Data de entrada", placeholder="AAAA-MM-DD", key="new_data",
-                        value=_dt.today().strftime("%Y-%m-%d"))
-                if st.button("Adicionar a carteira", key="new_add", type="primary", use_container_width=True):
-                    if new_ticker.strip():
-                        cart_atual = _load_carteira()
-                        tk_novo = new_ticker.strip().upper()
-                        if tk_novo != "CAIXA" and not tk_novo.endswith(".SA"):
-                            tk_novo += ".SA"
-                        if tk_novo in [p["ticker"].upper() for p in cart_atual]:
-                            st.warning(f"{tk_novo} ja esta na carteira. Edite na tabela acima.")
+                with _aj3:
+                    _pe_aj = st.number_input(
+                        "P. Entrada R$", 0.0, step=0.01,
+                        value=float(_p_sel.get("preco_entrada",0)),
+                        key="pe_aj"
+                    )
+                with _aj4:
+                    st.markdown("<div style='margin-top:28px'></div>", unsafe_allow_html=True)
+                    if st.button("Aplicar", key="btn_aj", type="primary", use_container_width=True):
+                        _ca = _load_carteira()
+                        for _p in _ca:
+                            if _p["ticker"] == _tk_aj:
+                                _p["peso"] = _np_aj
+                                _p["preco_entrada"] = _pe_aj
+                        _save_carteira(_ca)
+                        st.success(f"{_tk_aj.replace('.SA','')} atualizado!")
+                        st.cache_data.clear(); st.rerun()
+
+                st.divider()
+
+                # ── Remover posições ───────────────────────────────
+                st.markdown("**Remover posições**")
+                _r1,_r2,_r3 = st.columns([3,1,1])
+                with _r1:
+                    _tks_rm = st.multiselect(
+                        "Remover",
+                        [p["ticker"] for p in _ce],
+                        format_func=lambda x: x.replace(".SA",""),
+                        key="tks_rm",
+                        label_visibility="collapsed",
+                        placeholder="Selecione ativos para remover..."
+                    )
+                with _r2:
+                    if st.button("Remover", key="btn_rm", disabled=not _tks_rm, use_container_width=True):
+                        _save_carteira([p for p in _load_carteira() if p["ticker"] not in _tks_rm])
+                        st.success(f"{len(_tks_rm)} removido(s)")
+                        st.cache_data.clear(); st.rerun()
+                with _r3:
+                    if st.button("Zerar carteira", key="btn_clr", use_container_width=True):
+                        if st.session_state.get("_clr_ok"):
+                            _save_carteira([])
+                            st.session_state["_clr_ok"] = False
+                            st.success("Carteira zerada!")
+                            st.cache_data.clear(); st.rerun()
                         else:
-                            try:
-                                cart_atual.append({"ticker":tk_novo,"empresa":new_emp.strip(),
-                                    "setor":new_setor.strip(),"peso":new_peso,
-                                    "preco_entrada":new_entrada,"data_entrada":new_data.strip()})
-                                _save_carteira(cart_atual)
-                                st.success(f"{tk_novo} adicionado com sucesso!")
-                                st.cache_data.clear()
-                                st.rerun()
-                            except PermissionError:
-                                st.error("Erro de permissao no arquivo. Execute no servidor: chmod 666 /opt/shipyard/data/endurance/carteira.json")
+                            st.session_state["_clr_ok"] = True
+                            st.warning("Clique novamente para confirmar.")
+            else:
+                st.info("Carteira vazia. Adicione posições abaixo.")
+
+            st.divider()
+
+            # ── Adicionar posições ─────────────────────────────────
+            st.markdown("**Adicionar posições**")
+            _modo = st.radio("Modo", ["Rápido (múltiplos)", "Detalhado (manual)"], horizontal=True, key="modo_add")
+            _tks_d = sorted([v.get("ticker","").replace(".SA","") for v in results.values() if v.get("ticker","")])
+            _tks_nc = [p["ticker"].replace(".SA","") for p in _load_carteira()]
+            _tks_l = [t for t in _tks_d if t not in _tks_nc] + (["CAIXA"] if "CAIXA" not in _tks_nc else [])
+
+            if _modo == "Rápido (múltiplos)":
+                _a1,_a2,_a3 = st.columns([3,1,1])
+                with _a1:
+                    _nvs = st.multiselect("Tickers", _tks_l, key="nvs_rap",
+                        label_visibility="collapsed", placeholder="Selecione tickers...")
+                with _a2:
+                    _pr = st.number_input("Peso%", 0.0, 100.0, 5.0, 0.5, key="pr_rap", label_visibility="collapsed")
+                with _a3:
+                    if st.button("Adicionar", key="btn_add_r", type="primary", use_container_width=True, disabled=not _nvs):
+                        _ca = _load_carteira()
+                        for _nt in _nvs:
+                            _tf = _nt if _nt == "CAIXA" else _nt + ".SA"
+                            _ri = next((v for v in results.values() if v.get("ticker","").replace(".SA","")==_nt), {})
+                            _ca.append({"ticker":_tf, "empresa":_ri.get("empresa",_nt) or (_nt if _nt!="CAIXA" else "Caixa — CDI"),
+                                "setor":_ri.get("sector","") or ("Renda Fixa" if _nt=="CAIXA" else ""),
+                                "peso":_pr, "preco_entrada":float(_ri.get("price_now") or 0),
+                                "data_entrada":_dt.today().strftime("%Y-%m-%d")})
+                        _save_carteira(_ca)
+                        st.success(f"{len(_nvs)} adicionado(s)!")
+                        st.cache_data.clear(); st.rerun()
+            else:
+                _em = {v.get("ticker","").replace(".SA",""): v.get("empresa","") or v.get("name","") for v in results.values()}
+                _sd = sorted(set([v.get("sector","") or v.get("setor","") for v in results.values() if v.get("sector","") or v.get("setor","")]))
+                _b1,_b2,_b3 = st.columns(3)
+                with _b1:
+                    _ns = st.selectbox("Ticker", [""]+_tks_l, key="ntk_s")
+                    _ntk = _ns if _ns else st.text_input("Ticker manual", key="ntk_m")
+                    _nemp = st.text_input("Empresa", value=_em.get(_ntk.upper(),"") or ("Caixa — CDI" if _ntk=="CAIXA" else ""), key="nemp2")
+                with _b2:
+                    _sa = next((v.get("sector","") for v in results.values() if v.get("ticker","").replace(".SA","")==_ntk.upper()), "")
+                    _nss = st.selectbox("Setor", [""]+_sd+["Renda Fixa","Outro"], index=(_sd.index(_sa)+1) if _sa in _sd else 0, key="nset_s")
+                    _nset = st.text_input("Setor manual", key="nset_m") if _nss == "Outro" else _nss
+                    _np = st.number_input("Peso%", 0.0, 100.0, 5.0, 0.5, key="np2")
+                with _b3:
+                    _npe = st.number_input("P. entrada R$", 0.0, step=0.01, key="npe2")
+                    _nda = st.text_input("Data", value=_dt.today().strftime("%Y-%m-%d"), key="nda2")
+                if st.button("Adicionar à carteira", key="btn_add_d", type="primary", use_container_width=True):
+                    if _ntk.strip():
+                        _tf2 = _ntk.strip().upper()
+                        if _tf2 != "CAIXA" and not _tf2.endswith(".SA"): _tf2 += ".SA"
+                        _ca2 = _load_carteira()
+                        if _tf2 in [p["ticker"].upper() for p in _ca2]:
+                            st.warning(f"{_tf2} já está na carteira.")
+                        else:
+                            _ca2.append({"ticker":_tf2,"empresa":_nemp.strip(),"setor":_nset.strip(),
+                                "peso":_np,"preco_entrada":_npe,"data_entrada":_nda.strip()})
+                            _save_carteira(_ca2)
+                            st.success(f"{_tf2} adicionado!")
+                            st.cache_data.clear(); st.rerun()
                     else:
                         st.error("Informe o ticker.")
-            col_save, col_imp = st.columns([1,1])
-            with col_save:
-                if st.button(" Salvar Carteira", use_container_width=True, type="primary"):
-                    nova = edited.to_dict("records")
-                    _save_carteira(nova)
-                    st.success("Carteira salva!")
-                    st.cache_data.clear()
-                    st.rerun()
-
-            with col_imp:
-                st.markdown("**Importar CSV ComDinheiro**")
-                uploaded = st.file_uploader("Upload CSV", type=["csv","txt"], key="end_upload",
-                                            label_visibility="collapsed")
-                if uploaded:
-                    try:
-                        df_imp = pd.read_csv(uploaded, sep=None, engine="python",
-                                            encoding="latin1", dtype=str)
-                        df_imp.columns = [c.strip().lower() for c in df_imp.columns]
-                        # Tenta mapear colunas comuns do ComDinheiro
-                        col_map = {}
-                        for c in df_imp.columns:
-                            if any(k in c for k in ["ticker","ativo","papel","cod"]): col_map["ticker"]=c
-                            if any(k in c for k in ["peso","alocacao","%","participacao"]): col_map["peso"]=c
-                            if any(k in c for k in ["preco","entrada","custo","pm"]): col_map["preco_entrada"]=c
-                            if any(k in c for k in ["empresa","nome","emis"]): col_map["empresa"]=c
-                        if "ticker" in col_map:
-                            importados = []
-                            for _, row in df_imp.iterrows():
-                                tk = str(row[col_map["ticker"]]).strip().upper()
-                                if not tk.endswith(".SA") and tk != "CAIXA":
-                                    tk += ".SA"
-                                importados.append({
-                                    "ticker": tk,
-                                    "empresa": str(row.get(col_map.get("empresa",""), tk)).strip(),
-                                    "setor": "—",
-                                    "peso": float(str(row.get(col_map.get("peso","0"),"0")).replace(",",".").replace("%","") or 0),
-                                    "preco_entrada": float(str(row.get(col_map.get("preco_entrada","0"),"0")).replace(",",".") or 0),
-                                    "data_entrada": str(_date.today()),
-                                })
-                            _save_carteira(importados)
-                            st.success(f"{len(importados)} posições importadas!")
-                            st.cache_data.clear()
-                            st.rerun()
-                        else:
-                            st.error(f"Não achei coluna 'ticker'. Colunas: {list(df_imp.columns)}")
-                    except Exception as e:
-                        st.error(f"Erro ao importar: {e}")
-
-        # ════════════════════════════════════════════════════════════
-        # TAB 3 — RISCO & KPIs
-        # ════════════════════════════════════════════════════════════
         with tab_risk:
             if not carteira:
                 st.info("Carteira vazia.")
@@ -3636,7 +3355,7 @@ elif pagina == "Portfolio":
                                 mb3.metric("Sharpe", f"{m_bt.get('sharpe',0):.2f}")
                                 mb4.metric("Max Drawdown", f"{m_bt.get('max_dd',0)*100:.1f}%")
                                 mb5.metric("Alpha", f"{m_bt.get('alpha',0)*100:+.2f}%" if "alpha" in m_bt else "—")
-                                mb6.metric("Beta", f"{m_bt.get('beta',0):.2f}" if "beta" in m_bt else "—")
+
 
                             # Underwater chart
                             cum_bt = (1 + port_ret_bt).cumprod()
@@ -3719,6 +3438,339 @@ elif pagina == "Portfolio":
 
 # ══════════════════════════════════════════════════════════════════
 # MERCADO — Exposição Geográfica + Governança + Gestoras + Acionistas
+# ══════════════════════════════════════════════════════════════════
+        with tab_mk:
+            st.markdown("## Otimização de Carteira — Fronteira Eficiente de Markowitz")
+
+            all_tickers = [results[e].get("ticker",e) for e in empresas]
+            st.markdown("### Configuração")
+            col_a, col_b = st.columns(2)
+            with col_a:
+                # Import da Carteira Endurance
+                import json as _jmk, pathlib as _pmk
+                _efile = _pmk.Path("/opt/shipyard/data/endurance/carteira.json")
+                _end_tks = []
+                if _efile.exists():
+                    try:
+                        _end_cart = _jmk.loads(_efile.read_text())
+                        _end_tks = [p["ticker"] for p in _end_cart if p.get("ticker") and p["ticker"] != "CAIXA"]
+                    except: pass
+                col_imp1, col_imp2 = st.columns([2,1])
+                with col_imp1:
+                    extra = st.text_input("Tickers extras (separados por vírgula)",
+                                          value="PETR4.SA, VALE3.SA, BBAS3.SA, ITUB4.SA")
+                with col_imp2:
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    if st.button(" Importar Endurance", use_container_width=True, key="mk_imp_end"):
+                        st.session_state["mk_end_imported"] = True
+                extra_list = [t.strip() for t in extra.split(",") if t.strip()]
+                base_tks = _end_tks if st.session_state.get("mk_end_imported") else []
+                portfolio_tickers = list(dict.fromkeys(base_tks + all_tickers + extra_list))
+                default_sel = _end_tks[:min(8,len(_end_tks))] if st.session_state.get("mk_end_imported") and _end_tks else portfolio_tickers[:min(5,len(portfolio_tickers))]
+                if st.session_state.get("mk_end_imported") and _end_tks:
+                    st.success(f" {len(_end_tks)} ativos da Endurance importados")
+                selected = st.multiselect("Ativos na carteira", portfolio_tickers, default=default_sel)
+            with col_b:
+                period    = st.selectbox("Período histórico", ["1y","2y","3y","5y"], index=1)
+                n_sim     = st.slider("Portfólios simulados (Monte Carlo)", 1000, 10000, 3000, 500)
+                risk_free = st.slider("Taxa livre de risco anual (%)", 5.0, 15.0, 11.7, 0.1) / 100
+                perfil    = st.radio("Perfil de risco preferido",
+                                     ["Mínima Variância","Máximo Sharpe","Personalizado"],
+                                     horizontal=True)
+                show_ibov = st.checkbox("Mostrar benchmark IBOV", value=True)
+
+            if len(selected) < 2:
+                st.warning("Selecione pelo menos 2 ativos."); st.stop()
+
+            if st.button("  Calcular Fronteira Eficiente", type="primary"):
+                with st.spinner("Baixando dados e calculando..."):
+                    try:
+                        import yfinance as yf
+                        from scipy.optimize import minimize
+
+                        @st.cache_data(ttl=3600)
+                        def get_prices(tickers, period):
+                            data = yf.download(tickers, period=period, auto_adjust=True, progress=False)
+                            if isinstance(data.columns, pd.MultiIndex):
+                                prices = data["Close"]
+                            else:
+                                prices = data[["Close"]] if "Close" in data.columns else data
+                            return prices.dropna(how="all")
+
+                        prices = get_prices(selected, period)
+                        prices = prices.dropna(axis=1, thresh=int(len(prices)*0.8))
+                        valid_tickers = list(prices.columns)
+                        if len(valid_tickers) < 2:
+                            st.error("Dados insuficientes para os tickers selecionados."); st.stop()
+
+                        returns = prices.pct_change().dropna()
+                        mu      = returns.mean() * 252
+                        cov     = returns.cov() * 252
+                        n       = len(valid_tickers)
+
+                        # Benchmark IBOV
+                        ibov_ret = None
+                        ibov_vol = None
+                        if show_ibov:
+                            try:
+                                ibov_data = yf.download("^BVSP", period=period, auto_adjust=True, progress=False)
+                                ibov_close = ibov_data["Close"].squeeze()
+                                ibov_rets = ibov_close.pct_change().dropna()
+                                ibov_ret = float(ibov_rets.mean() * 252)
+                                ibov_vol = float(ibov_rets.std() * np.sqrt(252))
+                            except Exception:
+                                ibov_ret = None
+
+                        # Monte Carlo
+                        np.random.seed(42)
+                        sim_ret, sim_vol, sim_sharpe, sim_w = [], [], [], []
+                        for _ in range(n_sim):
+                            w = np.random.dirichlet(np.ones(n))
+                            r_p = float(w @ mu)
+                            v_p = float(np.sqrt(w @ cov.values @ w))
+                            s_p = (r_p - risk_free) / v_p if v_p > 0 else 0
+                            sim_ret.append(r_p); sim_vol.append(v_p)
+                            sim_sharpe.append(s_p); sim_w.append(w)
+
+                        sim_ret    = np.array(sim_ret)
+                        sim_vol    = np.array(sim_vol)
+                        sim_sharpe = np.array(sim_sharpe)
+
+                        def neg_sharpe(w):
+                            rp = w @ mu; vp = np.sqrt(w @ cov.values @ w)
+                            return -(rp - risk_free) / vp if vp>0 else 0
+                        def port_vol(w):
+                            return np.sqrt(w @ cov.values @ w)
+
+                        bounds    = tuple((0,1) for _ in range(n))
+                        constraint = {"type":"eq","fun":lambda w: np.sum(w)-1}
+
+                        opt_sharpe = minimize(neg_sharpe, np.ones(n)/n, method="SLSQP",
+                                              bounds=bounds, constraints=constraint)
+                        opt_minvar = minimize(port_vol, np.ones(n)/n, method="SLSQP",
+                                              bounds=bounds, constraints=constraint)
+
+                        w_sharpe = opt_sharpe.x
+                        w_minvar = opt_minvar.x
+                        r_sharpe = float(w_sharpe @ mu); v_sharpe = float(np.sqrt(w_sharpe @ cov.values @ w_sharpe))
+                        r_minvar = float(w_minvar @ mu); v_minvar = float(np.sqrt(w_minvar @ cov.values @ w_minvar))
+
+                        target_rets = np.linspace(sim_ret.min(), sim_ret.max(), 60)
+                        ef_vols = []
+                        for tr in target_rets:
+                            cons = [{"type":"eq","fun":lambda w: np.sum(w)-1},
+                                    {"type":"eq","fun":lambda w,t=tr: w@mu - t}]
+                            try:
+                                res = minimize(port_vol, np.ones(n)/n, method="SLSQP",
+                                               bounds=bounds, constraints=cons)
+                                ef_vols.append(float(res.fun) if res.success else None)
+                            except Exception:
+                                ef_vols.append(None)
+
+                        ef_pairs = [(v,r) for v,r in zip(ef_vols, target_rets) if v is not None]
+                        ef_vols_clean = [p[0] for p in ef_pairs]
+                        ef_rets_clean = [p[1] for p in ef_pairs]
+
+                        fig_mz = go.Figure()
+
+                        fig_mz.add_trace(go.Scatter(
+                            x=sim_vol*100, y=sim_ret*100, mode="markers",
+                            marker=dict(size=4, color=sim_sharpe,
+                                colorscale=[[0,C["bg4"]],[0.5,C["bg3"]],[1,C["blue_lt"]]],
+                                colorbar=dict(title=dict(text="Sharpe",font=dict(color=C["gray"])),
+                                              tickfont=dict(color=C["gray"]),thickness=12,x=1.02),
+                                opacity=0.5),
+                            name="Portfólios MC",
+                            hovertemplate="Vol: %{x:.1f}%<br>Ret: %{y:.1f}%<extra></extra>",
+                        ))
+
+                        fig_mz.add_trace(go.Scatter(
+                            x=[v*100 for v in ef_vols_clean], y=[r*100 for r in ef_rets_clean],
+                            mode="lines", line=dict(color=C["white"],width=2.5),
+                            name="Fronteira Eficiente",
+                        ))
+
+                        vol_range = np.linspace(0, max(sim_vol)*100, 100)
+                        sharpe_opt = (r_sharpe - risk_free) / v_sharpe
+                        cml_ret = risk_free*100 + sharpe_opt * vol_range
+                        fig_mz.add_trace(go.Scatter(
+                            x=vol_range, y=cml_ret, mode="lines",
+                            line=dict(color=C["blue_lt"], width=1.5, dash="dot"),
+                            name=f"Capital Market Line (Sharpe={sharpe_opt:.2f})",
+                        ))
+
+                        fig_mz.add_trace(go.Scatter(
+                            x=[v_sharpe*100], y=[r_sharpe*100], mode="markers+text",
+                            marker=dict(size=14, color=C["pos"], symbol="star",
+                                        line=dict(color=C["white"],width=1.5)),
+                            text=[" Máx Sharpe"], textposition="top right",
+                            textfont=dict(color=C["pos"], size=11),
+                            name=f"Máx Sharpe ({sharpe_opt:.2f})",
+                        ))
+
+                        fig_mz.add_trace(go.Scatter(
+                            x=[v_minvar*100], y=[r_minvar*100], mode="markers+text",
+                            marker=dict(size=14, color=C["blue_lt"], symbol="diamond",
+                                        line=dict(color=C["white"],width=1.5)),
+                            text=["◆ Mín Var"], textposition="top right",
+                            textfont=dict(color=C["blue_lt"], size=11),
+                            name="Mínima Variância",
+                        ))
+
+                        # Benchmark IBOV
+                        if show_ibov and ibov_ret is not None:
+                            ibov_sharpe = (ibov_ret - risk_free) / ibov_vol
+                            fig_mz.add_trace(go.Scatter(
+                                x=[ibov_vol*100], y=[ibov_ret*100], mode="markers+text",
+                                marker=dict(size=14, color="#FFD700", symbol="square",
+                                            line=dict(color=C["white"],width=1.5)),
+                                text=[" IBOV"], textposition="top left",
+                                textfont=dict(color="#FFD700", size=11),
+                                name=f"IBOV (Sharpe={ibov_sharpe:.2f})",
+                            ))
+
+                        for i,t in enumerate(valid_tickers):
+                            fig_mz.add_trace(go.Scatter(
+                                x=[float(np.sqrt(cov.values[i,i]))*100],
+                                y=[float(mu.iloc[i])*100], mode="markers+text",
+                                marker=dict(size=10, color=C["gray"], symbol="circle-open",
+                                            line=dict(color=C["gray"],width=2)),
+                                text=[t], textposition="top center",
+                                textfont=dict(color=C["gray2"],size=10),
+                                name=t, showlegend=False,
+                            ))
+
+                        fig_mz.update_layout(**PL,
+                            title="Fronteira Eficiente | Nuvem = Monte Carlo |  Máx Sharpe |  IBOV",
+                            xaxis_title="Volatilidade Anual (%)",
+                            yaxis_title="Retorno Anual Esperado (%)",
+                            height=580,
+                        )
+                        st.plotly_chart(fig_mz, use_container_width=True)
+
+                        if show_ibov and ibov_ret is not None:
+                            st.info(f" IBOV — Retorno: {ibov_ret*100:.1f}% a.a. | Vol: {ibov_vol*100:.1f}% | Sharpe: {(ibov_ret-risk_free)/ibov_vol:.2f}")
+
+                        st.markdown("<hr>", unsafe_allow_html=True)
+                        st.markdown("### Alocações Ótimas")
+
+                        if perfil == "Máximo Sharpe":
+                            w_sel = w_sharpe; label_sel = "Máximo Sharpe"
+                            r_sel = r_sharpe; v_sel = v_sharpe
+                        elif perfil == "Mínima Variância":
+                            w_sel = w_minvar; label_sel = "Mínima Variância"
+                            r_sel = r_minvar; v_sel = v_minvar
+                        else:
+                            # Personalizado — slider de volatilidade alvo
+                            _vol_min_pct = float(v_minvar * 100)
+                            _vol_max_pct = float(max(sim_vol) * 100)
+                            _tv = st.slider(
+                                "Volatilidade alvo (% a.a.)",
+                                min_value=round(_vol_min_pct, 1),
+                                max_value=round(_vol_max_pct, 1),
+                                value=round((_vol_min_pct + _vol_max_pct) / 2, 1),
+                                step=0.5, key="mk_tv"
+                            ) / 100
+                            st.caption(f"Mín Variância: {_vol_min_pct:.1f}% | Máx Sharpe: {v_sharpe*100:.1f}% | Selecionado: {_tv*100:.1f}%")
+                            from scipy.optimize import minimize as _mz
+                            def _neg_ret(w): return -(w @ mu)
+                            _cons_p = [
+                                {"type":"eq","fun": lambda w: np.sum(w)-1},
+                                {"type":"ineq","fun": lambda w,tv=_tv: tv - np.sqrt(w @ cov.values @ w)}
+                            ]
+                            try:
+                                _res_p = _mz(_neg_ret, np.ones(n)/n, method="SLSQP",
+                                             bounds=bounds, constraints=_cons_p)
+                                w_sel = _res_p.x if _res_p.success else w_sharpe
+                            except Exception:
+                                w_sel = w_sharpe
+                            r_sel = float(w_sel @ mu)
+                            v_sel = float(np.sqrt(w_sel @ cov.values @ w_sel))
+                            label_sel = f"Personalizado (vol alvo {_tv*100:.1f}%)"
+
+                        col_p1, col_p2 = st.columns(2)
+                        with col_p1:
+                            st.markdown(f"#### Portfólio — {label_sel}")
+                            df_w = pd.DataFrame({
+                                "Ativo": valid_tickers,
+                                "Peso (%)": [f"{w*100:.1f}%" for w in w_sel],
+                                "Retorno Esp.": [f"{float(mu.iloc[i])*100:.1f}%" for i in range(n)],
+                                "Volatilidade": [f"{float(np.sqrt(cov.values[i,i]))*100:.1f}%" for i in range(n)],
+                            })
+                            st.markdown(dark_table(df_w), unsafe_allow_html=True)
+                            c1,c2,c3 = st.columns(3)
+                            c1.metric("Retorno Esperado", f"{r_sel*100:.1f}%")
+                            c2.metric("Volatilidade",     f"{v_sel*100:.1f}%")
+                            c3.metric("Índice de Sharpe", f"{(r_sel-risk_free)/v_sel:.2f}")
+                            if show_ibov and ibov_ret is not None:
+                                st.markdown(f"<div style='color:{C['gray2']};font-size:.8rem;'>vs IBOV: Ret {ibov_ret*100:.1f}% | Vol {ibov_vol*100:.1f}% | Sharpe {(ibov_ret-risk_free)/ibov_vol:.2f}</div>", unsafe_allow_html=True)
+
+                        with col_p2:
+                            fig_pizza = go.Figure(go.Pie(
+                                labels=valid_tickers, values=w_sel*100, hole=.5,
+                                marker_colors=[C["bg3"],C["blue_lt"],C["gray"],
+                                               C["bg4"],C["gray2"],C["pos"],C["neg"]][:n],
+                                textfont=dict(color=C["white"],size=11),
+                            ))
+                            fig_pizza.update_layout(
+                                paper_bgcolor=C["bg"],
+                                font=dict(family="Helvetica,Arial",color=C["gray"]),
+                                legend=dict(bgcolor=C["bg"],bordercolor=C["border"]),
+                                margin=dict(l=10,r=10,t=30,b=10),
+                                title=f"Alocação — {label_sel}",
+                                annotations=[dict(text=f"Sharpe<br><b>{(r_sel-risk_free)/v_sel:.2f}</b>",
+                                    font=dict(size=12,color=C["white"]),showarrow=False)],
+                            )
+                            st.plotly_chart(fig_pizza, use_container_width=True)
+
+                        st.markdown("#### Comparação: Mín Variância vs Máx Sharpe")
+                        compare_df = pd.DataFrame({
+                            "Ativo": valid_tickers,
+                            "Mín Variância (%)": [f"{w*100:.1f}%" for w in w_minvar],
+                            "Máx Sharpe (%)":    [f"{w*100:.1f}%" for w in w_sharpe],
+                        })
+                        st.markdown(dark_table(compare_df), unsafe_allow_html=True)
+
+                        mc1, mc2, mc3, mc4 = st.columns(4)
+                        mc1.metric("Ret. Mín Var",   f"{r_minvar*100:.1f}%")
+                        mc2.metric("Vol. Mín Var",   f"{v_minvar*100:.1f}%")
+                        mc3.metric("Ret. Máx Sharpe", f"{r_sharpe*100:.1f}%")
+                        mc4.metric("Vol. Máx Sharpe", f"{v_sharpe*100:.1f}%")
+
+                        # Correlação entre ativos
+                        st.markdown("#### Matriz de Correlação")
+                        corr = returns.corr()
+                        fig_corr = go.Figure(go.Heatmap(
+                            z=corr.values, x=list(corr.columns), y=list(corr.index),
+                            colorscale=[
+                                [0.0,"#E8F4FD"],[0.25,"#BEDAF2"],
+                                [0.5,"#6EB5E8"],[0.75,"#2B7EC2"],
+                                [1.0,"#071d36"]
+                            ],
+                            zmin=-1, zmax=1,
+                            text=[[f"{v:.2f}" for v in row] for row in corr.values],
+                            texttemplate="%{text}", textfont=dict(size=10,color="#0a1624"),
+                            colorbar=dict(tickfont=dict(color=C["gray"]),bgcolor=C["bg2"],bordercolor=C["border"])
+                        ))
+                        fig_corr.update_layout(
+                            paper_bgcolor=C["bg"],
+                            font=dict(family="Helvetica,Arial",color=C["white"]),
+                            margin=dict(l=80,r=30,t=30,b=80), height=380)
+                        st.plotly_chart(fig_corr, use_container_width=True)
+
+                    except ImportError as e:
+                        st.error(f"Biblioteca necessária não instalada: {e}")
+                        st.code("pip install yfinance scipy")
+                    except Exception as e:
+                        import traceback
+                        st.error(f"Erro ao calcular: {e}")
+                        st.code(traceback.format_exc())
+
+        # ══════════════════════════════════════════════════════════════════
+        # PÁG 8 — NOTÍCIAS
+
+# ══════════════════════════════════════════════════════════════════
+# PORTFOLIO — Carteira Endurance + Markowitz já na Analise
 # ══════════════════════════════════════════════════════════════════
 elif pagina == "Mercado":
     _mtab1, _mtab2, _mtab3, _mtab4 = st.tabs([
@@ -4151,7 +4203,7 @@ elif pagina == "Gerenciar Usuários":
         def _load_users():
             if _os.path.exists(_USERS_FILE):
                 return _jc.loads(open(_USERS_FILE).read())
-            return {"Leonardo Losi": {"senha": _hc.md5(b"velacapital@2025").hexdigest(), "perfil": "Diretor"}}
+            return {"Leonardo Losi": {"senha": _hc.md5(required_env("DASHBOARD_PASS").encode()).hexdigest(), "perfil": env("DASHBOARD_PROFILE", "Diretor")}}
         def _save_users(u):
             open(_USERS_FILE,"w").write(_jc.dumps(u, indent=2, ensure_ascii=False))
 

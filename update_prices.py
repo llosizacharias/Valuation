@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Atualiza price_now no JSON via brapi + yfinance. Roda via cron."""
 import json, sys, requests, logging
+
+from config import required_env
+_BRAPI_TOKEN = required_env("BRAPI_TOKEN")
 sys.path.insert(0, "/opt/shipyard")
 import brapi_client as brapi
 
@@ -17,7 +20,7 @@ for tk in all_tks:
     mapped = brapi.TICKER_MAP.get(clean, clean)
     try:
         r = requests.get(f"https://brapi.dev/api/quote/{mapped}",
-            params={"token":"82Pz8JKQS8zatUkoo1PBgr"}, timeout=8)
+            params={"token": _BRAPI_TOKEN}, timeout=8)
         res = r.json().get("results",[{}])
         if res and res[0].get("regularMarketPrice"):
             prices[tk] = float(res[0]["regularMarketPrice"])

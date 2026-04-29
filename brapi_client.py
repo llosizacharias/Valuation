@@ -7,7 +7,7 @@ import os, requests, pandas as pd
 from datetime import datetime, timedelta
 from functools import lru_cache
 
-BRAPI_KEY  = os.getenv("BRAPI_TOKEN", "82Pz8JKQS8zatUkoo1PBgr")
+BRAPI_KEY  = required_env("BRAPI_TOKEN")
 BASE_URL   = "https://brapi.dev/api"
 TIMEOUT    = 15
 

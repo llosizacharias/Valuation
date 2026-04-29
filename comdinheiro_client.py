@@ -8,11 +8,12 @@ Estratégia:
 """
 import os, requests, pandas as pd
 from datetime import datetime, timedelta
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 API_URL  = "https://api.comdinheiro.com.br/v1/ep1/import-data"
-CD_USER  = os.getenv("COMDINHEIRO_USER", "vela.capital")
-CD_PASS  = os.getenv("COMDINHEIRO_PASS", "Vela.capital1!")
+from config import required_env
+CD_USER  = required_env("COMDINHEIRO_USER")
+CD_PASS  = required_env("COMDINHEIRO_PASS")
 HEADERS  = {"Content-Type": "application/x-www-form-urlencoded"}
 
 
@@ -21,7 +22,7 @@ HEADERS  = {"Content-Type": "application/x-www-form-urlencoded"}
 # ─────────────────────────────────────────────────────────────────
 def _request(url_consulta, timeout=45):
     url_enc = quote(url_consulta + "&format=json3", safe="=&?/+")
-    payload = f"username={CD_USER}&password={CD_PASS}&URL={url_enc}"
+    payload = urlencode({"username": CD_USER, "password": CD_PASS}) + f"&URL={url_enc}"
     r = requests.post(API_URL, data=payload, headers=HEADERS, timeout=timeout)
     r.raise_for_status()
     return r.json()

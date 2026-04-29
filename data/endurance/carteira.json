@@ -1,114 +1,122 @@
 [
   {
-    "ticker": "WEGE3.SA",
-    "empresa": "WEG",
-    "setor": "Bens Industriais",
+    "ticker": "ALOS3.SA",
+    "empresa": "ALOS3",
+    "setor": "",
+    "peso": 5.0,
+    "preco_entrada": 33.5,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "BPAC11.SA",
+    "empresa": "BPAC11",
+    "setor": "",
+    "peso": 7.5,
+    "preco_entrada": 64.12999725341797,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "UGPA3.SA",
+    "empresa": "UGPA3",
+    "setor": "Energy",
     "peso": 12.0,
-    "preco_entrada": 38.5,
-    "data_entrada": "2024-01-02"
+    "preco_entrada": 33.5,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "RAIL3.SA",
+    "empresa": "ALL - AMÉRICA LATINA LOGÍSTICA",
+    "setor": "",
+    "peso": 5.0,
+    "preco_entrada": 16.469999313354492,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "ITSA4.SA",
+    "empresa": "ITSA4",
+    "setor": "Industrials",
+    "peso": 5.0,
+    "preco_entrada": 14.739999771118164,
+    "data_entrada": "2026-04-24"
   },
   {
     "ticker": "ITUB4.SA",
-    "empresa": "Itaú Unibanco",
-    "setor": "Financeiro",
-    "peso": 10.5,
-    "preco_entrada": 31.2,
-    "data_entrada": "2024-01-02"
-  },
-  {
-    "ticker": "PETR4.SA",
-    "empresa": "Petrobras",
-    "setor": "Petróleo & Gás",
-    "peso": 9.0,
-    "preco_entrada": 37.8,
-    "data_entrada": "2024-01-02"
-  },
-  {
-    "ticker": "VALE3.SA",
-    "empresa": "Vale",
-    "setor": "Mineração",
-    "peso": 8.5,
-    "preco_entrada": 62.4,
-    "data_entrada": "2024-01-02"
-  },
-  {
-    "ticker": "BBAS3.SA",
-    "empresa": "Banco do Brasil",
-    "setor": "Financeiro",
-    "peso": 7.5,
-    "preco_entrada": 25.1,
-    "data_entrada": "2024-01-02"
-  },
-  {
-    "ticker": "RENT3.SA",
-    "empresa": "Localiza",
-    "setor": "Consumo Discr.",
-    "peso": 7.0,
-    "preco_entrada": 42.9,
-    "data_entrada": "2024-01-02"
-  },
-  {
-    "ticker": "MGLU3.SA",
-    "empresa": "Magazine Luiza",
-    "setor": "Consumo Discr.",
-    "peso": 5.5,
-    "preco_entrada": 8.2,
-    "data_entrada": "2024-01-02"
-  },
-  {
-    "ticker": "RADL3.SA",
-    "empresa": "Raia Drogasil",
-    "setor": "Saúde",
+    "empresa": "ITUB4",
+    "setor": "",
     "peso": 5.0,
-    "preco_entrada": 28.6,
-    "data_entrada": "2024-01-02"
+    "preco_entrada": 46.37,
+    "data_entrada": "2026-04-24"
   },
   {
-    "ticker": "COGN3.SA",
-    "empresa": "Cogna",
-    "setor": "Educação",
-    "peso": 4.5,
-    "preco_entrada": 3.5,
-    "data_entrada": "2024-01-02"
+    "ticker": "VULC3.SA",
+    "empresa": "VULC3",
+    "setor": "Consumer Cyclical",
+    "peso": 5.0,
+    "preco_entrada": 17.219999313354492,
+    "data_entrada": "2026-04-24"
   },
   {
-    "ticker": "ABEV3.SA",
-    "empresa": "Ambev",
-    "setor": "Consumo Básico",
-    "peso": 4.0,
-    "preco_entrada": 12.4,
-    "data_entrada": "2024-01-02"
+    "ticker": "ALPK3.SA",
+    "empresa": "ALPK3",
+    "setor": "",
+    "peso": 5.0,
+    "preco_entrada": 4.639999866485596,
+    "data_entrada": "2026-04-24"
   },
   {
-    "ticker": "CAIXA",
-    "empresa": "Caixa / CDI",
-    "setor": "Renda Fixa",
-    "peso": 26.5,
-    "preco_entrada": 0.0,
-    "data_entrada": "2024-01-02"
+    "ticker": "ORVR3.SA",
+    "empresa": "ORVR3",
+    "setor": "",
+    "peso": 15.0,
+    "preco_entrada": 33.5,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "OPCT3.SA",
+    "empresa": "OceanPact Serviços Marítimos",
+    "setor": "Petróleo e Gás",
+    "peso": 15.0,
+    "preco_entrada": 33.5,
+    "data_entrada": "2026-04-24"
   },
   {
     "ticker": "EQTL3.SA",
-    "empresa": "",
+    "empresa": "EQUATORIAL",
     "setor": "",
-    "peso": 10.0,
-    "preco_entrada": 0.0,
-    "data_entrada": "2026-03-13"
+    "peso": 5.0,
+    "preco_entrada": 45.060001373291016,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "MBRF3.SA",
+    "empresa": "MBRF3",
+    "setor": "",
+    "peso": 5.0,
+    "preco_entrada": 19.56999969482422,
+    "data_entrada": "2026-04-24"
   },
   {
     "ticker": "KLBN11.SA",
-    "empresa": "",
+    "empresa": "KLABIN",
     "setor": "",
-    "peso": 3.5,
-    "preco_entrada": 0.0,
-    "data_entrada": "2026-03-13"
+    "peso": 2.5,
+    "preco_entrada": 18.760000228881836,
+    "data_entrada": "2026-04-24"
   },
   {
-    "ticker": "PRIO3.SA",
-    "empresa": "",
+    "ticker": "SUZB3.SA",
+    "empresa": "SUZANO HOLDING",
     "setor": "",
-    "peso": 0.0,
-    "preco_entrada": 0.0,
-    "data_entrada": "2026-03-13"
+    "peso": 2.5,
+    "preco_entrada": 47.79999923706055,
+    "data_entrada": "2026-04-24"
+  },
+  {
+    "ticker": "CAIXA",
+    "empresa": "CAIXA",
+    "setor": "Renda Fixa",
+    "peso": 5.5,
+    "preco_entrada": 33.5,
+    "data_entrada": "2026-04-24"
   }
 ]

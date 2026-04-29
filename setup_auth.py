@@ -15,8 +15,9 @@ from datetime import datetime, timedelta
 
 # ── Configuração ──────────────────────────────────────────────────
 API_URL  = "https://www.comdinheiro.com.br/Clientes/API/EndPoint001.php"
-CD_USER  = os.getenv("COMDINHEIRO_USER", "vela.capital")
-CD_PASS  = os.getenv("COMDINHEIRO_PASS", "Vela.capital1!")
+from config import required_env
+CD_USER  = required_env("COMDINHEIRO_USER")
+CD_PASS  = required_env("COMDINHEIRO_PASS")
 TIMEOUT  = 30
 
 HEADERS = {"Content-Type": "application/x-www-form-urlencoded"}
