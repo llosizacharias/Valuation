@@ -41,6 +41,30 @@ TG_SETOR = {
     "varejo":0.055,"DEFAULT":0.045,
 }
 
+# ── D-006: TV com ROIC explícito (Damodaran cap. 12) ──────────────
+# g perpétuo por setor (nominal, ≤ PIB nominal Brasil ~7%)
+G_SETOR_PERP = {
+    "energia":0.045,"saneamento":0.040,"financeiro":0.055,"banco":0.055,
+    "tecnologia":0.070,"saude":0.060,"construc":0.050,"consumo":0.060,
+    "petroleo":0.035,"minerac":0.035,"agro":0.050,"telecom":0.045,
+    "varejo":0.060,"DEFAULT":0.050,
+}
+# Spread perpétuo ROIC* sobre WACC* (decay para WACC + spread)
+SPREAD_SETOR_PERP = {
+    "energia":0.010,"saneamento":0.010,"financeiro":0.020,"banco":0.020,
+    "tecnologia":0.030,"saude":0.030,"construc":0.020,"consumo":0.020,
+    "petroleo":0.000,"minerac":0.000,"agro":0.010,"telecom":0.010,
+    "varejo":0.020,"DEFAULT":0.020,
+}
+# Estrutura de capital perpétua (D/V) por setor — para WACC perpétuo
+DV_SETOR_PERP = {
+    "energia":0.40,"saneamento":0.45,"financeiro":0.20,"banco":0.10,
+    "tecnologia":0.10,"saude":0.20,"construc":0.40,"consumo":0.25,
+    "petroleo":0.30,"minerac":0.25,"agro":0.30,"telecom":0.40,
+    "varejo":0.30,"DEFAULT":0.25,
+}
+
+
 CAPEX_DEFAULT = {
     "energia":0.18,"saneamento":0.20,"telecom":0.12,"petroleo":0.15,
     "minerac":0.14,"construc":0.08,"consumo":0.05,"varejo":0.04,
@@ -64,8 +88,36 @@ def _sk(sector):
         if k in s: return k
     return "DEFAULT"
 
-def _is_banco(sector):
-    return any(b in (sector or "").lower() for b in BANCOS)
+# Tickers reconhecidos como banco/financeira independente do campo sector
+BANK_TICKERS = {
+    "ITUB4", "ITUB3", "ITSA4", "ITSA3",
+    "BBDC4", "BBDC3", "BBAS3", "SANB11", "SANB3", "SANB4",
+    "BPAC11", "BPAC3", "BPAC5",
+    "BRSR6", "BRSR3", "BRSR5",
+    "ABCB4", "BMGB4", "BIDI4", "BIDI11",
+    "BBSE3", "PSSA3", "IRBR3", "BMOB3", "WIZS3",
+    "B3SA3",
+}
+
+def _is_banco_ticker(ticker_raw):
+    """Verifica se ticker (com ou sem .SA) bate com lista conhecida."""
+    if not ticker_raw:
+        return False
+    tk = ticker_raw.replace(".SA", "").upper()
+    return tk in BANK_TICKERS
+
+
+def _is_banco(sector_or_v):
+    """
+    Aceita string (sector) OU dict (v completo).
+    Se receber dict, checa sector + ticker.
+    """
+    if isinstance(sector_or_v, dict):
+        sector = (sector_or_v.get("sector") or sector_or_v.get("setor") or "").lower()
+        if any(b in sector for b in BANCOS):
+            return True
+        return _is_banco_ticker(sector_or_v.get("ticker"))
+    return any(b in (sector_or_v or "").lower() for b in BANCOS)
 
 def _get_default(dct, setor):
     for k,v in dct.items():
@@ -137,50 +189,57 @@ def proj_ebit(v, receita_proj):
 # ── CAPEX LÍQUIDO ─────────────────────────────────────────────────
 def proj_capex_liq(v, receita_proj, receita_ant):
     """
-    Capex líquido = Capex - D&A incremental
-    D&A incremental = variação média histórica da D&A (não cumulativa)
+    Reinvestimento líquido em capital fixo (Damodaran cap. 10/12):
+        CapEx_liquido = CapEx - D&A_total
+
+    Damodaran usa D&A TOTAL (não incremental). A definição de FCFF é:
+        FCFF = NOPAT - (CapEx - D&A) - ΔWC
+    onde (CapEx - D&A) é o reinvestimento líquido em ativos fixos.
+
+    Empresas em fase de colheita (D&A > CapEx) têm reinvestimento
+    NEGATIVO — soma de volta ao FCFF. Isso é correto e desejado.
     """
-    setor = _sk(v.get("sector") or v.get("setor",""))
-    
-    # Capex como % receita
+    setor = _sk(v.get("sector") or v.get("setor", ""))
+
+    # CapEx como % receita
     capex_pct = v.get("capex_pct_rev") or _get_default(CAPEX_DEFAULT, setor)
     capex_pct = max(0.01, min(float(capex_pct), 0.35))
     capex = receita_proj * capex_pct
-    
-    # D&A incremental (variação média histórica — não cumulativo)
-    da_inc = v.get("da_incremental_avg")
-    if da_inc is not None:
-        # D&A incremental proporcional ao crescimento da receita
-        if receita_ant and receita_ant > 0:
-            delta_rev_pct = (receita_proj - receita_ant) / receita_ant
-            da_inc_proj = float(da_inc) * (1 + delta_rev_pct)
-        else:
-            da_inc_proj = float(da_inc)
+
+    # D&A TOTAL como % receita (Damodaran-style)
+    da_pct = v.get("da_pct_rev")
+    if da_pct is not None:
+        da_pct = max(0.0, min(float(da_pct), 0.30))
+        da_total = receita_proj * da_pct
     else:
-        # Fallback: % da receita
-        da_pct = v.get("da_pct_rev") or _get_default(DA_DEFAULT, setor)
-        da_base = float(v.get("da_last") or 0)
-        if da_base and receita_ant:
-            da_inc_proj = da_base * (receita_proj/receita_ant - 1)
-        else:
-            da_inc_proj = receita_proj * float(da_pct) * 0.15  # 15% do D&A total
-    
-    # Capex líquido = Capex - D&A incremental (mínimo zero)
-    return max(0, capex - max(0, da_inc_proj))
+        # Fallback: estima D&A em 70% do CapEx (média histórica empresas BR maduras)
+        da_total = capex * 0.70
+
+    # Reinvestimento líquido = CapEx - D&A (pode ser negativo!)
+    return capex - da_total
+
 
 # ── DELTA CAPITAL DE GIRO ─────────────────────────────────────────
 def proj_dcg(v, receita_proj, receita_ant):
-    """ΔCG = ΔCG/ΔRev × ΔRev"""
-    if not receita_ant or receita_ant <= 0: return 0
+    """
+    Variação de capital de giro (ΔWC).
+    ΔWC = ΔRev × dcg_pct_drev, com CAP de ±15% (Damodaran sanity).
+
+    Empresas normais têm WC marginal entre 0% e 15% da receita.
+    Valores fora disso (>15% ou <-15%) são lixo de coleta —
+    geralmente histórico curto com outlier amplificado.
+    """
+    if not receita_ant or receita_ant <= 0:
+        return 0
     delta_rev = receita_proj - receita_ant
-    
-    setor = _sk(v.get("sector") or v.get("setor",""))
     dcg_pct = v.get("dcg_pct_drev")
     if dcg_pct is None:
-        dcg_pct = _get_default(DCG_DEFAULT, setor)
-    
-    dcg_pct = max(-0.20, min(float(dcg_pct), 0.40))
+        return 0
+    dcg_pct = float(dcg_pct)
+    # Cap em ±15% — sanity Damodaran
+    dcg_pct = max(-0.15, min(dcg_pct, 0.15))
     return delta_rev * dcg_pct
+
 
 # ── FCFF POR ANO ──────────────────────────────────────────────────
 def calc_fcff_ano(v, ano, receita_ant):
@@ -201,7 +260,7 @@ def calc_fcff_ano(v, ano, receita_ant):
 # ── DDM PARA BANCOS ───────────────────────────────────────────────
 def calc_ddm(v, shares, price):
     lpa    = v.get("lpa")
-    if not lpa: return None, {}
+    if not lpa: return None, {"erro": "lpa ausente para banco — preciso de LPA do yfinance"}
     lpa    = float(lpa)
     payout = v.get("payout") or 0.40
     if isinstance(payout, (int,float)) and payout > 1: payout /= 100
@@ -219,6 +278,119 @@ def calc_ddm(v, shares, price):
                 "wacc_expl":round(ke*100,2),"wacc_impl":round(ke*100,2)}
 
 # ── DCF COMPLETO ──────────────────────────────────────────────────
+
+# ── D-006: WACC perpétuo (β=1, estrutura setorial, RF_BASE) ───────
+def calc_wacc_perpetuo(setor, rf=None, erp=None, tax=None):
+    """
+    WACC na perpetuidade: β=1.0, estrutura de capital setorial,
+    Kd com spread reduzido (empresa madura), RF=RF_BASE (8.5%, equilíbrio LP).
+    Damodaran (Investment Valuation, cap. 12):
+    'beta should be close to one — between 0.8 and 1.2'
+    """
+    rf = RF_BASE if rf is None else rf
+    erp = ERP if erp is None else erp
+    tax = TAX if tax is None else tax
+
+    beta_perp = 1.0
+    ke_perp = rf + beta_perp * erp
+
+    dv = DV_SETOR_PERP.get(setor, DV_SETOR_PERP["DEFAULT"])
+    ev = 1.0 - dv
+
+    # Kd perpétuo: spread setorial reduzido (empresa madura)
+    kd_spread_perp = {
+        "banco":0.015,"financeiro":0.015,
+        "energia":0.020,"saneamento":0.020,"telecom":0.020,
+        "DEFAULT":0.025,
+    }
+    kd_perp = rf + kd_spread_perp.get(setor, kd_spread_perp["DEFAULT"])
+
+    wacc_p = ev * ke_perp + dv * kd_perp * (1 - tax)
+    return wacc_p, ke_perp, kd_perp
+
+
+# ── D-006: Terminal Value com ROIC explícito (Damodaran cap. 12) ──
+def calc_tv_v2(v, ebit_n, wacc_e, anos):
+    """
+    Terminal Value com fórmula:
+        TV_N = NOPAT_{N+1} × (1 - g/ROIC*) / (WACC* - g)
+
+    Decisões (D-006):
+    1. NOPAT_{N+1} = EBIT_N × (1+g) × (1-t)  — não FCFF_N × (1+g)
+       (FCFF do ano N carrega reinvestimento do ano N, inadequado p/ perpetuidade)
+    2. WACC* via calc_wacc_perpetuo (β=1, estrutura setorial, RF_BASE)
+    3. g setorial, limitado por RF_BASE
+    4. ROIC* = min(ROIC_atual, WACC* + spread_setor); spreads 0-3pp
+    5. Se ROIC_atual < WACC*: ROIC* = WACC* (sem excess return),
+       reinv_rate = g/WACC*
+
+    Retorna: (tv_pv, details_dict)
+    """
+    setor = _sk(v.get("sector") or v.get("setor", ""))
+
+    # 1. WACC perpétuo
+    wacc_p, ke_p, kd_p = calc_wacc_perpetuo(setor)
+
+    # 2. g perpétuo (limitado por RF_BASE)
+    g = min(G_SETOR_PERP.get(setor, G_SETOR_PERP["DEFAULT"]), RF_BASE * 0.95)
+
+    # 3. ROIC perpétuo (com fade)
+    roic_atual = v.get("roic")
+    try:
+        roic_atual = float(roic_atual) if roic_atual is not None else None
+    except (TypeError, ValueError):
+        roic_atual = None
+
+    spread = SPREAD_SETOR_PERP.get(setor, SPREAD_SETOR_PERP["DEFAULT"])
+
+    # Fix #3: empresas em distress (ROIC < 0) — não aplicar TV padrão
+    if roic_atual is not None and roic_atual < 0:
+        return None, {
+            "erro": f"distress: ROIC={roic_atual:.2%} < 0 — requer tratamento especial (Damodaran cap. 22)",
+            "tv_case": "distress_roic_negativo",
+        }
+
+    if roic_atual is None or roic_atual < wacc_p:
+        # ROIC* = WACC*: TV = NOPAT/(WACC-g) puro (sem excess return)
+        roic_p = wacc_p
+        reinv_rate = g / wacc_p
+        case = "no_excess" if roic_atual is not None else "no_roic_data"
+    else:
+        roic_p = min(roic_atual, wacc_p + spread)
+        reinv_rate = g / roic_p
+        case = "fade"
+
+    # 4. NOPAT_{N+1}
+    nopat_n_plus_1 = ebit_n * (1 + g) * (1 - TAX)
+
+    # 5. TV em t=N
+    if wacc_p <= g:
+        return None, {"erro": f"wacc_p ({wacc_p:.2%}) <= g ({g:.2%})"}
+    tv_n = nopat_n_plus_1 * (1 - reinv_rate) / (wacc_p - g)
+
+    # 6. PV em t=0 (descontado a wacc_explicito)
+    if wacc_e <= -1.0:
+        return None, {"erro": "wacc_e invalido"}
+    tv_pv = tv_n / (1 + wacc_e) ** anos
+
+    return tv_pv, {
+        "tv_method":     "damodaran_roic_v2",
+        "wacc_perpetuo": round(wacc_p * 100, 2),
+        "ke_perpetuo":   round(ke_p * 100, 2),
+        "kd_perpetuo":   round(kd_p * 100, 2),
+        "g_perpetuo":    round(g * 100, 2),
+        "roic_atual":    round(roic_atual * 100, 2) if roic_atual is not None else None,
+        "roic_perpetuo": round(roic_p * 100, 2),
+        "reinv_rate":    round(reinv_rate * 100, 2),
+        "ebit_n":        round(ebit_n, 0),
+        "nopat_n1":      round(nopat_n_plus_1, 0),
+        "tv_in_year_n":  round(tv_n, 0),
+        "tv_pv":         round(tv_pv, 0),
+        "case":          case,
+        "tv_case":       case,
+    }
+
+
 def calc_dcf_full(v):
     price  = float(v.get("price_now") or 0)
     mktcap = v.get("mkt_cap")
@@ -226,11 +398,11 @@ def calc_dcf_full(v):
     sector = v.get("sector") or v.get("setor","") or ""
     setor  = _sk(sector)
     
-    if not price or not mktcap: return None, {}
+    if not price or not mktcap: return None, {"erro": "price ou mktcap zerado"}
     shares = mktcap / price
-    if shares <= 0: return None, {}
+    if shares <= 0: return None, {"erro": "shares <= 0"}
     
-    if _is_banco(sector):
+    if _is_banco(v):
         return calc_ddm(v, shares, price)
     
     # Beta
@@ -252,7 +424,7 @@ def calc_dcf_full(v):
     
     # Receita base
     rev_base = float(v.get("revenue_last") or 0)
-    if not rev_base: return None, {}
+    if not rev_base: return None, {"erro": "revenue_last zerado"}
     
     # PV período explícito — FCFF projetado ano a ano
     pv = 0.0
@@ -267,24 +439,26 @@ def calc_dcf_full(v):
         fcff_series.append(round(fcff_i, 0))
         receita_ant = receita_i
     
-    # Estrutura terminal
-    nd_term  = nd_pos * 0.70
-    eq_term  = mktcap
-    d_e_term = nd_term / eq_term if eq_term > 0 else 0
-    beta_l_t = min(relever(beta_u, d_e_term), 2.5)
-    kd_term  = RF_IMPL * 0.90
-    wacc_i, ke_i = calc_wacc(beta_l_t, kd_term,
-                              eq_term, nd_term, RF_IMPL, ERP)
-    wacc_i = min(wacc_i, 0.18)
-    
-    if wacc_i <= TG_PIB: wacc_i = TG_PIB + 0.03
-    
-    # Valor terminal
-    fcff_last = fcff_series[-1]
-    tv = fcff_last * (1 + TG_PIB) / (wacc_i - TG_PIB) / (1 + wacc_e)**ANOS
+    # ── D-006: Terminal value via Damodaran ROIC explícito ──
+    # EBIT do ano N: re-projeção (mesma metodologia de proj_ebit) ou
+    # extrapolação a partir do FCFF/margem — preferimos recalcular EBIT_N puro
+    receita_n = receita_ant  # após o loop, receita_ant = receita do ano N
+    ebit_n = proj_ebit(v, receita_n)
+    if ebit_n is None or ebit_n <= 0:
+        # Fallback: estima EBIT_N pela margem média × receita_N
+        margin = float(v.get("ebit_margin_hist") or 0.15)
+        ebit_n = receita_n * margin
+
+    tv, tv_details = calc_tv_v2(v, ebit_n, wacc_e, ANOS)
+    if tv is None:
+        return None, {"erro_tv": tv_details.get("erro", "tv None")}
+
+    # Compatibilidade backward: mantém wacc_i e fcff_last como referência
+    wacc_i = tv_details["wacc_perpetuo"] / 100
+    fcff_last = fcff_series[-1] if fcff_series else 0
     
     eq_val = pv + tv - nd
-    if eq_val <= 0: return None, {}
+    if eq_val <= 0: return None, {"erro": f"eq_val negativo: pv={pv:.0f} tv={tv:.0f} nd={nd:.0f}"}
     
     pf = round(eq_val / shares, 2)
     
@@ -292,7 +466,7 @@ def calc_dcf_full(v):
         "wacc_expl":    round(wacc_e*100, 2),
         "wacc_impl":    round(wacc_i*100, 2),
         "ke_expl":      round(ke_e*100, 2),
-        "ke_impl":      round(ke_i*100, 2),
+        "ke_impl":      round(tv_details["ke_perpetuo"], 2),
         "kd_real":      round(kd*100, 2),
         "beta_levered": round(beta_l, 3),
         "beta_unlevered":round(beta_u, 3),
@@ -305,6 +479,8 @@ def calc_dcf_full(v):
         "fcff_series":  fcff_series,
         "ebit_method":  v.get("ebit_method","pct_rev"),
         "rev_base":     round(rev_base, 0),
+        # D-006: detalhes do TV v2
+        "tv_v2":        tv_details,
     }
     
     return pf, details
