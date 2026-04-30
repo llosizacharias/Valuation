@@ -28,10 +28,28 @@ TG_PIB    = 0.023
 
 # Beta desalavancado setorial (Damodaran 2026 EM)
 BETA_U = {
-    "energia":0.45,"saneamento":0.40,"financeiro":0.50,"banco":0.45,
-    "tecnologia":0.90,"saude":0.65,"construc":0.80,"consumo":0.70,
-    "petroleo":0.65,"minerac":0.75,"agro":0.65,"telecom":0.55,
-    "varejo":0.80,"DEFAULT":0.70,
+    # Damodaran 2026 (US) — unlevered beta corrected for cash (D-007)
+    # Fonte: https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/Betas.html
+    "energia":     0.31,    # Power
+    "saneamento":  0.28,    # Utility (Water)
+    "financeiro":  0.33,    # Financial Svcs. (Non-bank & Insurance)
+    "banco":       0.37,    # Banks (Regional)
+    "tecnologia":  1.25,    # Software (System & Application)
+    "saude":       0.86,    # Healthcare Products
+    "construc":    1.05,    # Construction Supplies
+    "consumo":     0.47,    # Food Processing
+    "petroleo":    0.58,    # Oil/Gas (Production and Exploration)
+    "minerac":     1.01,    # Metals & Mining
+    "siderurgia":  0.94,    # Steel
+    "papel":       0.77,    # Paper/Forest Products
+    "agro":        0.85,    # Farming/Agriculture
+    "telecom":     0.38,    # Telecom. Services
+    "varejo":      0.78,    # Retail (General)
+    "transporte":  0.71,    # Transportation
+    "educacao":    0.72,    # Education
+    "real_estate": 0.40,    # R.E.I.T.
+    "industrial":  0.89,    # Machinery
+    "DEFAULT":     0.90,    # Total Market (without financials)
 }
 
 TG_SETOR = {
@@ -83,9 +101,76 @@ DCG_DEFAULT = {
 BANCOS = ["banco","financeiro","seguro","previdencia","credito"]
 
 def _sk(sector):
-    s = (sector or "").lower()
-    for k in list(BETA_U.keys())[:-1]:
-        if k in s: return k
+    """
+    Classificador de setor robusto — D-007 Sprint 2A.
+    Aceita keywords brasileiras (com/sem acentos) e inglês (yfinance).
+    Retorna chave de BETA_U.
+    """
+    if not sector:
+        return "DEFAULT"
+    s = sector.lower()
+
+    # Normaliza acentos comuns
+    repl = {"á":"a","â":"a","ã":"a","é":"e","ê":"e",
+            "í":"i","ó":"o","ô":"o","õ":"o","ú":"u","ç":"c"}
+    for old, new in repl.items():
+        s = s.replace(old, new)
+
+    # Mapeamento explícito por keyword (ordem importa: mais específico antes)
+    SECTOR_MAP = [
+        # ── BANCOS / FINANCEIRO ──
+        (["banco","bank","financeiro","financ","credito","credit"], "banco"),
+        (["seguro","insurance","previdencia","reinsur"], "financeiro"),
+        (["bolsa","exchange","corretora","brokerage"], "financeiro"),
+
+        # ── ENERGIA / SANEAMENTO ──
+        (["energia eletrica","electric utility","power","utility (general)"], "energia"),
+        (["utilities","utility"], "energia"),
+        (["saneamento","water","sanit"], "saneamento"),
+
+        # ── PETRÓLEO / GÁS ──
+        (["petroleo","oil","gas","petroleum","oilfield"], "petroleo"),
+
+        # ── MINERAÇÃO / SIDERURGIA / PAPEL ──
+        (["siderurgia","steel","metalur"], "siderurgia"),
+        (["minerac","mining","metals","basic materials"], "minerac"),
+        (["papel","paper","celulose","forest"], "papel"),
+
+        # ── INDUSTRIAL ──
+        (["maquinas","machinery","equipment","industrial","aerospace","defense"], "industrial"),
+        (["construc","construction","building","engenh"], "construc"),
+
+        # ── TECNOLOGIA / TELECOM ──
+        (["tecnologia","technology","software","semiconductor","computer"], "tecnologia"),
+        (["telecom","communication","wireless"], "telecom"),
+
+        # ── SAÚDE ──
+        (["saude","healthcare","health care","drug","pharma","biotech","hospital"], "saude"),
+
+        # ── EDUCAÇÃO ──
+        (["educacao","education","school","university"], "educacao"),
+
+        # ── REAL ESTATE ──
+        (["real estate","reit","imobiliar","property"], "real_estate"),
+
+        # ── TRANSPORTE ──
+        (["transporte","transport","airline","trucking","shipping","railroad"], "transporte"),
+
+        # ── AGRO / ALIMENTOS / CONSUMO ──
+        (["agro","farming","agricult","cattle","beef","fertiliz"], "agro"),
+        (["alimentos","food","beverage","bebida","tobacco","tabaco"], "consumo"),
+        (["consumer staples","consumer defensive","household"], "consumo"),
+
+        # ── VAREJO / CONSUMO CICLICO ──
+        (["varejo","retail","apparel","clothing","shoe","luxury"], "varejo"),
+        (["consumer cyclical","consumer discretionary","auto","entertain","hotel","restaurant"], "varejo"),
+    ]
+
+    for keywords, target in SECTOR_MAP:
+        for kw in keywords:
+            if kw in s:
+                return target
+
     return "DEFAULT"
 
 # Tickers reconhecidos como banco/financeira independente do campo sector
@@ -98,6 +183,7 @@ BANK_TICKERS = {
     "BBSE3", "PSSA3", "IRBR3", "BMOB3", "WIZS3",
     "B3SA3",
 }
+
 
 def _is_banco_ticker(ticker_raw):
     """Verifica se ticker (com ou sem .SA) bate com lista conhecida."""
