@@ -477,11 +477,27 @@ def calc_tv_v2(v, ebit_n, wacc_e, anos):
 
     spread = SPREAD_SETOR_PERP.get(setor, SPREAD_SETOR_PERP["DEFAULT"])
 
-    # Fix #3: empresas em distress (ROIC < 0) — não aplicar TV padrão
+    # D-009: detecção de distress estendida (Sprint 2B+)
+    # Captura empresas em deterioração mesmo sem ROIC explícito calculado.
+    # Damodaran cap. 22: empresas em distress requerem framework alternativo
+    # (probabilidade de default × valor liquidação + (1-p) × valor continuidade).
+    distress_signals = []
     if roic_atual is not None and roic_atual < 0:
+        distress_signals.append(f"ROIC={roic_atual:.2%}")
+    ebit_avg = v.get("ebit_3y_avg")
+    if ebit_avg is not None and ebit_avg < 0:
+        distress_signals.append(f"EBIT_3y={ebit_avg/1e9:.2f}bi")
+    rev_cagr = v.get("rev_cagr_hist")
+    if rev_cagr is not None and rev_cagr < -0.10:
+        distress_signals.append(f"rev_cagr={rev_cagr:.1%}")
+    lpa = v.get("lpa")
+    if lpa is not None and lpa < 0 and rev_cagr is not None and rev_cagr < 0:
+        distress_signals.append(f"prejuizo+contracao(LPA={lpa:.2f})")
+
+    if distress_signals:
         return None, {
-            "erro": f"distress: ROIC={roic_atual:.2%} < 0 — requer tratamento especial (Damodaran cap. 22)",
-            "tv_case": "distress_roic_negativo",
+            "erro": f"distress: {', '.join(distress_signals)} - requer tratamento especial",
+            "tv_case": "distress",
         }
 
     if roic_atual is None or roic_atual < wacc_p:
