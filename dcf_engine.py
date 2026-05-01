@@ -425,7 +425,10 @@ def calc_wacc_perpetuo(setor, rf=None, erp=None, tax=None):
     erp = ERP if erp is None else erp
     tax = TAX if tax is None else tax
 
-    beta_perp = 1.0
+    # D-010 Sprint 2C: beta perpetuo setorial com floor/cap Damodaran
+    # "In stable growth, beta should be between 0.6 and 1.4" (cap. 12)
+    beta_setorial = BETA_U.get(setor, BETA_U["DEFAULT"])
+    beta_perp = max(0.6, min(beta_setorial, 1.4))
     ke_perp = rf + beta_perp * erp
 
     dv = DV_SETOR_PERP.get(setor, DV_SETOR_PERP["DEFAULT"])
