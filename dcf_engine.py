@@ -21,7 +21,55 @@ NTNB_REAL = (1 + NTNB_NOM) / (1 + IPCA_LP) - 1
 RF_EXPL   = RF_BASE   # base = equilíbrio; use DI_AA para stress
 RF_IMPL   = NTNB_REAL + IPCA_LP
 RF_STRESS = DI_AA    # cenário stress = DI atual
-ERP       = 0.0747   # Damodaran 2026
+# ── ERP DECOMPOSTO (D-008, Sprint 2B) ─────────────────────────────
+# Fonte: Damodaran janeiro 2026 (Mature Market + Brasil Ba1)
+# https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html
+#
+# Mature Market ERP = ERP for US − Default spread for the US
+#                   = 4.46% − 0.23% = 4.23%
+#                   (novo método pós-downgrade Moody's US, jan 2026)
+#
+# CRP Brasil: rating Ba1, default spread 2.13%, scaled-up = 3.24%
+# Sovereign CDS alternativo: ERP_Brasil_CDS = 7.59% (validação cruzada)
+ERP_MATURO  = 0.0423   # Mature Market ERP (Damodaran jan 2026)
+CRP_BRASIL  = 0.0324   # Country Risk Premium Brasil (Ba1, jan 2026)
+ERP         = ERP_MATURO + CRP_BRASIL  # = 0.0747 (compatibilidade backward)
+ERP_BRASIL  = ERP                       # alias semântico
+
+# Tabela CRP por país (Damodaran jan 2026, equity risk premium total)
+# Para futuras empresas com exposição internacional (Ambev, Vale, Klabin)
+ERP_PAIS = {
+    "brasil":     0.0747,
+    "chile":      0.0533,
+    "mexico":     0.0669,
+    "peru":       0.0630,
+    "colombia":   0.0708,
+    "argentina":  0.1394,
+    "uruguai":    0.0630,
+    "uruguay":    0.0630,
+    "usa":        0.0446,
+    "us":         0.0446,
+    "europa":     0.0501,  # média Aa3 típica
+    "china":      0.0514,
+    "DEFAULT":    0.0747,  # fallback = Brasil
+}
+
+
+def get_erp(pais="brasil"):
+    """
+    Retorna ERP total para o país. Default = Brasil.
+    Fonte: Damodaran janeiro 2026.
+    """
+    return ERP_PAIS.get((pais or "brasil").lower(), ERP_PAIS["DEFAULT"])
+
+
+def get_crp(pais="brasil"):
+    """
+    Retorna apenas o CRP (country risk premium) para o país.
+    Útil para análises com exposição internacional (lambda).
+    """
+    return get_erp(pais) - ERP_MATURO
+
 TAX       = 0.34
 ANOS      = 7
 TG_PIB    = 0.023
