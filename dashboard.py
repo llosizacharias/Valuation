@@ -247,14 +247,14 @@ h3 {{ color:{C['gray2']} !important; font-size:.76rem !important; text-transform
 [data-testid="stTab"] button p {{ font-weight:700 !important; }}
 button[data-baseweb="tab"] {{ font-weight:700 !important; }}
 /* ── DataFrames / tabelas ── */
-.stDataFrame {{ border:1px solid {C['border']}; border-radius:6px; overflow:hidden; background:{C['bg2']}; }}
-.stDataFrame > div {{ background:{C['bg2']} !important; }}
-/* Novo componente Arrow (glide-data-grid) */
-[data-testid="stDataFrame"] {{ background:{C['bg2']} !important; border:1px solid {C['border']}; border-radius:6px; }}
-[data-testid="stDataFrame"] > div {{ background:{C['bg2']} !important; }}
-/* Canvas do glide-data-grid fica em cima — forçar background do container */
-.dvn-scroller {{ background:{C['bg2']} !important; }}
-.stDataFrame canvas {{ filter: invert(0); }}
+/* IMPORTANTE: NÃO forçar background no .dvn-scroller nem no canvas
+   pois o glide-data-grid renderiza os dados via canvas e o background
+   forçado COBRE os dados. Apenas borda externa para integração visual. */
+[data-testid="stDataFrame"] {{
+    border:1px solid {C['border']};
+    border-radius:6px;
+    overflow:hidden;
+}}
 /* Fallback: tabelas HTML simples */
 thead tr th {{ background:{C['bg4']} !important; color:{C['blue_lt']} !important; font-size:.72rem !important; text-transform:uppercase; }}
 tbody tr {{ background:{C['bg2']} !important; color:{C['white']} !important; }}
@@ -327,6 +327,27 @@ input[type="checkbox"]:checked + div, input[type="radio"]:checked + div {{
 .stTextInput > div > div > input {{ background:{C['bg2']} !important; color:{C['white']} !important; border:1px solid {C['border']} !important; }}
 /* Progress/spinner color */
 .stProgress > div > div > div > div {{ background:{C['blue_lt']} !important; }}
+
+/* ── Fonte aumentada (D-011 v3.1) ─────────────────── */
+/* Métricas (st.metric) */
+[data-testid="stMetricValue"] {{ font-size: 1.55rem !important; }}
+[data-testid="stMetricLabel"] {{ font-size: 0.78rem !important; }}
+
+/* Tabelas / dataframes — texto interno do glide-data-grid */
+[data-testid="stDataFrame"] {{ font-size: 1rem !important; }}
+
+/* Selectboxes, multiselects, inputs — labels e valores */
+.stSelectbox label, .stMultiSelect label, .stTextInput label, .stNumberInput label {{
+    font-size: 0.85rem !important;
+}}
+.stSelectbox > div > div, .stMultiSelect > div > div {{
+    font-size: 0.95rem !important;
+}}
+.stTextInput input, .stNumberInput input {{ font-size: 0.95rem !important; }}
+
+/* Markdown body em geral (textos auxiliares dentro da Visão Geral) */
+.main .block-container p {{ font-size: 0.95rem; }}
+
 
 /* ── REMOVE VERMELHO STREAMLIT GLOBAL ── */
 :root {{
@@ -1008,50 +1029,86 @@ def get_beta_data(tk, periodo="3y"):
 if pagina == "Cobertura":
     _ctab1, _ctab2, _ctab3 = st.tabs(["Visão Geral", "Empresa", "Fundamentals"])
     with _ctab1:
-            # ── Filtros e ordenação ────────────────────────────────────
-            f1, f2, f3, f4 = st.columns([2, 2, 2, 2])
-            with f1:
-                ordem_por = st.selectbox("Ordenar por", [
-                    "Nome", "Upside ↑", "Upside ↓", "EV ↓", "EV ↑",
-                    "WACC ↑", "WACC ↓", "Beta ↑", "Beta ↓",
-                    "EV/EBITDA ↑", "P/E ↑", "Margem EBIT ↓",
-                ], key="vg_ordem")
-            with f2:
-                filtro_rec = st.multiselect("Recomendação", ["COMPRA FORTE","COMPRA","NEUTRO","VENDA","VENDA FORTE"],
-                                            default=[], key="vg_rec",
-                                            placeholder="Todas")
-            with f3:
-                filtro_upside_min = st.number_input("Upside mín (%)", value=-100, step=5, key="vg_up_min")
-            with f4:
-                filtro_upside_max = st.number_input("Upside máx (%)", value=200, step=5, key="vg_up_max")
+            # ══════════════════════════════════════════════════════════════
+            # VISÃO GERAL v3 — tabela densa enxuta + interatividade
+            # ══════════════════════════════════════════════════════════════
+            import pandas as pd
 
-            # Aplica filtros
+            # ── Mini-métricas agregadas no topo ───────────────────────
+            _all = [r for r in results.values() if not r.get("deslistado")]
+            _n_total = len(_all)
+            _n_cf = sum(1 for r in _all if r.get("recomendacao") == "COMPRA FORTE")
+            _n_c  = sum(1 for r in _all if r.get("recomendacao") == "COMPRA")
+            _n_n  = sum(1 for r in _all if r.get("recomendacao") == "NEUTRO")
+            _n_v  = sum(1 for r in _all if r.get("recomendacao") == "VENDA")
+            _n_vf = sum(1 for r in _all if r.get("recomendacao") == "VENDA FORTE")
+            _n_dist = sum(1 for r in _all if r.get("recomendacao") == "DISTRESS")
+            _n_falha = sum(1 for r in _all if r.get("recomendacao") in
+                           ["FALHA_MODELO", "SEM_DADOS", "DADOS_SUSPEITOS"])
+
+            mc1, mc2, mc3, mc4, mc5, mc6 = st.columns(6)
+            with mc1: st.metric("Total", _n_total)
+            with mc2: st.metric("🟢 Compra Forte", _n_cf)
+            with mc3: st.metric("🔵 Compra", _n_c)
+            with mc4: st.metric("⚪ Neutro", _n_n)
+            with mc5: st.metric("🔴 Venda/Forte", f"{_n_v + _n_vf}")
+            with mc6: st.metric("⚠️ Falha/Distress", f"{_n_dist + _n_falha}")
+
+            st.markdown("<hr style='margin:10px 0'>", unsafe_allow_html=True)
+
+            # ── Filtros ───────────────────────────────────────────────
+            f1, f2, f3, f4, f5 = st.columns([2.5, 2, 1.5, 1, 1])
+            with f1:
+                _busca = st.text_input("🔍 Buscar ticker ou empresa",
+                                       placeholder="ex: WEGE3, Itau, Vale...",
+                                       key="vg_busca")
+            with f2:
+                filtro_rec = st.multiselect("Recomendação",
+                    ["COMPRA FORTE","COMPRA","NEUTRO","VENDA","VENDA FORTE",
+                     "DISTRESS","FALHA_MODELO","SEM_DADOS","DADOS_SUSPEITOS"],
+                    default=[], key="vg_rec", placeholder="Todas")
+            with f3:
+                ordem_por = st.selectbox("Ordenar por", [
+                    "Upside ↓", "Upside ↑", "Ticker", "Preço ↓", "Preço ↑",
+                ], key="vg_ordem")
+            with f4:
+                filtro_upside_min = st.number_input("Up.mín %", value=-100, step=10, key="vg_up_min")
+            with f5:
+                filtro_upside_max = st.number_input("Up.máx %", value=300, step=10, key="vg_up_max")
+
+            # ── Aplica filtros ────────────────────────────────────────
             empresas_vg = list(results.keys())
-            if filtro_rec:
-                empresas_vg = [e for e in empresas_vg if
-                               any(r in (results[e].get("recomendacao") or "") for r in filtro_rec)]
-            empresas_vg = [e for e in empresas_vg if
-                           filtro_upside_min <= float(results[e].get("upside") or 0) <= filtro_upside_max]
-            # Oculta deslistados (sem dados em nenhuma fonte)
+
+            # Filtro deslistados
             empresas_vg = [e for e in empresas_vg if not results[e].get("deslistado")]
+
+            # Filtro recomendação
+            if filtro_rec:
+                empresas_vg = [e for e in empresas_vg if results[e].get("recomendacao") in filtro_rec]
+
+            # Filtro upside
+            empresas_vg = [e for e in empresas_vg
+                           if filtro_upside_min <= float(results[e].get("upside") or 0) <= filtro_upside_max]
+
+            # Filtro busca texto livre
+            if _busca:
+                _q = _busca.strip().lower()
+                empresas_vg = [e for e in empresas_vg if
+                    _q in (results[e].get("ticker") or "").lower() or
+                    _q in (results[e].get("empresa") or "").lower() or
+                    _q in (e or "").lower()]
 
             # Ordena
             _sort_key = {
-                "Nome":          lambda e: results[e].get("ticker", e).replace(".SA",""),
-                "Upside ↑":      lambda e: float(results[e].get("upside") or 0),
-                "Upside ↓":      lambda e: -float(results[e].get("upside") or 0),
-                "EV ↓":          lambda e: -float(results[e].get("enterprise_value") or 0),
-                "EV ↑":          lambda e: float(results[e].get("enterprise_value") or 0),
-                "WACC ↑":        lambda e: float(results[e].get("wacc") or 0),
-                "WACC ↓":        lambda e: -float(results[e].get("wacc") or 0),
-                "Beta ↑":        lambda e: float(results[e].get("beta") or 0),
-                "Beta ↓":        lambda e: -float(results[e].get("beta") or 0),
-                "EV/EBITDA ↑":   lambda e: float(results[e].get("ev_ebitda") or 0),
-                "P/E ↑":         lambda e: float(results[e].get("pe") or 0),
-                "Margem EBIT ↓": lambda e: -float(results[e].get("ebit_margin") or 0),
+                "Ticker":   lambda e: results[e].get("ticker", e).replace(".SA",""),
+                "Upside ↓": lambda e: -float(results[e].get("upside") or 0),
+                "Upside ↑": lambda e:  float(results[e].get("upside") or 0),
+                "Preço ↓":  lambda e: -float(results[e].get("price_now") or 0),
+                "Preço ↑":  lambda e:  float(results[e].get("price_now") or 0),
             }
-            empresas_vg = sorted(empresas_vg, key=_sort_key.get(ordem_por, lambda e: e))
-            # Deduplica por ticker — manual tem prioridade sobre B3
+            empresas_vg = sorted(empresas_vg, key=_sort_key.get(ordem_por, _sort_key["Upside ↓"]))
+
+            # Deduplica por ticker
             _seen = {}
             for _e in empresas_vg:
                 _t = results[_e].get("ticker", _e)
@@ -1063,77 +1120,177 @@ if pagina == "Cobertura":
                 st.info("Nenhuma empresa corresponde aos filtros aplicados.")
                 st.stop()
 
+            # ── Cabeçalho do bloco ────────────────────────────────────
             st.markdown(f"""<div style="display:flex;align-items:center;gap:12px;margin:8px 0 12px">
-                <span style="color:{C['white']};font-size:1.1rem;font-weight:700">Visão Geral da Cobertura</span>
+                <span style="color:{C['white']};font-size:1.05rem;font-weight:700">Visão Geral da Cobertura</span>
                 <span style="color:{C['gray']};font-size:.75rem;background:{C['bg2']};border:1px solid {C['border']};
                     border-radius:4px;padding:2px 10px">{len(empresas_vg)} empresa(s)</span>
             </div>""", unsafe_allow_html=True)
 
-            _ncols = 3
-            for _row_start in range(0, len(empresas_vg), _ncols):
-                _row_emps = empresas_vg[_row_start:_row_start+_ncols]
-                cols = st.columns(_ncols, gap="small")
-                for i, emp in enumerate(_row_emps):
-                    r = results[emp]; ticker = r.get("ticker", emp); upside = r.get("upside") or 0
-                    with cols[i]:
-                        _up  = (upside or 0)
-                        _uc  = C["pos"] if _up >= 0 else C["neg"]
-                        _ud  = f"{_up:+.1f}%"
-                        _rec = r.get("recomendacao", "—")
-                        _bc  = C["pos"] if "COMPRA" in str(_rec).upper() else (C["neg"] if "VENDA" in str(_rec).upper() else C["gray"])
-                        _nome = r.get("empresa", ticker.replace(".SA",""))
-                        st.markdown(f'''<div style="background:{C['bg2']};border:1px solid {C['border']};border-radius:10px;padding:16px 14px;margin-bottom:4px;min-width:0">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;min-width:0">
-                            ''' + logo_empresa_html(ticker, 40) + f'''
-                            <div style="flex:1;min-width:0;overflow:hidden">
-                                <div style="color:{C['blue_lt']};font-weight:800;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{ticker.replace('.SA','')}</div>
-                                <div style="color:{C['gray']};font-size:.65rem;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{_nome[:28]}</div>
-                            </div>
-                            <div style="background:{_bc}22;border:1px solid {_bc};border-radius:4px;padding:2px 6px;font-size:.62rem;font-weight:700;color:{_bc};white-space:nowrap;flex-shrink:0">{_rec}</div>
+            # ── Construção do DataFrame (6 colunas) ───────────────────
+            # Helper: prefixa Rec. com bullet colorido (emoji)
+            def _format_rec_with_bullet(rec):
+                v = str(rec).upper()
+                if "COMPRA FORTE" in v: return "🟢 COMPRA FORTE"
+                if "VENDA FORTE" in v:  return "🔴 VENDA FORTE"
+                if "COMPRA" in v:        return "🟢 COMPRA"
+                if "VENDA" in v:         return "🔴 VENDA"
+                if "NEUTRO" in v:        return "⚪ NEUTRO"
+                if "DISTRESS" in v:      return "🟠 DISTRESS"
+                if "DADOS_SUSPEITOS" in v or "SUSPEITO" in v: return "⚠️ SUSPEITO"
+                if "FALHA" in v:         return "✕ FALHA"
+                if "SEM_DADOS" in v:     return "— SEM DADOS"
+                return rec
+
+            _rows = []
+            for emp in empresas_vg:
+                r = results[emp]
+                _ticker_full = r.get("ticker", emp) or emp
+                _ticker = _ticker_full.replace(".SA", "")
+
+                _price_now = r.get("price_now")
+                _price_fair = r.get("price_fair")
+                _upside = r.get("upside")
+
+                _rows.append({
+                    "_emp_key": emp,
+                    "Ticker": _ticker,
+                    "Empresa": (r.get("empresa") or _ticker)[:40],
+                    "Preço": float(_price_now) if _price_now else None,
+                    "Fair": float(_price_fair) if _price_fair else None,
+                    "Upside %": float(_upside) if _upside is not None else None,
+                    "Rec.": _format_rec_with_bullet(r.get("recomendacao") or "—"),
+                })
+
+            _df = pd.DataFrame(_rows)
+            _df_display = _df.drop(columns=["_emp_key"])
+
+            # ── Styler — cores condicionais via Styler.map ───────────
+            def _color_upside(val):
+                if val is None or pd.isna(val): return ""
+                if val >= 30:    return f"background-color: {C['pos']}55; color: {C['white']}; font-weight:700"
+                if val >= 10:    return f"background-color: {C['pos']}33; color: {C['pos']}; font-weight:600"
+                if val >= -10:   return f"color: {C['gray']}"
+                if val >= -30:   return f"background-color: {C['neg']}33; color: {C['neg']}; font-weight:600"
+                return f"background-color: {C['neg']}55; color: {C['white']}; font-weight:700"
+
+            def _color_rec(val):
+                """Cores Rec. com fundo escuro consistente — só varia a cor do texto."""
+                v = str(val).upper()
+                base = f"background-color: {C['bg']}; text-align:center; font-weight:700"
+                if "COMPRA FORTE" in v: return f"{base}; color: {C['pos']}"
+                if "VENDA FORTE" in v:  return f"{base}; color: {C['neg']}"
+                if "COMPRA" in v:        return f"{base}; color: {C['pos']}"
+                if "VENDA" in v:         return f"{base}; color: {C['neg']}"
+                if "DISTRESS" in v:      return f"{base}; color: #f59e0b"
+                if "NEUTRO" in v:        return f"{base}; color: {C['gray2']}"
+                # FALHA, SUSPEITO, SEM_DADOS
+                return f"{base}; color: {C['gray']}; font-weight:500"
+
+            _styled = (_df_display.style
+                .map(_color_upside, subset=["Upside %"])
+                .map(_color_rec, subset=["Rec."])
+                .format({
+                    "Preço":    lambda x: f"R$ {x:.2f}" if pd.notna(x) and x else "—",
+                    "Fair":     lambda x: f"R$ {x:.2f}" if pd.notna(x) and x else "—",
+                    "Upside %": lambda x: f"{x:+.1f}%" if pd.notna(x) else "—",
+                })
+            )
+
+            # ── Renderiza tabela com seleção ─────────────────────────
+            _evt = st.dataframe(
+                _styled,
+                use_container_width=True,
+                hide_index=True,
+                height=min(50 + len(_df) * 35, 600),
+                on_select="rerun",
+                selection_mode="single-row",
+                key="vg_tabela",
+                column_config={
+                    "Ticker":   st.column_config.TextColumn("Ticker", width="small"),
+                    "Empresa":  st.column_config.TextColumn("Empresa", width="medium"),
+                    "Preço":    st.column_config.NumberColumn("Preço", width="small"),
+                    "Fair":     st.column_config.NumberColumn("Fair", width="small"),
+                    "Upside %": st.column_config.NumberColumn("Upside", width="small"),
+                    "Rec.":     st.column_config.TextColumn("Rec.", width="small"),
+                },
+            )
+
+            # ── Botão exportar CSV ────────────────────────────────────
+            _csv_bytes = _df_display.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                "📥 Exportar visão atual (CSV)",
+                data=_csv_bytes,
+                file_name=f"shipyard_visao_geral_{len(_df)}empresas.csv",
+                mime="text/csv",
+                key="vg_export_csv",
+            )
+
+            # ── Painel de detalhe inline (linha selecionada) ─────────
+            try:
+                _sel = _evt.selection.rows
+            except AttributeError:
+                _sel = []
+
+            if _sel:
+                _idx = _sel[0]
+                _emp_sel = _df.iloc[_idx]["_emp_key"]
+                _r_sel = results[_emp_sel]
+                _tk_sel = _df.iloc[_idx]["Ticker"]
+
+                st.markdown(f"<hr style='margin:18px 0 10px'>", unsafe_allow_html=True)
+                st.markdown(f"""<div style="background:{C['bg2']};border:1px solid {C['blue_lt']};
+                    border-radius:8px;padding:16px 20px">
+                    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+                        {logo_empresa_html(_r_sel.get("ticker", _emp_sel), 50)}
+                        <div>
+                            <div style="color:{C['blue_lt']};font-weight:800;font-size:1.2rem">{_tk_sel}</div>
+                            <div style="color:{C['gray']};font-size:.85rem">{_r_sel.get("empresa", "")}</div>
+                            <div style="color:{C['gray2']};font-size:.7rem;margin-top:2px">{_r_sel.get("setor", "—")}</div>
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
-                            <div style="background:{C['bg']};border-radius:6px;padding:8px 10px">
-                                <div style="color:{C['gray']};font-size:.58rem;text-transform:uppercase;letter-spacing:.5px">Preco Tela</div>
-                                <div style="color:{C['white']};font-weight:700;font-size:.92rem;margin-top:2px">{price(r.get('price_now'))}</div>
-                            </div>
-                            <div style="background:{C['bg']};border-radius:6px;padding:8px 10px">
-                                <div style="color:{C['gray']};font-size:.58rem;text-transform:uppercase;letter-spacing:.5px">Preco Justo</div>
-                                <div style="font-weight:700;font-size:.92rem;margin-top:2px">
-                                    <span style="color:{C['blue_lt']}">{price(r.get('price_fair'))}</span>
-                                    <span style="color:{_uc};font-size:.70rem;margin-left:4px">{_ud}</span>
-                                </div>
-                            </div>
-                            <div style="background:{C['bg']};border-radius:6px;padding:8px 10px">
-                                <div style="color:{C['gray']};font-size:.58rem;text-transform:uppercase;letter-spacing:.5px">EV (DCF)</div>
-                                <div style="color:{C['white']};font-weight:600;font-size:.85rem;margin-top:2px">{bi(r.get('enterprise_value'))}</div>
-                            </div>
-                            <div style="background:{C['bg']};border-radius:6px;padding:8px 10px">
-                                <div style="color:{C['gray']};font-size:.58rem;text-transform:uppercase;letter-spacing:.5px">Net Debt</div>
-                                <div style="color:{C['white']};font-weight:600;font-size:.85rem;margin-top:2px">{bi(r.get('net_debt'))}</div>
-                            </div>
-                        </div>
-                        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
-                            <div style="background:{C['bg']};border-radius:4px;padding:5px 4px;text-align:center">
-                                <div style="color:{C['gray']};font-size:.55rem;text-transform:uppercase">WACC</div>
-                                <div style="color:{C['blue_lt']};font-weight:700;font-size:.78rem">{pct_p(r.get('wacc'))}</div>
-                            </div>
-                            <div style="background:{C['bg']};border-radius:4px;padding:5px 4px;text-align:center">
-                                <div style="color:{C['gray']};font-size:.55rem;text-transform:uppercase">ROIC</div>
-                                <div style="color:{C['blue_lt']};font-weight:700;font-size:.78rem">{pct(r.get('roic'))}</div>
-                            </div>
-                            <div style="background:{C['bg']};border-radius:4px;padding:5px 4px;text-align:center">
-                                <div style="color:{C['gray']};font-size:.55rem;text-transform:uppercase">Mg EBIT</div>
-                                <div style="color:{C['blue_lt']};font-weight:700;font-size:.78rem">{pct_p(r.get('ebit_margin'))}</div>
-                            </div>
-                            <div style="background:{C['bg']};border-radius:4px;padding:5px 4px;text-align:center">
-                                <div style="color:{C['gray']};font-size:.55rem;text-transform:uppercase">Beta</div>
-                                <div style="color:{C['blue_lt']};font-weight:700;font-size:.78rem">{f_(r.get('beta'))}</div>
-                            </div>
-                        </div>
-                        </div>''', unsafe_allow_html=True)
-                        if st.button('Ver detalhes', key=f'vd_{emp}_{_row_start}', use_container_width=True):
-                            st.session_state['_nav_empresa'] = emp
-                            st.rerun()
+                    </div>
+                </div>""", unsafe_allow_html=True)
+
+                # Métricas detalhadas em 2 linhas de 4
+                d1, d2, d3, d4 = st.columns(4)
+                with d1: st.metric("WACC", pct_p(_r_sel.get("wacc")))
+                with d2: st.metric("β", f_(_r_sel.get("beta")))
+                with d3: st.metric("ROIC", pct(_r_sel.get("roic")))
+                with d4: st.metric("Mg EBIT", pct_p(_r_sel.get("ebit_margin")))
+
+                d5, d6, d7, d8 = st.columns(4)
+                with d5: st.metric("Mkt Cap", bi(_r_sel.get("mkt_cap")))
+                with d6: st.metric("Net Debt", bi(_r_sel.get("div_liq") or _r_sel.get("net_debt")))
+                with d7: st.metric("EV", bi(_r_sel.get("enterprise_value") or _r_sel.get("ev")))
+                with d8: st.metric("EBITDA", bi(_r_sel.get("ebitda")))
+
+                # Linha extra: classificação B3
+                _seg_b3 = _r_sel.get("segmento_b3") or "—"
+                _seg_label = {
+                    "NM": "Novo Mercado",
+                    "N1": "Nível 1",
+                    "N2": "Nível 2",
+                    "MA": "Bovespa Mais",
+                    "MB": "Bovespa Mais N2",
+                    "BAS": "Tradicional (Bovespa Antigo)",
+                }.get(_seg_b3, _seg_b3)
+
+                d9, d10, d11, d12 = st.columns(4)
+                with d9: st.metric("Segmento B3", _seg_label)
+                with d10: st.metric("LPA", f_(_r_sel.get("lpa")))
+                with d11: st.metric("EV/EBITDA", f_(_r_sel.get("ev_ebitda")))
+                with d12: st.metric("ROE", pct_p(_r_sel.get("roe")))
+
+                # Erro de cálculo se houver
+                _erro = _r_sel.get("erro_calc")
+                if _erro:
+                    st.warning(f"⚠️ {_erro}")
+
+                # Botão para abrir aba Empresa
+                if st.button(f"🔗 Abrir aba Empresa para {_tk_sel}",
+                             key=f"open_emp_{_emp_sel}", use_container_width=True):
+                    st.session_state["_nav_empresa"] = _emp_sel
+                    st.rerun()
 
             # Sparklines de cotação
             st.markdown("<hr>", unsafe_allow_html=True)
