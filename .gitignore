@@ -33,3 +33,10 @@ logs/
 *.bak_*
 *.prepatch_*
 *.bak_corrompido
+
+# D-017 ComDinheiro v2
+*.env
+comdinheiro_v2/cache_*.json
+comdinheiro_v2/pageview_log.jsonl
+comdinheiro_v2/__pycache__/
+/tmp/patch_*.py
